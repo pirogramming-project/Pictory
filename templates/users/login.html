@@ -65,13 +65,37 @@
         .login_link_ksy {
             font-size: 1.1rem;
             padding: 35px;
-            margin: 60px;
+            margin-top: 60px;
+            margin-bottom: 40px;
             text-align: center;
             color: var(--login_signup_hint);
         }
         .login_link_ksy a {
             color: var(--login_signup_link);
         }
+        .login_social_container_ksy {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7%;
+        }
+        .login_naverSocial_button_ksy {
+            background:none;
+            border: none;
+            cursor: pointer;
+        }
+        .login_kakaoSocial_button_ksy {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: none;
+            background-color: #FEE500;
+        }
+        .login_naverSocial_img_ksy {
+            width: 90px;
+            height: 90px;
+        }
+       
     </style>
 </head>
 <body>
@@ -85,6 +109,12 @@
             </div>
         </div>
         <div class="login_link_ksy">계정이 없으신가요? <a href="{% url 'users:signup' %}">회원가입</a></div>
+        <div class="login_social_container_ksy">
+            <button type="submit" class="login_naverSocial_button_ksy">
+                <img src="{% static 'images/btnG_아이콘원형.png'%}" alt="네이버 계정 로그인" class="login_naverSocial_img_ksy">
+            </button>
+            <button type="submit" class="login_kakaoSocial_button_ksy"></button>
+        </div>
     </div>
 </body>
 </html>
