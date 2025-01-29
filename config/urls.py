@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
-    path('accounts/', include('allauth.urls')),  # django-allauth URL
 ]
 
 if settings.DEBUG:

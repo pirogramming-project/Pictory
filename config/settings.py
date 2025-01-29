@@ -8,6 +8,8 @@ load_dotenv()  # .env 파일 로드
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 NAVER_CALLBACK_URL = os.getenv("NAVER_CALLBACK_URL")
+NAVER_REDIRECT_URI = os.getenv("NAVER_CALLBACK_URI")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,48 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'diaries',
     'users',
-    'django.contrib.sites',                  
-    'allauth',                               
-    'allauth.account',                       
-    'allauth.socialaccount',                
-    'allauth.socialaccount.providers.naver', 
+    'django.contrib.sites',                   
 ]
 
 SITE_ID = 1 
 
 
-# # 나 홀로 디버깅
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # username 필드 비활성화
-# ACCOUNT_USERNAME_REQUIRED = False  # username 입력 비활성화
-
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'  # 이메일 또는 다른 필드를 인증 수단으로 사용
-# ACCOUNT_EMAIL_REQUIRED = True  # 이메일 필드 필수
-# ACCOUNT_EMAIL_VERIFICATION = 'optional'  # 이메일 검증 옵션 (필요에 따라 변경 가능)
-
-# #요까지
-
-SOCIALACCOUNT_PROVIDERS = {
-    'naver': {
-        'APP': {
-            'client_id': NAVER_CLIENT_ID,
-            'secret': NAVER_CLIENT_SECRET,
-            'key': ''
-        },
-        'SCOPE': ['email', 'name'],
-        'PROFILE_FIELDS': ['email', 'nickname'],
-    }
-}
-
-LOGIN_REDIRECT_URL = '/'  # 로그인 성공 후 이동할 URL
-LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 이동할 URL
-ACCOUNT_LOGOUT_ON_GET = True  # GET 요청으로 로그아웃 허용
-
 AUTH_USER_MODEL = 'users.User'
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  
-    'allauth.account.auth_backends.AuthenticationBackend',  
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -169,3 +136,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
