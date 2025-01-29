@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'diaries',
     'users',
 ]
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
