@@ -1,0 +1,229 @@
+:root {
+    --login_signup_hint: rgba(0,0,0,0.41);
+    --login_signup_background: #DDE9FE;
+    --login_signup_button: #9BC3FF;
+    --font_color: #1E3269;
+    --login_signup_link: #78A9ED;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+/* 카메라 배경 */
+.camera-wrapper_psy {
+    position: relative;
+    width: 400px;
+    height: 450px;
+}
+
+/* 카메라 이미지 배경 */
+.camera-img_psy {
+    width: 100%;
+    display: block;
+    transform: scale(1.5);
+    margin-top: 60px;
+    margin-bottom: 20px; 
+}
+
+/* 카메라 셔터 버튼 */
+.shutters_psy {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.shutter1_psy{
+    position: absolute;
+    width: 33px;
+    height: 13px;
+    left: 369px;
+    top: -61px;
+    background: var(--font_color);
+
+}
+.shutter2_psy {
+    position: absolute;
+    width: 50px;
+    height: 17px;
+    left: 360px;
+    top: -48px;
+    background: #DAE6F8;
+}
+/* 제목 */
+.title_psy{
+    position: absolute;
+    width: 188px;
+    height: 92px;
+    left: 100px;
+    top: -125px;
+    font-family: 'GangwonEduSaeeum';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 70px;
+    line-height: 92px;
+    color: var(--font_color);
+}
+/* 상단 점들들 */
+.top-dots_psy{
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    left: -8px;
+    top: -44px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #ffffff;
+    opacity: 0.5;
+    box-shadow: inset 0px 4px 4px #1E3269, inset 0px -2px 4px #1E3269;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot1_psy
+{
+    width: 20px;
+    height: 20px;
+    background-color: #739BE1;
+    border-radius: 50%;
+}
+.dot2_psy {
+    width: 20px;
+    height: 20px;
+    background-color: #557DE1;
+    border-radius: 50%;
+}
+
+.camera-line_psy{ 
+    position: absolute;
+    width: 517px;
+    height: 27px;
+    left: -61px;
+    top: 44px;
+    background: #9BC3FF;
+    opacity: 0.8;
+    z-index: -1;
+}
+
+/* 플래시 부분 */
+.flash_psy {
+    position: absolute;
+    top: -4px;
+    right: -74px;
+    width: 57px;
+    height: 23px;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
+
+.camera-body_psy {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    text-align: center;
+}
+
+/* 카메라 렌즈 */
+.lens_psy {
+    background-color: #DDEAFE;
+    border-radius: 50%;
+    width: 330px;
+    height: 330px;
+    padding: 20px;
+    margin-top: 22px;
+    z-index: 1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* 회원가입 폼 */
+.signup-form_psy {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    top: 120px;
+    left: 50px;
+    width: 252px;
+    z-index: 2;
+}
+
+/* 입력 필드 */
+.input-field_psy {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 0px -2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+}
+
+/* 회원가입 버튼 */
+.signup-button_psy {
+    background-color: #9BC3FF;
+    width: 272px;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.signup-button_psy:hover {
+    background-color: #78A9ED;
+}
+
+.login-text_psy {
+    position: absolute;
+    margin-top: 10px;
+    font-size: 14px;
+    left: 10px;
+    width: 340px;
+    z-index: 2;
+    top: 306px;
+}
+
+.login-link_psy {
+    color: #78A9ED;
+    font-weight: bold;
+}
+
+.login-link_psy:hover {
+    text-decoration: underline;
+}
+
+/* 하단 점들 */
+.bottom-dots_psy {
+    position: absolute;
+    bottom: 10px;
+    left: 380px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot3_psy{
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+
+.dot4_psy {
+    width: 15px;
+    height: 15px;
+    background-color: #1E3269;
+    opacity: 0.6;
+    border-radius: 50%;
+}

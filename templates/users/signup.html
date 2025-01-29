@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
+<html lang="kn">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
+    <link rel="stylesheet" href="{% static "users/signup.css" %}">
 </head>
 <body>
     <div class="camera-wrapper_psy">
-        <img src="images/camera.png" alt="카메라 배경" class="camera-img_psy">
+        <img src="{% static "images/camera.png" %}" alt="카메라 배경" class="camera-img_psy">
         <div class="shutters_psy">
             <div class="shutter1_psy"></div>
             <div class="shutter2_psy"></div>
