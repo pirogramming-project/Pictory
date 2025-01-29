@@ -117,12 +117,10 @@ body {
 /* 플래시 부분 */
 .flash_psy {
     position: absolute;
-    top: -4px;
-    right: -74px;
-    width: 57px;
-    height: 23px;
-    background-color: #ffffff;
+    top: -20px;
+    right: -130px;
     border-radius: 3px;
+    transform: scale(0.45);
 }
 
 .camera-body_psy {
