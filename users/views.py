@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
+from django.contrib.auth.hashers import check_password
 
 
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
@@ -13,8 +14,20 @@ NAVER_REDIRECT_URI = settings.NAVER_REDIRECT_URI
 
 def login_view(request):
     if request.method == "POST":
-        pass
-    
+        login_id = request.POST['login_id']
+        input_password = request.POST['password']
+        try:
+            user = User.objects.get(login_id=login_id)  
+            if check_password(input_password, user.password):  
+                auth_login(request, user)
+                return redirect('/')    # 메인 페이지로 이동 (미구현)
+            else:
+                print("잘못된 비밀번호")
+                return redirect('users:login')
+        except User.DoesNotExist:
+            print("사용자를 찾을 수 없습니다.")
+            return redirect('users:login')
+        
     return render(request, 'users/login.html')
 
 
