@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
+{%block head%}
+<link rel="stylesheet" href="{% static "users/main.css" %}">
+{% endblock %}
 
-    <link rel="stylesheet" href="{% static "users/main.css" %}">
+{% block content %}
     <div class="calendar-wrapper">
         <div class="calendar">
 
@@ -25,6 +27,7 @@
             <div class="days" id="days"></div>
         </div>
     </div>
+
 
     <script>
         const currentMonthElement = document.getElementById("currentMonth");
