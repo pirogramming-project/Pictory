@@ -6,6 +6,7 @@ from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
 from django.contrib.auth.hashers import check_password
+from django.contrib import messages
 
 
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
@@ -29,6 +30,28 @@ def login_view(request):
             return redirect('users:login')
         
     return render(request, 'users/login.html')
+
+def signup(request):
+    if request.method == "POST":
+        login_id = request.POST.get("login_id")
+        password = request.POST.get("password")
+        password_confirm = request.POST.get("password_confirm")
+  
+        # 비밀번호 확인
+        if password != password_confirm:
+            return redirect("users:signup")  
+
+        # ID 중복 확인
+        if User.objects.filter(login_id=login_id).exists():
+            return redirect("users:signup")  
+        
+        user = User(login_id=login_id)
+        user.set_password(password) 
+        user.save()
+        
+        return redirect("users:login")
+    return render(request, "users/signup.html")
+         
 
 
 def kakao_login(request):
@@ -82,15 +105,6 @@ def kakao_callback(request):
     # 5. 로그인 처리
     auth_login(request, user)
     return redirect("/")  # 로그인 후 이동할 페이지
-
-
-
-def signup(request):
-    if request.method == "POST":
-        pass
-    
-    
-    return render(request, 'users/signup.html')
 
 
 # 네이버 로그인 페이지로 리디렉션하는 함수
