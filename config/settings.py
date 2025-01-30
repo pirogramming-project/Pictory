@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from decouple import config
 
 load_dotenv()  # .env 파일 로드
 
@@ -83,11 +84,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('SETTING_DB_NAME'),
+        'USER': config('SETTING_DB_USER'),
+        'PASSWORD': config('SETTING_DB_PW'),
+        'HOST': config('SETTING_DB_HOST'),
+        'PORT': config('SETTiNG_DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -137,7 +141,6 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from decouple import config
 
 KAKAO_CLIENT_ID=config('KAKAO_CLIENT_ID')
 KAKAO_REDIRECT_URI=config('KAKAO_REDIRECT_URI')
