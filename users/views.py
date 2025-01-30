@@ -48,7 +48,7 @@ def signup(request):
         
         user = User(login_id=login_id)
         user.set_password(password) 
-        user.nickname=login_id
+        user.nickname=make_unique_nickname_of_social_login(login_id)
         user.save()
         
         return redirect("users:login")
@@ -196,11 +196,13 @@ def handle_naver_user(request, user_info):
 
 def make_unique_nickname_of_social_login(base_nickname):
     import random
-    import string
     new_nickname = base_nickname
     
     while User.objects.filter(nickname=new_nickname).exists():
-        random_suffix = "".join(random.choices(string.ascii_lowercase, k=3))
-        new_nickname = f"{base_nickname}{random_suffix}"
+        random_suffix = ""
+        for i in range(11):
+            random_suffix += str(random.randrange(0, 10))
+
+        new_nickname = f"{base_nickname}-{random_suffix}"
         
     return new_nickname
