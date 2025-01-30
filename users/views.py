@@ -181,6 +181,12 @@ def handle_naver_user(request, user_info):
 
     user, created = User.objects.get_or_create(email=email, defaults={"nickname": make_unique_nickname_of_social_login(nickname), "login_id": email})
 
+    if created:
+        # 랜덤 비밀번호 생성 및 설정
+        random_password = secrets.token_urlsafe(32)  # 랜덤 비밀번호 생성 (32자리)
+        user.set_password(random_password)  # 비밀번호 설정
+        user.save()
+
     #로그인 처리
     auth_login(request, user)
     #main페이지 생기면 거기로 주소 바뀔 예정
