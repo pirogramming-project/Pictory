@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
-from django.contrib.auth import login
 
 
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
@@ -68,7 +67,7 @@ def kakao_callback(request):
         user.save()
 
     # 5. 로그인 처리
-    login(request, user)
+    auth_login(request, user)
     return redirect("/")  # 로그인 후 이동할 페이지
 
 
