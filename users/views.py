@@ -47,6 +47,7 @@ def signup(request):
         
         user = User(login_id=login_id)
         user.set_password(password) 
+        user.nickname=login_id
         user.save()
         
         return redirect("users:login")
