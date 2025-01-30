@@ -60,7 +60,7 @@ def kakao_callback(request):
     if created:
         # 4. 새 유저라면 추가 정보 저장
         user.login_id = login_id  # 유저네임을 카카오 ID 기반으로 설정
-        user.nickname = nickname
+        user.nickname = make_unique_nickname_of_social_login(nickname)
         random_password = secrets.token_urlsafe(32)  # 일반 로그인 방지용 랜덤 문자열 생성
         user.set_password(random_password)  # 비밀번호 설정
         user.save()
@@ -149,9 +149,22 @@ def handle_naver_user(request, user_info):
     if not email:
         return render(request, "users/login.html", {"error": "네이버 계정에 이메일이 없습니다."})
 
-    user, created = User.objects.get_or_create(email=email, defaults={"nickname": nickname, "login_id": email})
+    user, created = User.objects.get_or_create(email=email, defaults={"nickname": make_unique_nickname_of_social_login(nickname), "login_id": email})
 
     #로그인 처리
     auth_login(request, user)
     #main페이지 생기면 거기로 주소 바뀔 예정
     return redirect('/')
+
+
+
+def make_unique_nickname_of_social_login(base_nickname):
+    import random
+    import string
+    new_nickname = base_nickname
+    
+    while User.objects.filter(nickname=new_nickname).exists():
+        random_suffix = "".join(random.choices(string.ascii_lowercase, k=3))
+        new_nickname = f"{base_nickname}{random_suffix}"
+        
+    return new_nickname
