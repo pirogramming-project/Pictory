@@ -46,6 +46,8 @@ def kakao_callback(request):
 
     kakao_id = user_info["id"]
     login_id = f'kakao_{kakao_id}'
+    nickname = user_info["properties"]['nickname']
+    
 
     # 3. Custom User Model에서 해당 유저가 존재하는지 확인
     user, created = User.objects.get_or_create(login_id=login_id)
@@ -53,7 +55,7 @@ def kakao_callback(request):
     if created:
         # 4. 새 유저라면 추가 정보 저장
         user.login_id = login_id  # 유저네임을 카카오 ID 기반으로 설정
-        user.nickname = login_id
+        user.nickname = nickname
         random_password = secrets.token_urlsafe(32)  # 일반 로그인 방지용 랜덤 문자열 생성
         user.set_password(random_password)  # 비밀번호 설정
         user.save()
