@@ -6,8 +6,9 @@ from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
 from django.contrib.auth.hashers import check_password
-from django.contrib import messages
 
+KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
+KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
 
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
 NAVER_CLIENT_SECRET = settings.NAVER_CLIENT_SECRET
@@ -58,7 +59,7 @@ def signup(request):
 def kakao_login(request):
     kakao_auth_url = (
         f"https://kauth.kakao.com/oauth/authorize?response_type=code"
-        f"&client_id={settings.KAKAO_CLIENT_ID}&redirect_uri={settings.KAKAO_REDIRECT_URI}"
+        f"&client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URI}"
         f"&prompt=login"
     )
     return redirect(kakao_auth_url)
@@ -72,8 +73,8 @@ def kakao_callback(request):
         "https://kauth.kakao.com/oauth/token",
         data={
             "grant_type": "authorization_code",
-            "client_id": settings.KAKAO_CLIENT_ID,
-            "redirect_uri": settings.KAKAO_REDIRECT_URI,
+            "client_id": KAKAO_CLIENT_ID,
+            "redirect_uri": KAKAO_REDIRECT_URI,
             "code": code,
         },
     )

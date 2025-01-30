@@ -1,15 +1,5 @@
 from pathlib import Path
-import os
-from dotenv import load_dotenv
 from decouple import config
-
-load_dotenv()  # .env 파일 로드
-
-# 네이버 소셜 로그인 설정
-NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
-NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
-NAVER_CALLBACK_URL = os.getenv("NAVER_CALLBACK_URL")
-NAVER_REDIRECT_URI = os.getenv("NAVER_CALLBACK_URI")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -142,6 +132,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# .env 변수들 LOAD
 KAKAO_CLIENT_ID=config('KAKAO_CLIENT_ID')
 KAKAO_REDIRECT_URI=config('KAKAO_REDIRECT_URI')
-
+NAVER_CLIENT_ID = config("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = config("NAVER_CLIENT_SECRET")
+NAVER_REDIRECT_URI = config("NAVER_CALLBACK_URI")
