@@ -1,11 +1,3 @@
-:root {
-    --login_signup_hint: rgba(0,0,0,0.41);
-    --login_signup_background: #DDE9FE;
-    --login_signup_button: #9BC3FF;
-    --font_color: #1E3269;
-    --login_signup_link: #78A9ED;
-}
-
 body {
     display: flex;
     justify-content: center;
