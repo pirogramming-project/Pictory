@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'diaries',
     'users',
 ]
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,3 +131,8 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from decouple import config
+
+KAKAO_CLIENT_ID=config('KAKAO_CLIENT_ID')
+KAKAO_REDIRECT_URI=config('KAKAO_REDIRECT_URI')
