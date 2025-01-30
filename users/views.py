@@ -7,7 +7,6 @@ from users.models import User
 import urllib.parse
 from django.contrib.auth import login
 
-
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
 NAVER_CLIENT_SECRET = settings.NAVER_CLIENT_SECRET
 NAVER_REDIRECT_URI = settings.NAVER_REDIRECT_URI
