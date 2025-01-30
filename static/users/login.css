@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 @font-face {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
@@ -47,14 +52,14 @@
     width: 62%;
 }
 .login_button_ksy {
-    width: 66%;
-    height: 4rem;
+    width: 61%;
+    height: 6rem;
     background-color: var(--login_signup_button);
     font-weight: bold;
     font-size: 25px;
 }
 .login_link_ksy {
-    font-size: 1.1rem;
+    font-size: 1.8rem;
     padding: 35px;
     margin-top: 60px;
     margin-bottom: 40px;

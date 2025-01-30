@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* 전체 캘린더를 화면 중앙에 정렬 */
 .calendar-wrapper {
     display: flex;
