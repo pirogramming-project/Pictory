@@ -6,7 +6,6 @@ from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
 from django.contrib.auth.hashers import check_password
-from django.contrib import messages
 
 
 NAVER_CLIENT_ID = settings.NAVER_CLIENT_ID
@@ -179,6 +178,12 @@ def handle_naver_user(request, user_info):
         return render(request, "users/login.html", {"error": "네이버 계정에 이메일이 없습니다."})
 
     user, created = User.objects.get_or_create(email=email, defaults={"nickname": make_unique_nickname_of_social_login(nickname), "login_id": email})
+
+    if created:
+        # 랜덤 비밀번호 생성 및 설정
+        random_password = secrets.token_urlsafe(32)  # 랜덤 비밀번호 생성 (32자리)
+        user.set_password(random_password)  # 비밀번호 설정
+        user.save()
 
     #로그인 처리
     auth_login(request, user)
