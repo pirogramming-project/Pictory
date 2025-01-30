@@ -8,6 +8,7 @@ body {
     margin: 0;
     background: #F9FFFF;
     display: flex;
+    flex-direction: column;
 }
 aside {
     position: relative;

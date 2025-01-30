@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static "reset.css" %}">
     <link rel="stylesheet" href="{%static 'global.css'%}"> 
     <link rel="stylesheet" href="{%static 'base.css'%}"> 
+    <link rel="stylesheet" href="{%static 'reset.css'%}"> 
     {%block head%}
     {% endblock %}
 </head>
@@ -59,14 +60,14 @@
         </div>
     </aside>
     <header>
-        <img src="{% static 'images/pictoryLogo.png'%}" alt="네이버 계정 로그인" class="login_naverSocial_img_ksy">
+        <img src="{% static 'images/pictoryLogo.png'%}" alt="픽토리 로고">
     </header>
-    <section>
-        {%block content%}
-      
     
-        {%endblock%}
-    </section>
+    {%block content%}
+    
+
+    {%endblock%}
+    
 </body>
 </html>
 
