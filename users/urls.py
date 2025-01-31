@@ -11,4 +11,5 @@ urlpatterns = [
     path('naver/callback/', naver_callback, name='naver_callback'),  
     path('login_kakao/', kakao_login, name='login_kakao'),
     path('accounts/kakao/callback/', kakao_callback, name='login_kakao_callback'),
+    path('logout/', logout_view, name='logout'),
 ]
