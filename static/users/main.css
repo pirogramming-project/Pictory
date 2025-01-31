@@ -1,0 +1,123 @@
+/* 전체 캘린더를 화면 중앙에 정렬 */
+.calendar-wrapper_psy {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    min-width: 100%;
+    top: 20%;
+    left: 27%;
+    background: #e6f0fa;
+    transform: scale(0.8);
+}
+
+/* 캘린더 컨테이너 */
+.calendar_psy {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    min-height: 50dvh;
+    min-width: 90dvh;
+    top: 10%;
+    left: 18%;
+    flex-direction: column;
+}
+
+/* 월 타이틀 */
+.month_psy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #1E3269;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-family: 'GangwonEduSaeeum';
+}
+
+.month_psy span {
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 요일 스타일 */
+.weekdays_psy {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #DAE6F8;
+    padding: 15px 0px;
+    font-size: 3rem;
+    color: #1E3269;
+    font-family: 'GangwonEduSaeeum';
+}
+
+/* 날짜 스타일 */
+.days_psy {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
+    padding: 10px 0;
+    padding-left: 20px;
+    position: relative;  
+}
+
+/* 빈칸 (공백) */
+.empty {
+    visibility: hidden;
+}
+
+/* 날짜 기본 스타일 */
+.day_psy {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:2.5rem;
+    cursor: pointer;
+    font-family: 'GangwonEduSaeeum';
+    color: #1E3269;
+    position: relative;
+    z-index: 2;
+}
+
+.day_psy span {
+    position: relative;
+    z-index: 4;
+}
+
+.day_psy.today {
+    background: #C3E7FA;
+    border-radius: 50%;
+}
+
+/* 구름 아이콘 (기본적으로 숨김) */
+.cloud-icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    display: none;
+}
+
+/* 마우스를 날짜 위에 올리면 구름 아이콘 표시 */
+.day_psy:hover::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49 55" fill="none"><path d="M13.2408 45.8333C10.1513 45.8333 7.51199 44.6302 5.32285 42.2239C3.13371 39.8177 2.03847 36.8767 2.03711 33.401C2.03711 30.4218 2.83495 27.7673 4.43063 25.4375C6.02631 23.1076 8.11427 21.618 10.6945 20.9687C11.5433 17.4548 13.2408 14.6093 15.7871 12.4323C18.3334 10.2552 21.2192 9.16663 24.4445 9.16663C28.4167 9.16663 31.7867 10.7234 34.5543 13.837C37.322 16.9507 38.7051 20.7411 38.7038 25.2083C41.0464 25.5138 42.9904 26.6505 44.5358 28.6183C46.0812 30.5861 46.8533 32.8869 46.8519 35.5208C46.8519 38.3854 45.9611 40.8207 44.1793 42.8266C42.3976 44.8326 40.2329 45.8348 37.6853 45.8333H13.2408Z" fill="%23C3E7FA"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    left: 56%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
