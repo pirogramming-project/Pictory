@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
     <link rel="stylesheet" href="{%static 'global.css'%}"> 
     <link rel="stylesheet" href="{%static 'base.css'%}"> 
-    <link rel="stylesheet" href="{% static 'reset.css' %}">
     {%block head%}
     {% endblock %}
 </head>
@@ -58,14 +58,16 @@
             </button>
         </div>
     </aside>
-    <header class="base_header_ksy">
-        <img src="{% static 'images/pictoryLogo.png'%}" alt="픽토리 로고">
-    </header>
+    <div class="base_main_ksy">
+        <header class="base_header_ksy">
+            <img src="{% static 'images/pictoryLogo.png'%}" alt="픽토리 로고">
+        </header>
+        
+        {%block content%}
+        
     
-    {%block content%}
-    
-
-    {%endblock%}
+        {%endblock%}
+    </div>
     
 </body>
 </html>
