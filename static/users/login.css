@@ -1,34 +1,35 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 @font-face {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
+.login_body_ksy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+}
 .login_container_ksy {
-    width: 100dvh;
-    height: 93dvh;
-    margin: 30px auto;
-    border-radius: 15px;
+    padding: 2%;
+    width: 50%;
+    height: 80%;
+    margin: 2% auto;
+    border-radius: 2rem;
     box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.10), 3px 0px 4px 0px rgba(0, 0, 0, 0.10), -3px 0px 4px 0px rgba(0, 0, 0, 0.10), 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
 }
 .login_background_ksy {
     position: relative;
-    top: 5%;
+    padding: 5%;
     left: 5%;
     background-color: var(--login_signup_background);
-    width: 90dvh;
-    height: 55dvh;
-    border-radius: 10px;
+    width: 90%;
+    border-radius: 1.7rem;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;
 }
 .login_title_ksy {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
-    font-size: 55px;
+    font-size: 5rem;
     color: var(--font_color);
     font-style: normal;
     margin: 0;
@@ -37,32 +38,32 @@
 }
 .login_form_ksy {
     display: flex;
-    gap: 40px;
+    gap: 5vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .login_input_ksy, .login_button_ksy {
-    padding: 17px;
-    font-size: 20px;
-    border-radius: 17px;
+    padding: 2%;
+    font-size: 2rem;
+    border-radius: 2rem;
     height: 25%;
     border: none;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10);
-    width: 62%;
+    width: 70%;
 }
 .login_button_ksy {
-    width: 61%;
+    width: 70%;
     height: 6rem;
     background-color: var(--login_signup_button);
     font-weight: bold;
-    font-size: 25px;
+    font-size: 2rem;
 }
 .login_link_ksy {
     font-size: 1.8rem;
-    padding: 35px;
-    margin-top: 60px;
-    margin-bottom: 40px;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     text-align: center;
     color: var(--login_signup_hint);
 }
@@ -81,13 +82,13 @@
     cursor: pointer;
 }
 .login_kakaoSocial_button_ksy {
-    width: 90px;
-    height: 90px;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     border: none;
     background-color: #FEE500;
 }
 .login_naverSocial_img_ksy {
-    width: 90px;
-    height: 90px;
+    width: 8rem;
+    height: 8rem;
 }
