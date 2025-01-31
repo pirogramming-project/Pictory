@@ -4,14 +4,13 @@
     font-weight: normal;
     font-style: normal;
 }
-body {
+.base_body_ksy {
     margin: 0;
     background: #F9FFFF;
     display: flex;
     flex-direction: column;
 }
-aside {
-    position: relative;
+.base_aside_ksy {
     width: 312px;
     height: 100dvh;
     position: fixed;
@@ -90,7 +89,7 @@ aside {
     color: #1E3269;
     margin: 0;
 }
-header {
+.base_header_ksy {
     margin-top: 15px;
     margin-left: 312px; 
     flex: 1;
