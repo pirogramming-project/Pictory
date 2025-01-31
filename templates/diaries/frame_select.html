@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" href="{% static 'diaries/frame_select.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="frame-container_psy">
+        <div class="frame-btn_psy">
+            <!-- 첫 번째 프레임 -->
+            <button class="frame-btn1_psy">
+                <img src="{% static 'images/pictory-frame1.png' %}" alt="프레임 1">
+            </button>
+
+            <!-- 두 번째 프레임 -->
+            <button class="frame-btn2_psy">
+                <img src="{% static 'images/pictory-frame2.png' %}" alt="프레임 2">
+            </button>
+
+            <!-- 세 번째 프레임 -->
+            <button class="frame-btn3_psy">
+                <img src="{% static 'images/pictory-frame3.png' %}" alt="프레임 3">
+            </button>
+
+            <!-- 네 번째 프레임 -->
+            <button class="frame-btn4_psy">
+                <img src="{% static 'images/pictory-frame4.png' %}" alt="프레임 4">
+            </button>
+        </div>
+
+        <p class="frame-select-text_psy">오늘 하루를 담을 프레임을 선택해주세요</p>   
+    </div>
+{% endblock %}
