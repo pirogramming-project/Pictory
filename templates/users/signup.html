@@ -34,10 +34,11 @@
                 <div class="camera-line_psy"></div>
     
                 <div class="lens_psy"></div>
-                <form class="signup-form_psy">
-                    <input type="text" class="input-field_psy" placeholder="아이디">
-                    <input type="password" class="input-field_psy" placeholder="비밀번호">
-                    <input type="password" class="input-field_psy" placeholder="비밀번호 재확인">
+                <form method="POST" action= "{% url 'users:signup' %}" class="signup-form_psy">
+                    {% csrf_token %}
+                    <input type="text" name='login_id' class="input-field_psy" placeholder="아이디" required>
+                    <input type="password" name='password' class="input-field_psy" placeholder="비밀번호" required>
+                    <input type="password" name="password_confirm" class="input-field_psy" placeholder="비밀번호 재확인" required>
                     <button type="submit" class="signup-button_psy">회원가입</button>
                 </form>
               <p class="login-text_psy">이미 계정이 있으신가요? <a href="{% url 'users:login' %}" class="login-link_psy">로그인</a></p>

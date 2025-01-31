@@ -14,7 +14,10 @@
     <aside class="base_aside_ksy">
         <div class="base_profile_ksy">
             <img class="base_profile_img_ksy">
-            <a class="base_logout_ksy">로그아웃</a>
+            <form action="{% url 'users:logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="base_logout_ksy">로그아웃</button>
+            </form>
         </div>
         <div class="base_sideButton_ksy">
             <button class="base_buttonMy_ksy">

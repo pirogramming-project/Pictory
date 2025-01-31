@@ -23,14 +23,19 @@ def login_view(request):
             user = User.objects.get(login_id=login_id)  
             if check_password(input_password, user.password):  
                 auth_login(request, user)
-                return redirect('/')    # 메인 페이지로 이동 (미구현)
+                return redirect('users:main')    # 메인 페이지로 이동 (미구현)
             else:
                 print("잘못된 비밀번호")
                 return redirect('users:login')
         except User.DoesNotExist:
             print("사용자를 찾을 수 없습니다.")
             return redirect('users:login')
-        
+    
+    # 만약에 유저가 로그인했다
+    if request.user.is_authenticated:
+        return redirect('users:main')
+    
+    # 아니다
     return render(request, 'users/login.html')
 
 def signup(request):
