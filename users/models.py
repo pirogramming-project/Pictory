@@ -60,3 +60,78 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.login_id}"
+
+
+## 유저 이웃 관련 모델들
+class NeighborRequest(models.Model):
+    """이웃 추가 신청"""
+    STATUS_CHOICES = [
+        ('waiting', '대기 중'),
+        ('accepted', '수락됨'),
+    ]
+    
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_neighbor_requests", verbose_name="신청 보낸 유저")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_neighbor_requests", verbose_name="신청 받은 유저")
+    status = models.CharField("상태", max_length=10, choices=STATUS_CHOICES, default='waiting')
+    created_at = models.DateTimeField("생성시간", auto_now_add=True)
+
+    class Meta:
+        unique_together = ('sender', 'receiver')  # 같은 유저에게 중복 신청 방지
+
+    def __str__(self):
+        return f"{self.sender} → {self.receiver} ({self.get_status_display()})"
+
+
+class Neighbor(models.Model):
+    """이웃 관계"""
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="neighbors1", verbose_name="이웃 A")
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="neighbors2", verbose_name="이웃 B")
+    created_at = models.DateTimeField("생성시간", auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user1', 'user2'], name='unique_neighbor')
+        ]
+
+    def save(self, *args, **kwargs):
+        """항상 user1 < user2 순서로 저장하여 중복 방지"""
+        if self.user1.id > self.user2.id:
+            self.user1, self.user2 = self.user2, self.user1
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user1} ↔ {self.user2}"
+    
+
+## 배지 관련 모델들
+class Badge(models.Model):
+    """배지 정보"""
+    image = models.FilePathField(
+        "배지 이미지", 
+        path='static/images/badges', 
+        match=r".*\.(png|jpg|jpeg|gif|webp|bmp|tiff)$", 
+        recursive=True
+    )
+    description = models.CharField("배지 설명", max_length=30)
+
+    def __str__(self):
+        return self.description
+
+
+class UserBadge(models.Model):
+    """유저가 획득한 배지"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="badges")
+    badge = models.ForeignKey(Badge, on_delete=models.CASCADE, related_name="user_badges")
+    created_at = models.DateTimeField("생성일시", auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'badge')  # 동일한 유저가 같은 배지를 여러 번 받을 수 없도록 설정
+
+    def __str__(self):
+        return f"{self.user.nickname} - {self.badge.description}"
+
+###### 사용하게 될 지도 모르는 utility 함수들
+# def are_neighbors(user_a, user_b):
+#     """두 유저가 이웃인지 확인"""
+#     user1, user2 = sorted([user_a, user_b], key=lambda u: u.id)
+#     return Neighbor.objects.filter(user1=user1, user2=user2).exists()

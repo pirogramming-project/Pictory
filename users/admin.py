@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import *
 
 # admin.site.register(User)
 
@@ -22,3 +22,9 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('login_id', 'nickname', 'is_active', 'is_staff')
     search_fields = ('login_id', 'nickname')
     ordering = ('login_id',)
+    
+    
+admin.site.register(NeighborRequest)
+admin.site.register(Neighbor)
+admin.site.register(Badge)
+admin.site.register(UserBadge)
