@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" href="{% static 'diaries/photo_type.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="photo-type-container_psy">
+        <div class="photo-type_psy">
+            <button class="cloud-btn_psy">
+                <span>인생네컷<br>올리기</span>
+            </button>
+            <button class="cloud-btn_psy">
+                <span>오늘의 네컷<br>만들기</span>
+            </button>
+        </div>
+    </div>
+{% endblock %}
