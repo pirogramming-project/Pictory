@@ -14,18 +14,20 @@
     <div class="login_container_ksy">
         <div class="login_background_ksy">
             <h1 class="login_title_ksy">Pictory</h1>
-            <div class="login_form_ksy">
-                <input type="text" placeholder="아이디" class="login_input_ksy">
-                <input type="password" placeholder="비밀번호" class="login_input_ksy">
+            <form method="POST" action="{% url 'users:login' %}" class="login_form_ksy">
+                {% csrf_token %}
+                <input type="text" name="login_id" placeholder="아이디" class="login_input_ksy" required>
+                <input type="password" name="password" placeholder="비밀번호" class="login_input_ksy" required>
                 <button type="submit" class="login_button_ksy">로그인</button>
-            </div>
+            </form>            
         </div>
         <div class="login_link_ksy">계정이 없으신가요? <a href="{% url 'users:signup' %}">회원가입</a></div>
         <div class="login_social_container_ksy">
-            <button type="submit" class="login_naverSocial_button_ksy">
-                <img src="{% static 'images/btnG_아이콘원형.png'%}" alt="네이버 계정 로그인" class="login_naverSocial_img_ksy">
+            <!-- 네이버 소셜 로그인 버튼 -->
+            <button type="button" class="login_naverSocial_button_ksy" onclick="window.location.href='/naver/login/'">
+                <img src="{% static 'images/btnG_아이콘원형.png' %}" alt="네이버 계정 로그인" class="login_naverSocial_img_ksy">
             </button>
-            <button type="submit" class="login_kakaoSocial_button_ksy"></button>
+            <button type="submit" class="login_kakaoSocial_button_ksy" onclick="document.location.href='{% url "users:login_kakao" %}'"></button>
         </div>
     </div>
 </body>
