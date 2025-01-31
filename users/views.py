@@ -210,5 +210,7 @@ def make_unique_nickname_of_social_login(base_nickname):
 
 # 로그아웃
 def logout_view(request):
-    logout(request)
+    if request.method == "POST":
+        logout(request)
+
     return redirect('/')
