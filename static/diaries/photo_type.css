@@ -1,0 +1,48 @@
+.photo-type-container_psy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.photo-type_psy {
+    display: flex;
+    gap: 15px;
+}
+
+.cloud-btn_psy {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 100px;
+    height: 70px;
+}
+
+.cloud-btn1_psy svg {
+    width: 100px;
+    height: 70px;
+    fill: #D7F1FA;
+    transition: fill 0.3s ease;
+}
+
+.cloud-btn1_psy svg {
+    width: 100px;
+    height: 70px;
+    fill: #E1F6FA;
+    transition: fill 0.3s ease;
+}
+
+.cloud-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    pointer-events: none;
+}
