@@ -4,59 +4,66 @@
     font-weight: normal;
     font-style: normal;
 }
-body {
+.base_body_ksy {
+    height: 100dvh;
     margin: 0;
     background: #F9FFFF;
     display: flex;
     flex-direction: column;
 }
-aside {
-    position: relative;
-    width: 312px;
-    height: 100dvh;
+.base_aside_ksy {
+    width: 18%;
+    height: 100vh; 
     position: fixed;
     border: 1px solid #EBF5FF;
     background: rgba(235, 245, 255, 0.40);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
 }
 .base_profile_ksy {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   gap: 20px;
-   margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh; 
+    margin: 2vh;
+    height: 20vh; 
+    min-height: 120px; 
+    flex-shrink: 0; 
 }
 .base_profile_img_ksy {
     background-color: #DAE6F8;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    width: 180px;
-    height: 180px;
+    height: 80%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     display: flex;
-    
+    object-fit: cover;
 }
 .base_logout_ksy {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     color: #78A9ED;
-    font-size: 1.8rem;
+    font-size: 2.8rem;
     cursor: pointer;
 }
 .base_sideButton_ksy {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around; 
     align-items: center;
-    gap: 10px;
+    flex-grow: 1; 
+    height: 100%;
+    padding-bottom: 10px;
 }
 .base_buttonMy_ksy, .base_buttonAlarm_ksy, .base_buttonMap_ksy, .base_buttonPhoto_ksy, .base_buttonCommunity_ksy, .base_buttonFriend_ksy {
     width: 90%;
-    height: 100px;
-    border: none;
+    height: calc(80vh / 8); 
+    min-height: 50px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 1vh;
     cursor: pointer;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20), 0px 2px 4px 0px rgba(0, 0, 0, 0.20) inset;
 }
@@ -86,14 +93,22 @@ aside {
 }
 .base_button_letter_ksy {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
-    font-size: 2.5rem;
+    font-size: 1.5vw; 
     color: #1E3269;
     margin: 0;
 }
-header {
+.base_main_ksy {
+    margin-left: 312px;
+    height: 100%;
+}
+
+.base_header_ksy {
+    left: 50%;
+    position: fixed;
     margin-top: 15px;
-    margin-left: 312px; 
-    flex: 1;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
 }
+    
+
