@@ -6,6 +6,7 @@ from django.contrib.auth import login as auth_login
 from users.models import User
 import urllib.parse
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import logout
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -206,3 +207,8 @@ def make_unique_nickname_of_social_login(base_nickname):
         new_nickname = f"{base_nickname}-{random_suffix}"
         
     return new_nickname
+
+# 로그아웃
+def logout_view(request):
+    logout(request)
+    return redirect('/')
