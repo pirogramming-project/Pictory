@@ -1,47 +1,54 @@
 <!DOCTYPE html>
-<html lang="kn">
+<html lang="ko">
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    
     <title>회원가입</title>
-    <link rel="stylesheet" href="{% static "users/signup.css" %}">
+    <link rel="stylesheet" href="{% static 'users/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
 </head>
 <body>
-    <div class="camera-wrapper_psy">
-        <img src="{% static "images/camera.png" %}" alt="카메라 배경" class="camera-img_psy">
-        <div class="shutters_psy">
-            <div class="shutter1_psy"></div>
-            <div class="shutter2_psy"></div>
+    <div class= "signup-body_psy">
+        <div class="camera-wrapper_psy">
+            <img src="{% static 'images/camera.png' %}" alt="카메라 배경" class="camera-img_psy">
+            <div class="shutters_psy">
+                <div class="shutter1_psy"></div>
+                <div class="shutter2_psy"></div>
+            </div>
+    
+            <div class="camera-body_psy" >  
+                <h1 class="title_psy">Pictory</h1>
+                <div class="top-dots_psy">
+                    <div class="dot1_psy"></div>
+                    <div class="dot2_psy"></div>
+                </div>
+    
+                <div class="flash_psy">
+                    <img src="{% static 'images/flash.png' %}" alt="카메라 플래쉬">
+                </div>
+                <div class="camera-line_psy"></div>
+    
+                <div class="lens_psy"></div>
+                <form class="signup-form_psy">
+                    <input type="text" class="input-field_psy" placeholder="아이디">
+                    <input type="password" class="input-field_psy" placeholder="비밀번호">
+                    <input type="password" class="input-field_psy" placeholder="비밀번호 재확인">
+                    <button type="submit" class="signup-button_psy">회원가입</button>
+                </form>
+              <p class="login-text_psy">이미 계정이 있으신가요? <a href="#" class="login-link_psy">로그인</a></p>
+                <div class="bottom-dots_psy">
+                    <div class="dot3_psy"></div>
+                    <div class="dot4_psy"></div>
+                </div>
+    
+            </div>  
         </div>
-
-        <div class="camera-body_psy" >  
-            <h1 class="title_psy">Pictory</h1>
-            <div class="top-dots_psy">
-                <div class="dot1_psy"></div>
-                <div class="dot2_psy"></div>
-            </div>
-
-            <div class="flash_psy">
-                <img src="{% static "images/flash.png" %}" alt="카메라 플래쉬">
-            </div>
-            <div class="camera-line_psy"></div>
-
-            <div class="lens_psy"></div>
-            <form class="signup-form_psy">
-                <input type="text" class="input-field_psy" placeholder="아이디">
-                <input type="password" class="input-field_psy" placeholder="비밀번호">
-                <input type="password" class="input-field_psy" placeholder="비밀번호 재확인">
-                <button type="submit" class="signup-button_psy">회원가입</button>
-            </form>
-          <p class="login-text_psy">이미 계정이 있으신가요? <a href="#" class="login-link_psy">로그인</a></p>
-            <div class="bottom-dots_psy">
-                <div class="dot3_psy"></div>
-                <div class="dot4_psy"></div>
-            </div>
-
-        </div>  
     </div>
+    
 
 </body>
 </html>
