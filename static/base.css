@@ -101,10 +101,13 @@
     margin-left: 312px;
     height: 100%;
 }
+
 .base_header_ksy {
     left: 50%;
     position: fixed;
     margin-top: 15px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
 }
+    
