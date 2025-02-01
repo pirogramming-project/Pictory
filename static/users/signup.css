@@ -17,82 +17,85 @@
 /* 카메라 이미지 배경 */
 .camera-img_psy {
     display: block;
-    height: 75%;
-    width: 75%;
-    padding: 4%;
+    height: 65%;
+    width: 65%;
+    padding: 3%;
 }
 
 /* 카메라 셔터 버튼 */
 .shutters_psy {
     position: absolute;
     display: flex;
-    top: 2.5%;
-    left: 69%;
+    top: 2%;
+    left: 67%;
     flex-direction: column;
     align-items: center;
 }
 
 .shutter1_psy{
     position: relative;
-    width: 33px;
-    height: 13px;
+    width: 28px;
+    height: 11px;
     background: var(--font_color);
-
 }
+
 .shutter2_psy {
     position: relative;
-    width: 50px;
-    height: 17px;
+    width: 45px;
+    height: 15px;
     background: #DAE6F8;
 }
+
 /* 제목 */
 .title_psy{
     position: relative;
     font-family: 'GangwonEduSaeeum';
     font-style: normal;
     font-weight: 400;
-    font-size: 6rem;
+    font-size: 5rem;
     color: var(--font_color);
-    padding-left: 10%;
+    padding-left: 8%;
 }
-/* 상단 점들들 */
+
+/* 상단 점들 */
 .top-dots_psy{
     position: absolute;
     display: flex;
     flex-direction: column;
     background: #ffffff;
     opacity: 0.5;
-    gap: 0.5rem;
+    gap: 0.4rem;
     box-shadow: inset 0px 4px 4px #1E3269, inset 0px -2px 4px #1E3269;
     border-radius: 2rem;
     align-items: center;
     justify-content: center;
-    width: 5%;
-    height: 50%;
-    top: 45%;
-    left: 26%;
+    width: 4%;
+    height: 45%;
+    top: 42%;
+    left: 27%;
 }
 
-.dot1_psy, .dot2_psy
-{
+.dot1_psy, .dot2_psy {
     position: relative;
     width: 50%;
     border-radius: 50%;
-    padding: 1.25rem 0;
+    padding: 1rem 0;
 }
+
 .dot1_psy {
     background-color: #739BE1;
 }
+
 .dot2_psy {
     background-color: #557DE1;
 }
 
-.camera-line_psy{ 
+.camera-line_psy{
     position: absolute;
-    width: 72%;
-    height: 28%;
-    top: 115%;
-    left: 19.5%;
+    width: 68%;
+    height: 25%;
+    top: 110%;
+    left: 21%;
     background: #9BC3FF;
     opacity: 0.8;
     z-index: -1;
@@ -101,18 +104,18 @@
 /* 플래시 부분 */
 .flash_psy {
     position: absolute;
-    top: 55%;
-    left: 70%;
+    top: 52%;
+    left: 68%;
     border-radius: 3px;
-    transform: scale(0.6);
+    transform: scale(0.5);
 }
 
 .camera-body_psy {
     position: absolute;
-    top: 4%;
+    top: 3%;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 75%;
     text-align: center;
 }
 
@@ -121,12 +124,11 @@
     position: absolute;
     background-color: #DDEAFE;
     border-radius: 50%;
-    width: 50%;
-    height: 328%;
-    left: 30%;
+    width: 48%;
+    height: 331%;
+    left: 32%;
     z-index: 1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25);
-    
 }
 
 /* 회원가입 폼 */
@@ -134,22 +136,21 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    top: 205%;
-    left: 38%;
-    width: 35%;
+    gap: 8px;
+    top: 195%;
+    left: 40%;
+    width: 32%;
     z-index: 2;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 /* 입력 필드 */
 .input-field_psy {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 0px -2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-
 }
 
 /* 회원가입 버튼 */
@@ -157,7 +158,7 @@
     background-color: #9BC3FF;
     width: 100%;
     color: white;
-    padding: 10px;
+    padding: 8px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -170,12 +171,12 @@
 
 .login-text_psy {
     position: absolute;
-    margin-top: 10px;
-    font-size: 1.5rem;
+    margin-top: 8px;
+    font-size: 1.3rem;
     width: 100%;
     z-index: 2;
-    top: 340%;
-    left: 6%;
+    top: 330%;
+    left: 5%;
     color: #1E3269;
 }
 
@@ -191,23 +192,23 @@
 /* 하단 점들 */
 .bottom-dots_psy {
     position: absolute;
-    left: 80%;
-    top: 405%;
+    left: 79%;
+    top: 415%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .dot3_psy{
     background-color: #ffffff;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 }
 
 .dot4_psy {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: #1E3269;
     opacity: 0.6;
     border-radius: 50%;
