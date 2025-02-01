@@ -4,6 +4,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
 from datetime import date
 
+
+# 인생네컷 추가 페이지3
+def custom_photo(request):
+    return render(request, 'diaries/custom_photo.html')
+
+
 # 인생네컷 추가 페이지4
 @login_required
 def create_diary(request):

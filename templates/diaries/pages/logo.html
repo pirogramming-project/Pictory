@@ -1,8 +1,26 @@
 <h3>로고를 작성해주세요</h3>
-<input type="text" id="logoText_psy" placeholder="로고 입력">
-<button onclick="applyLogo_psy()">완료</button>
+<input type="text" id="logoText_psy" value="pictory" placeholder="로고 입력">
+<button onclick="resetCustomizeField_kes()">완료</button>
 
 <script>
+    const logoText_kes = document.getElementById("logoText_psy");
+    const pictoryFrame_kes = document.getElementById("pictory-frame_psy");
+    logoText_kes.addEventListener("input", () => {
+        if (!logoText_kes.value) {
+            const logoP = document.querySelector(".custom-logo_psy");
+            if (logoP) {
+                logoP.remove();
+            }
+        } else {
+            let logoP = document.querySelector(".custom-logo_psy");
+            if (!logoP) {
+                logoP = document.createElement('p');
+                logoP.className = "custom-logo_psy";
+                pictoryFrame_kes.appendChild(logoP);
+            }
+            logoP.textContent = logoText_kes.value;
+        }
+    });
     function applyLogo_psy() {
         let logoText_psy = document.getElementById("logoText_psy").value;
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
