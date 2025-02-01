@@ -1,0 +1,15 @@
+<h3>색상 선택</h3>
+<input type="color" id="borderColorPicker_psy">
+<p>투명도 조절</p>
+<input type="range" min="0" max="100" id="opacitySlider_psy">
+<p>그라데이션 선택</p>
+<input type="color" id="gradientPicker_psy">
+<button onclick="applyColor_psy()">완료</button>
+
+<script>
+    function applyColor_psy() {
+        let color_psy = document.getElementById("borderColorPicker_psy").value;
+        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        pictoryFrame_psy.style.borderColor = color_psy;
+    }
+</script>
