@@ -16,7 +16,6 @@
     padding: 40px 0; 
 }
 
-
 .calendar_psy {
     background: white;
     padding: 15px; 
@@ -28,7 +27,6 @@
     width: 500px; 
     margin: 0 auto; 
 }
-
 
 .month_psy {
     display: flex;
@@ -49,7 +47,6 @@
     font-weight: bold;
 }
 
-
 .weekdays_psy {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -60,7 +57,6 @@
     font-family: 'GangwonEduSaeeum';
 }
 
-
 .days_psy {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -69,11 +65,9 @@
     position: relative;
 }
 
-
 .empty {
     visibility: hidden;
 }
-
 
 .day_psy {
     width: 30px; 
@@ -100,14 +94,12 @@
     border-radius: 50%;
 }
 
-
 .cloud-icon {
     position: absolute;
     width: 20px; 
     height: 20px;
     display: none;
 }
-
 
 .day_psy:hover::before {
     content: "";
