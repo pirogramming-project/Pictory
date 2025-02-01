@@ -50,8 +50,8 @@
 /* 햄버거 메뉴 버튼 */
 .base_menu-button_ksy {
     position: absolute; 
-    left: 20px; /* 왼쪽에서 20px 떨어지게 */
-    top: 35px; /* 상단에서의 거리 조정 */
+    left: 20px; 
+    top: 35px; 
     display: flex;
     flex-direction: column;
     gap: 6px;
