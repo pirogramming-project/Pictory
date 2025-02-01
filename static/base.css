@@ -1,113 +1,176 @@
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-.base_body_ksy {
-    height: 100dvh;
+* {
     margin: 0;
-    background: #F9FFFF;
-    display: flex;
-    flex-direction: column;
-}
-.base_aside_ksy {
-    width: 18%;
-    height: 100vh; 
-    position: fixed;
-    border: 1px solid #EBF5FF;
-    background: rgba(235, 245, 255, 0.40);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-}
-.base_profile_ksy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1vh; 
-    margin: 2vh;
-    height: 20vh; 
-    min-height: 120px; 
-    flex-shrink: 0; 
-}
-.base_profile_img_ksy {
-    background-color: #DAE6F8;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    height: 80%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    display: flex;
-    object-fit: cover;
-}
-.base_logout_ksy {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    color: #78A9ED;
-    font-size: 2.8rem;
-    cursor: pointer;
-}
-.base_sideButton_ksy {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; 
-    align-items: center;
-    flex-grow: 1; 
-    height: 100%;
-    padding-bottom: 10px;
-}
-.base_buttonMy_ksy, .base_buttonAlarm_ksy, .base_buttonMap_ksy, .base_buttonPhoto_ksy, .base_buttonCommunity_ksy, .base_buttonFriend_ksy {
-    width: 90%;
-    height: calc(80vh / 8); 
-    min-height: 50px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1vh;
-    cursor: pointer;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20), 0px 2px 4px 0px rgba(0, 0, 0, 0.20) inset;
-}
-.base_buttonMy_ksy {
-    border-radius: 20px;
-    background: #F9FFFF;    
-}
-.base_buttonAlarm_ksy {
-    border-radius: 20px;
-    background: #EBF5FF;
-}
-.base_buttonMap_ksy {
-    border-radius: 20px;
-    background: rgba(224, 235, 255, 0.50);
-}
-.base_buttonPhoto_ksy {
-    border-radius: 20px;
-    background: rgba(204, 225, 255, 0.50);
-}
-.base_buttonCommunity_ksy {
-    border-radius: 20px;
-    background: rgba(174, 205, 255, 0.50);
-}
-.base_buttonFriend_ksy {
-    border-radius: 20px;
-    background: rgba(164, 195, 255, 0.50);
-}
-.base_button_letter_ksy {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    font-size: 1.5vw; 
-    color: #1E3269;
-    margin: 0;
-}
-.base_main_ksy {
-    margin-left: 312px;
-    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.base_header_ksy {
-    left: 50%;
-    position: fixed;
-    margin-top: 15px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: center;
+.base_body_ksy {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
-    
+
+.base_layout_ksy {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+.base_side-area_ksy {
+    background-color: white;
+    flex-grow: 1;
+    height: 100vh;
+}
+
+/* 파란색 내부 영역 */
+.base_content-area_ksy {
+    width: 900px;
+    height: 100vh;
+    background-color: #EBF5FF;
+    flex-shrink: 0;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 5;
+}
+
+/* 헤더 */
+.base_header_ksy {
+    height: 100px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* 햄버거 버튼 */
+.base_menu-button_ksy {
+    display: flex; 
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 20;
+}
+
+.base_menu-button_ksy span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: #333;
+    transition: 0.3s;
+}
+
+/* X 버튼 */
+.base_close-button_ksy {
+    position: relative;
+    bottom: 27%;
+    left: 22%;
+    display: none;
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: #1E3269;
+    z-index: 20;
+}
+
+/* 로고 중앙 정렬 */
+.base_logo_ksy {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.base_logo_ksy img {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+/* 콘텐츠 스크롤 영역 */
+.base_content-scroll_ksy {
+    flex: 1;
+    padding: 20px;
+    height: calc(100vh - 100px);
+}
+
+/* 사이드바 (초기 숨김) */
+.base_side-nav_ksy {
+    display: none;
+    width: 250px;
+    height: 100vh;
+    background-color: #EBF5FF;
+    position: absolute;
+    top: 0;
+    left: -250px; /* 처음에는 숨김 */
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+/* 사이드바 활성화 시 */
+.base_side-nav_ksy.base_active_ksy {
+    left: 0;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 프로필 이미지 */
+.base_profile_ksy {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.base_profile-image_ksy {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+/* 로그아웃 텍스트 */
+.base_logout_ksy {
+    color: #1E3269;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* 메뉴 항목 스타일 */
+.base_menu-item_ksy {
+    width: 80%;
+    background-color: white;
+    border: none;
+    font-size: 18px;
+    padding: 15px;
+    margin: 5px 0;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1E3269;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.base_menu-item_ksy:hover {
+    background-color: #D0E8FF;
+}
