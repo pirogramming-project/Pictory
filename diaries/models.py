@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from datetime import date
 
 ########### 사진 관련 모델들 ###########
 class Frame(models.Model):
@@ -32,11 +32,20 @@ class EmotionRating(models.IntegerChoices):
     SEVEN = 7, "7점"
 
 class Diary(models.Model):
+    WEATHER_CHOICES = [
+        ('sunny', '맑음'),
+        ('partly_cloudy', '구름많음'),
+        ('cloudy', '흐림'),
+        ('rainy', '비'),
+        ('snowy', '눈'),
+        ('windy', '바람'),
+    ]
+    
     title = models.CharField("제목", max_length=40)
     writer = models.ForeignKey(User, models.CASCADE, verbose_name="작성자", related_name="wirte_diaries")
-    date = models.DateField("날짜")
+    date = models.DateField("날짜", default=date.today)
     four_cut_photo = models.OneToOneField(Frame, models.CASCADE)
-    # weather = "맑음", "흐림", "d/"/
+    weather = models.CharField("날씨", max_length=20, choices=WEATHER_CHOICES, default='sunny')  # 기본값 '맑음'
     place = models.CharField("장소", max_length=40)
     emotion = models.IntegerField("감정지수", choices=EmotionRating.choices)
     # 태그들은 역참조 tags 이용
@@ -49,11 +58,15 @@ class Diary(models.Model):
     likers = models.ManyToManyField(User, through='Like', related_name='liked_diaries')
     comments = models.ManyToManyField(User, through='Comment', related_name='commented_diaries')
 
-    
+    def __str__(self):
+        return f'{self.date}({self.writer})'
     
 class Tag(models.Model):
     diary = models.ForeignKey(Diary, models.CASCADE,verbose_name="일기", related_name="tags")
     name = models.CharField("태그명", max_length=10)
+    
+    def __str__(self):
+        return f'{self.name}({self.diary})'
     
 class User_Tag(models.Model):
     diary = models.ForeignKey(Diary, models.CASCADE, related_name="tagged_diaries")
