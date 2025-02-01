@@ -89,11 +89,16 @@
                 <div class="create_diary_third_ksy">
                     <div class="create_diary_third_title_ksy">
                         <h1 class="create_diary_letter_ksy">게시물 태그</h1>
-                        <input type="text" name="create_diary_post" placeholder="#으로 태그해주세요" class="create_diary_content_ksy" required>
+                        <input type="text" name="create_diary_post" placeholder="#으로 구분해서 태그를 추가하세요" class="create_diary_content_ksy" required>
                     </div>
                     <div class="create_diary_third_title_ksy">
                         <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                        <input type="text" name="create_diary_friend" placeholder="@으로 태그해주세요" class="create_diary_content_ksy" required>
+                            {% for checkbox in form.user_tags %}
+                                <div class="create_diary_usertag_item_kes">
+                                    {{ checkbox.tag }}
+                                    <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                </div>
+                            {% endfor %}
                     </div>
                 </div>
             

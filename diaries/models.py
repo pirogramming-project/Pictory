@@ -58,11 +58,15 @@ class Diary(models.Model):
     likers = models.ManyToManyField(User, through='Like', related_name='liked_diaries')
     comments = models.ManyToManyField(User, through='Comment', related_name='commented_diaries')
 
-    
+    def __str__(self):
+        return f'{self.date}({self.writer})'
     
 class Tag(models.Model):
     diary = models.ForeignKey(Diary, models.CASCADE,verbose_name="일기", related_name="tags")
     name = models.CharField("태그명", max_length=10)
+    
+    def __str__(self):
+        return f'{self.name}({self.diary})'
     
 class User_Tag(models.Model):
     diary = models.ForeignKey(Diary, models.CASCADE, related_name="tagged_diaries")
