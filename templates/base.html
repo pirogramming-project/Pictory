@@ -2,80 +2,80 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Pictory{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'base.css' %}">
-  {% block extra_css %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pictory{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body class="base_body_ksy">
-  <div class="base_layout_ksy">
-    <div></div>
-    <div class="base_content-area_ksy">
-      <header class="base_header_ksy">
-        <!-- 햄버거 버튼 -->
-        <button class="base_menu-button_ksy" id="base_menuButton_ksy">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <div class="base_logo_ksy">
-          <img src="{% static 'images/pictoryLogo.png' %}" alt="Pictory">
+    <div class="base_layout_ksy">
+        <div></div>
+        <div class="base_content-area_ksy">
+            <header class="base_header_ksy">
+                <!-- 햄버거 버튼 -->
+                <button class="base_menu-button_ksy" id="base_menuButton_ksy">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="base_logo_ksy">
+                    <img src="{% static 'images/pictoryLogo.png' %}" alt="Pictory">
+                </div>
+            </header>
+
+            <!-- 사이드바 -->
+            <div class="base_side-nav_ksy" id="base_sidebar_ksy">
+                <!-- X 버튼을 사이드바 내부로 이동 -->
+                <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
+                <div class="base_profile_ksy">
+                    <div class="base_profile-image_ksy"></div>
+                    <form action="{% url 'users:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="base_logout_ksy">로그아웃</button>
+                    </form>
+                </div>
+                <button class="base_menu-item_ksy">MY</button>
+                <button class="base_menu-item_ksy">알림</button>
+                <button class="base_menu-item_ksy">지도</button>
+                <button class="base_menu-item_ksy">인생네컷 만들기</button>
+                <button class="base_menu-item_ksy">community</button>
+                <button class="base_menu-item_ksy">친구 요청 보내기</button>
+            </div>
+
+            <div class="base_content-scroll_ksy">
+                {% block content %}{% endblock %}
+            </div>
         </div>
-        <!-- X 버튼 (초기 숨김) -->
-        <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
-      </header>
-      <!-- 사이드바 (초기 숨김) -->
-      <div class="base_side-nav_ksy" id="base_sidebar_ksy">
-        <div class="base_profile_ksy">
-          <div class="base_profile-image_ksy"></div>
-          <form action="{% url 'users:logout' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="base_logout_ksy">로그아웃</button>
-           </form>
-        </div>
-        <button class="base_menu-item_ksy"><i class="base_icon-user_ksy"></i> MY</button>
-        <button class="base_menu-item_ksy"><i class="base_icon-bell_ksy"></i> 알림</button>
-        <button class="base_menu-item_ksy"><i class="base_icon-map_ksy"></i> 지도</button>
-        <button class="base_menu-item_ksy"><i class="base_icon-camera_ksy"></i> 인생네컷 만들기</button>
-        <button class="base_menu-item_ksy"><i class="base_icon-community_ksy"></i> community</button>
-        <button class="base_menu-item_ksy"><i class="base_icon-friend_ksy"></i> 친구 요청 보내기</button>
-      </div>
-      <div class="base_content-scroll_ksy">
-        {% block content %}{% endblock %}
-      </div>
+        <div></div>
     </div>
-  </div>
-  <div></div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const base_menuButton_ksy = document.getElementById("base_menuButton_ksy");
-        const base_closeButton_ksy = document.getElementById("base_closeButton_ksy");
-        const base_sidebar_ksy = document.getElementById("base_sidebar_ksy");
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const menuButton = document.getElementById("base_menuButton_ksy");
+          const closeButton = document.getElementById("base_closeButton_ksy");
+          const sidebar = document.getElementById("base_sidebar_ksy");
+          
+          // 햄버거 메뉴 클릭 시
+          menuButton.addEventListener("click", function () {
+              menuButton.style.display = "none"; // 햄버거 버튼 즉시 숨기기
+              sidebar.style.display = "flex";
+              closeButton.style.display = "block"; // X 버튼 즉시 표시
+              requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); // 더 빠른 애니메이션을 위해 requestAnimationFrame 사용
+          });
+          
+          // X 버튼 클릭 시
+          closeButton.addEventListener("click", function () {
+              sidebar.classList.remove("base_active_ksy");
+              setTimeout(() => {
+                  sidebar.style.display = "none";
+                  closeButton.style.display = "none";
+                  menuButton.style.display = "flex"; 
+              }, 100); 
+          });
+      });
+    </script>
 
-        // 초기에 사이드바와 X 버튼 숨기기
-        base_sidebar_ksy.style.display = "none";
-        base_closeButton_ksy.style.display = "none";
-
-        base_menuButton_ksy.addEventListener("click", function () {
-            base_menuButton_ksy.style.display = "none"; // 햄버거 버튼 숨기기
-            base_closeButton_ksy.style.display = "flex"; // X 버튼 표시
-            base_sidebar_ksy.style.display = "flex"; // 사이드바 표시
-            setTimeout(() => base_sidebar_ksy.classList.add("base_active_ksy"), 5); // 애니메이션 적용
-        });
-
-        base_closeButton_ksy.addEventListener("click", function () {
-            base_sidebar_ksy.classList.remove("base_active_ksy");
-            base_menuButton_ksy.style.display = "flex"; // 햄버거 버튼 즉시 표시
-            base_closeButton_ksy.style.display = "none"; // X 버튼 숨기기
-            setTimeout(() => {
-                base_sidebar_ksy.style.display = "none"; // 애니메이션 후 사이드바 숨김
-            }, 300);
-        });
-    });
-  </script>
-
-  {% block extra_js %}{% endblock %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

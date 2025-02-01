@@ -10,7 +10,7 @@
     min-height: 100vh;
 }
 
-/* 💡 CSS Grid로 화면 중앙 정렬 */
+/* 화면 중앙 정렬을 위한 그리드 레이아웃 */
 .base_layout_ksy {
     display: grid;
     grid-template-columns: 1fr 2.5fr 1fr;
@@ -21,7 +21,7 @@
     left: 0;
 }
 
-/* 💡 파란색 내부 영역 - 중앙 배치 및 크기 유지 */
+/* 파란색 중앙 컨텐츠 영역 */
 .base_content-area_ksy {
     width: 100%;
     background-color: #EBF5FF;
@@ -31,10 +31,12 @@
     display: flex;
     flex-direction: column;
     z-index: 5;
-    margin: auto; /* 가로 정렬 */
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 
-/* 💡 헤더 */
+/* 헤더 영역 */
 .base_header_ksy {
     height: 100px;
     padding: 0 20px;
@@ -45,11 +47,12 @@
     flex-shrink: 0;
 }
 
-/* 💡 햄버거 버튼 */
+/* 햄버거 메뉴 버튼 */
 .base_menu-button_ksy {
-    right: 125px;
-    position: relative;
-    display: flex; 
+    position: absolute; 
+    left: 20px; /* 왼쪽에서 20px 떨어지게 */
+    top: 35px; /* 상단에서의 거리 조정 */
+    display: flex;
     flex-direction: column;
     gap: 6px;
     background: none;
@@ -67,36 +70,35 @@
     transition: 0.3s;
 }
 
-/* 💡 X 버튼 */
+/* X(닫기) 버튼 */
 .base_close-button_ksy {
-    position: relative;
-    bottom: 27%;
-    left: 22%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     display: none;
     background: none;
     border: none;
-    font-size: 32px;
+    font-size: 24px;
     cursor: pointer;
     color: #1E3269;
     z-index: 20;
 }
 
-
-
+/* 로고 이미지 */
 .base_logo_ksy img {
     height: 80px;
     width: auto;
     display: block;
 }
 
-/* 💡 콘텐츠 스크롤 영역 */
+/* 스크롤 가능한 컨텐츠 영역 */
 .base_content-scroll_ksy {
     flex: 1;
     padding: 20px;
     height: calc(100vh - 100px);
 }
 
-/* 💡 사이드바 (초기 숨김) */
+/* 사이드바 기본 스타일 */
 .base_side-nav_ksy {
     display: none;
     width: 250px;
@@ -104,30 +106,31 @@
     background-color: #EBF5FF;
     position: absolute;
     top: 0;
-    left: -250px;
+    left: 0;
     z-index: 15;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
+    padding-top: 40px;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-250px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* 💡 사이드바 활성화 시 */
+/* 사이드바 활성화 상태 */
 .base_side-nav_ksy.base_active_ksy {
-    left: 0;
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
 }
 
-/* 💡 프로필 이미지 */
+/* 프로필 영역 */
 .base_profile_ksy {
     text-align: center;
     margin-bottom: 20px;
 }
 
+/* 프로필 이미지 */
 .base_profile-image_ksy {
     width: 100px;
     height: 100px;
@@ -135,14 +138,14 @@
     background-color: #ccc;
 }
 
-/* 💡 로그아웃 버튼 */
+/* 로그아웃 버튼 */
 .base_logout_ksy {
     color: #1E3269;
     font-size: 14px;
     margin-top: 10px;
 }
 
-/* 💡 메뉴 항목 스타일 */
+/* 메뉴 아이템 스타일 */
 .base_menu-item_ksy {
     width: 80%;
     background-color: white;
@@ -160,6 +163,7 @@
     transition: 0.2s;
 }
 
+/* 메뉴 아이템 호버 효과 */
 .base_menu-item_ksy:hover {
     background-color: #D0E8FF;
 }
