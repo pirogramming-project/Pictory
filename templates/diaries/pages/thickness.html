@@ -1,8 +1,13 @@
 <h3>두께 조정</h3>
-<input type="range" min="1" max="10" id="thicknessSlider_psy">
-<button onclick="applyThickness_psy()">완료</button>
+<input type="range" id="thicknessSlider_psy">
+<button onclick="resetCustomizeField_kes()">완료</button>
 
-<script>
+<script defer>
+    const thicknessSlider_kes = document.getElementById("thicknessSlider_psy");
+    thicknessSlider_kes.addEventListener("input", () => {
+        pictoryFrame_kes.style.borderWidth = (thicknessSlider_kes.value / 10) + "px";
+        pictoryFrame_kes.style.gap = (thicknessSlider_kes.value / 10) + "px";
+    });
     function applyThickness_psy() {
         let thickness_psy = document.getElementById("thicknessSlider_psy").value;
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");

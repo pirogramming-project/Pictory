@@ -1,3 +1,13 @@
+.create_diary_container_ksy {
+    display: flex;
+}
+.create_diary_left_container_ksy {
+    flex: 1;
+}
+.create_diary_right_container_ksy {
+    flex: 1;
+}
+
 /* 이 파일 제가 테스트하려고 추가한 거라 나중에 프론트에 맞게 싹 다 지우셔도 무방합니다 */
 .create_diary_letter_ksy {
     color: black;
