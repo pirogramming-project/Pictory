@@ -2,47 +2,64 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8fbfd; 
 }
 
 .photo-type_psy {
     display: flex;
-    gap: 15px;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: 8%; 
+    width: 80%; 
 }
 
 .cloud-btn_psy {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+    width: 100%;
+}
+
+.cloud-btn1_psy, .cloud-btn2_psy {
     position: relative;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 100px;
-    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%; 
+    height: 18%;
+    min-width: 200px;
+    min-height: 140px;
+}
+
+.cloud-btn1_psy svg, .cloud-btn2_psy svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    transform: scale(2.0);
 }
 
 .cloud-btn1_psy svg {
-    width: 100px;
-    height: 70px;
     fill: #D7F1FA;
-    transition: fill 0.3s ease;
 }
 
-.cloud-btn1_psy svg {
-    width: 100px;
-    height: 70px;
+.cloud-btn2_psy svg {
     fill: #E1F6FA;
-    transition: fill 0.3s ease;
 }
 
 .cloud-text {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
+    font-size: 3.5rem;
     font-weight: bold;
-    color: white;
+    color: #1E3269;
     text-align: center;
+    line-height: 1.4;
     pointer-events: none;
+    white-space: nowrap;
+    font-family: 'GangwonEduSaeeum';
 }

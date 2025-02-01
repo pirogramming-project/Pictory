@@ -1,0 +1,17 @@
+<h3>스티커 선택</h3>
+<img src="../assets/stickers/sticker1.png" class="sticker_psy" onclick="addSticker_psy(this)">
+<img src="../assets/stickers/sticker2.png" class="sticker_psy" onclick="addSticker_psy(this)">
+<img src="../assets/stickers/sticker3.png" class="sticker_psy" onclick="addSticker_psy(this)">
+
+<script>
+    function addSticker_psy(sticker_psy) {
+        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        let newSticker_psy = document.createElement("img");
+        newSticker_psy.src = sticker_psy.src;
+        newSticker_psy.style.position = "absolute";
+        newSticker_psy.style.width = "50px";
+        newSticker_psy.style.left = "20px";
+        newSticker_psy.style.top = "20px";
+        pictoryFrame_psy.appendChild(newSticker_psy);
+    }
+</script>

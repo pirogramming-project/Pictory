@@ -1,0 +1,11 @@
+<h3>로고를 작성해주세요</h3>
+<input type="text" id="logoText_psy" placeholder="로고 입력">
+<button onclick="applyLogo_psy()">완료</button>
+
+<script>
+    function applyLogo_psy() {
+        let logoText_psy = document.getElementById("logoText_psy").value;
+        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        pictoryFrame_psy.innerHTML += `<p class="custom-logo_psy">${logoText_psy}</p>`;
+    }
+</script>

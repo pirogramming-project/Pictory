@@ -29,7 +29,10 @@
       <div class="base_side-nav_ksy" id="base_sidebar_ksy">
         <div class="base_profile_ksy">
           <div class="base_profile-image_ksy"></div>
-          <p class="base_logout_ksy">로그아웃</p>
+          <form action="{% url 'users:logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="base_logout_ksy">로그아웃</button>
+           </form>
         </div>
         <button class="base_menu-item_ksy"><i class="base_icon-user_ksy"></i> MY</button>
         <button class="base_menu-item_ksy"><i class="base_icon-bell_ksy"></i> 알림</button>

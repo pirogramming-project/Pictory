@@ -6,30 +6,68 @@
 {% endblock %}
 
 {% block content %}
-<div class="custom-photo_psy">
-    <div class="image-container_psy">
+<body>
+
+    <div class="container_psy">
         <div id="pictory-frame_psy">
-            <div class="image-slot1_psy"><button class="img-plus-btn_psy">+</button></div>
-            <div class="image-slot2_psy"><button class="img-plus-btn_psy">+</button></div>
-            <div class="image-slot3_psy"><button class="img-plus-btn_psy">+</button></div>
-            <div class="image-slot4_psy"><button class="img-plus-btn_psy">+</button></div>
+            <div class="image-slot_psy" onclick="uploadImage_psy(0)"><span>+</span></div>
+            <div class="image-slot_psy" onclick="uploadImage_psy(1)"><span>+</span></div>
+            <div class="image-slot_psy" onclick="uploadImage_psy(2)"><span>+</span></div>
+            <div class="image-slot_psy" onclick="uploadImage_psy(3)"><span>+</span></div>
         </div>
 
-        <input type="file" id="imageInput_psy" accept="image/*" style="display: none;" onchange="previewImage(event)">
-
-        <div class="custom-btns_psy">
-            <button class="color-btn_psy">색깔</button>
-            <button class="logo-btn_psy">로고 수정</button>
-            <button class="bold-btn_psy">두께</button>
-            <button class="sticker-btn_psy">스티커</button>
+        <div class="custom-buttons_psy">
+            <button class="cloud-btn_psy" data-page_psy="color">색깔</button>
+            <button class="cloud-btn_psy" data-page_psy="logo">로고 수정</button>
+            <button class="cloud-btn_psy" data-page_psy="thickness">두께</button>
+            <button class="cloud-btn_psy" data-page_psy="sticker">스티커</button>
         </div>
 
-        <div class="save-btn_psy">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-            </svg>
-        </div>
+        <!-- AJAX로 불러올 내용을 표시할 영역 -->
+        <div id="customization-area_psy"></div>
     </div>
-</div>
+
+    <input type="file" id="imageInput_psy" accept="image/*" style="display: none;" onchange="previewImage_psy(event)">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".cloud-btn_psy").forEach(button_psy => {
+                button_psy.addEventListener("click", function () {
+                    let page_psy = this.getAttribute("data-page_psy");
+                    loadCustomizationPage_psy(page_psy);
+                });
+            });
+        });
+
+        function loadCustomizationPage_psy(page_psy) {
+            let xhr_psy = new XMLHttpRequest();
+            xhr_psy.open("GET", "/diaries/pages/" + page_psy + ".html", true);
+            xhr_psy.onreadystatechange = function () {
+                if (xhr_psy.readyState === 4 && xhr_psy.status === 200) {
+                    document.getElementById("customization-area_psy").innerHTML = xhr_psy.responseText;
+                    document.getElementById("customization-area_psy").style.display = "block";
+                }
+            };
+            xhr_psy.send();
+        }
+
+        function uploadImage_psy(slotIndex_psy) {
+            selectedSlot_psy = slotIndex_psy;
+            document.getElementById("imageInput_psy").click();
+        }
+
+        function previewImage_psy(event) {
+            let files_psy = event.target.files;
+            if (files_psy.length > 0 && selectedSlot_psy !== null) {
+                let reader_psy = new FileReader();
+                reader_psy.onload = function(e_psy) {
+                    let imageSlots_psy = document.querySelectorAll(".image-slot_psy");
+                    imageSlots_psy[selectedSlot_psy].innerHTML = `<img src="${e_psy.target.result}" style="width:100%; height:100%; border-radius: 5px;">`;
+                };
+                reader_psy.readAsDataURL(files_psy[0]);
+            }
+        }
+    </script>
+
+</body>
 {% endblock %}
