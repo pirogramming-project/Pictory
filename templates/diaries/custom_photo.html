@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'diaries/custom_photo.css' %}">
 {% endblock %}
@@ -15,6 +14,7 @@
             <div class="image-slot_psy" onclick="uploadImage_psy(1)"><span>+</span></div>
             <div class="image-slot_psy" onclick="uploadImage_psy(2)"><span>+</span></div>
             <div class="image-slot_psy" onclick="uploadImage_psy(3)"><span>+</span></div>
+            <p class="custom-logo_psy">pictory</p>
         </div>
 
         <div class="custom-buttons_psy">
@@ -25,7 +25,20 @@
         </div>
 
         <!-- AJAX로 불러올 내용을 표시할 영역 -->
-        <div id="customization-area_psy"></div>
+        <div id="customization-area_psy">
+            <div id="customization-color_kes">
+                {% include "diaries/pages/color.html" %}
+            </div>
+            <div id="customization-logo_kes">
+                {% include "diaries/pages/logo.html" %}
+            </div>
+            <div id="customization-sticker_kes">
+                {% include "diaries/pages/sticker.html" %}
+            </div>
+            <div id="customization-thickness_kes">
+                {% include "diaries/pages/thickness.html" %}
+            </div>
+        </div>
     </div>
 
     <input type="file" id="imageInput_psy" accept="image/*" style="display: none;" onchange="previewImage_psy(event)">
@@ -35,21 +48,22 @@
             document.querySelectorAll(".cloud-btn_psy").forEach(button_psy => {
                 button_psy.addEventListener("click", function () {
                     let page_psy = this.getAttribute("data-page_psy");
-                    loadCustomizationPage_psy(page_psy);
+                    loadCustomizationPage_kes(page_psy);
                 });
             });
         });
 
-        function loadCustomizationPage_psy(page_psy) {
-            let xhr_psy = new XMLHttpRequest();
-            xhr_psy.open("GET", "/diaries/pages/" + page_psy + ".html", true);
-            xhr_psy.onreadystatechange = function () {
-                if (xhr_psy.readyState === 4 && xhr_psy.status === 200) {
-                    document.getElementById("customization-area_psy").innerHTML = xhr_psy.responseText;
-                    document.getElementById("customization-area_psy").style.display = "block";
+        function loadCustomizationPage_kes(page_option) {
+            const customizeAreaDiv = document.getElementById('customization-area_psy');
+            const selectedDiv = document.getElementById(`customization-${page_option}_kes`);
+            for(let i=0; i<customizeAreaDiv.children.length; i++) {
+                const targetDiv = customizeAreaDiv.children[i];
+                if (targetDiv === selectedDiv) {
+                    targetDiv.style.display = "block";
+                } else {
+                    targetDiv.style.display = "none";
                 }
-            };
-            xhr_psy.send();
+            }
         }
 
         function uploadImage_psy(slotIndex_psy) {
@@ -68,6 +82,11 @@
                 reader_psy.readAsDataURL(files_psy[0]);
             }
         }
+
+        function resetCustomizeField_kes() {
+            loadCustomizationPage_kes("");
+        }
+        resetCustomizeField_kes();
     </script>
 
 </body>
