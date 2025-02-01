@@ -1,79 +1,81 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'reset.css' %}">
-    <link rel="stylesheet" href="{%static 'global.css'%}"> 
-    <link rel="stylesheet" href="{%static 'base.css'%}"> 
-    {%block head%}
-    {% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}인생네컷{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+  {% block extra_css %}{% endblock %}
 </head>
 <body class="base_body_ksy">
-    <aside class="base_aside_ksy">
+  <div class="base_layout_ksy">
+    <div class="base_side-area_ksy base_left_ksy"></div>
+    <div class="base_content-area_ksy">
+      <header class="base_header_ksy">
+        <!-- 햄버거 버튼 -->
+        <button class="base_menu-button_ksy" id="base_menuButton_ksy">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <!-- X 버튼 (초기 숨김) -->
+        <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
+        <div class="base_logo_ksy">
+          <img src="{% static 'images/pictoryLogo.png' %}" alt="Pictory">
+        </div>
+      </header>
+      <!-- 사이드바 (초기 숨김) -->
+      <div class="base_side-nav_ksy" id="base_sidebar_ksy">
         <div class="base_profile_ksy">
-            <img class="base_profile_img_ksy">
-            <form action="{% url 'users:logout' %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="base_logout_ksy">로그아웃</button>
-            </form>
+          <div class="base_profile-image_ksy"></div>
+          <form action="{% url 'users:logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="base_logout_ksy">로그아웃</button>
+           </form>
         </div>
-        <div class="base_sideButton_ksy">
-            <button class="base_buttonMy_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#1E3269" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                </svg>
-                <p class="base_button_letter_ksy">MY</p>
-            </button>
-            <button class="base_buttonAlarm_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#1E3269" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
-                </svg>
-                <p class="base_button_letter_ksy">알림</p>
-            </button>
-            <button class="base_buttonMap_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#1E3269" class="bi bi-pin-angle-fill" viewBox="0 0 16 16">
-                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
-                </svg>
-                <p class="base_button_letter_ksy">지도</p>
-            </button>
-            <button class="base_buttonCommunity_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#1E3269" class="bi bi-people-fill" viewBox="0 0 16 16">
-                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                </svg>
-                <p class="base_button_letter_ksy">community</p>
-            </button>
-            <button class="base_buttonPhoto_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#1E3269" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
-                </svg>
-                <p class="base_button_letter_ksy">인생네컷 만들기</p>
-            </button>
-            <button class="base_buttonFriend_ksy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#1E3269" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                </svg>
-                <p class="base_button_letter_ksy">이웃요청 보내기</p>
-            </button>
-        </div>
-    </aside>
-    <div class="base_main_ksy">
-        <header class="base_header_ksy">
-            <img src="{% static 'images/pictoryLogo.png'%}" alt="픽토리 로고">
-        </header>
-        
-        {%block content%}
-        
-    
-        {%endblock%}
+        <button class="base_menu-item_ksy"><i class="base_icon-user_ksy"></i> MY</button>
+        <button class="base_menu-item_ksy"><i class="base_icon-bell_ksy"></i> 알림</button>
+        <button class="base_menu-item_ksy"><i class="base_icon-map_ksy"></i> 지도</button>
+        <button class="base_menu-item_ksy"><i class="base_icon-camera_ksy"></i> 인생네컷 만들기</button>
+        <button class="base_menu-item_ksy"><i class="base_icon-community_ksy"></i> community</button>
+        <button class="base_menu-item_ksy"><i class="base_icon-friend_ksy"></i> 친구 요청 보내기</button>
+      </div>
+      <div class="base_content-scroll_ksy">
+        {% block content %}{% endblock %}
+      </div>
     </div>
-    
+    <div class="base_side-area_ksy base_right_ksy"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const base_menuButton_ksy = document.getElementById("base_menuButton_ksy");
+        const base_closeButton_ksy = document.getElementById("base_closeButton_ksy");
+        const base_sidebar_ksy = document.getElementById("base_sidebar_ksy");
+
+        // 초기에 사이드바와 X 버튼 숨기기
+        base_sidebar_ksy.style.display = "none";
+        base_closeButton_ksy.style.display = "none";
+
+        base_menuButton_ksy.addEventListener("click", function () {
+            base_menuButton_ksy.style.display = "none"; // 햄버거 버튼 숨기기
+            base_closeButton_ksy.style.display = "flex"; // X 버튼 표시
+            base_sidebar_ksy.style.display = "flex"; // 사이드바 표시
+            setTimeout(() => base_sidebar_ksy.classList.add("base_active_ksy"), 5); // 애니메이션 적용
+        });
+
+        base_closeButton_ksy.addEventListener("click", function () {
+            base_sidebar_ksy.classList.remove("base_active_ksy");
+            base_menuButton_ksy.style.display = "flex"; // 햄버거 버튼 즉시 표시
+            base_closeButton_ksy.style.display = "none"; // X 버튼 숨기기
+            setTimeout(() => {
+                base_sidebar_ksy.style.display = "none"; // 애니메이션 후 사이드바 숨김
+            }, 300);
+        });
+    });
+  </script>
+
+  {% block extra_js %}{% endblock %}
 </body>
 </html>
-
-
-

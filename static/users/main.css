@@ -1,93 +1,87 @@
-/* 전체 캘린더를 화면 중앙에 정렬 */
+
 .calendar-wrapper_psy {
-    position: absolute;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100%;
-    min-width: 100%;
-    top: 20%;
-    left: 27%;
-    background: #e6f0fa;
-    transform: scale(0.8);
+    align-items: center; 
+    width: 100%;
+    min-height: calc(100vh - 100px); 
+    background: #EBF5FF;
+    overflow-y: auto; 
+    padding: 40px 0; 
 }
 
-/* 캘린더 컨테이너 */
+
 .calendar_psy {
     background: white;
-    padding: 20px;
+    padding: 15px; 
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
-    justify-content: center;
-    position: absolute;
-    min-height: 50dvh;
-    min-width: 90dvh;
-    top: 10%;
-    left: 18%;
     flex-direction: column;
+    width: 500px; 
+    margin: 0 auto; 
 }
 
-/* 월 타이틀 */
+
 .month_psy {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 4rem;
+    font-size: 1.5rem; 
+    margin-bottom: 10px;
+    font-family: 'GangwonEduSaeeum';
     font-weight: bold;
     color: #1E3269;
     text-transform: uppercase;
-    margin-bottom: 20px;
-    font-family: 'GangwonEduSaeeum';
 }
 
 .month_psy span {
     cursor: pointer;
     padding: 5px 10px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-/* 요일 스타일 */
+
 .weekdays_psy {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     background: #DAE6F8;
-    padding: 15px 0px;
-    font-size: 3rem;
+    padding: 10px 0;
+    font-size: 1.5rem; 
     color: #1E3269;
     font-family: 'GangwonEduSaeeum';
 }
 
-/* 날짜 스타일 */
+
 .days_psy {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 20px;
-    padding: 10px 0;
-    padding-left: 20px;
-    position: relative;  
+    gap: 10px; 
+    padding: 15px;
+    position: relative;
 }
 
-/* 빈칸 (공백) */
+
 .empty {
     visibility: hidden;
 }
 
-/* 날짜 기본 스타일 */
+
 .day_psy {
-    width: 40px;
-    height: 40px;
+    width: 30px; 
+    height: 30px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size:2.5rem;
+    font-size: 2rem; 
     cursor: pointer;
     font-family: 'GangwonEduSaeeum';
     color: #1E3269;
     position: relative;
     z-index: 2;
+    margin: 0 auto;
 }
 
 .day_psy span {
@@ -100,15 +94,15 @@
     border-radius: 50%;
 }
 
-/* 구름 아이콘 (기본적으로 숨김) */
+
 .cloud-icon {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 20px; 
+    height: 20px;
     display: none;
 }
 
-/* 마우스를 날짜 위에 올리면 구름 아이콘 표시 */
+
 .day_psy:hover::before {
     content: "";
     position: absolute;
