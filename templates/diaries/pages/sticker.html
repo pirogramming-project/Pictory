@@ -9,6 +9,7 @@
     function addSticker_psy(sticker_psy) {
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
         let newSticker_psy = document.createElement("img");
+        newSticker_psy.draggable="true"
         newSticker_psy.src = sticker_psy.src;
         newSticker_psy.style.position = "absolute";
         newSticker_psy.style.width = `${sticker_psy.offsetWidth}px`;
@@ -19,47 +20,39 @@
     }
 
     function addImageDragEventListeners_kes(draggableImg) {
-        let isDragging = false;
         let offsetX = 0, offsetY = 0;
-        const container = document.getElementById("pictory-frame_psy"); // 부모 div 가져오기
+        const container = document.getElementById("pictory-frame_psy");
 
-        function onMouseMove(e) {
-            if (!isDragging) return;
+        draggableImg.addEventListener("dragstart", (e) => {
+            offsetX = e.offsetX;
+            offsetY = e.offsetY;
+            e.dataTransfer.setData("text/plain", ""); // 기본 동작 방지용
+        });
 
-            // 가능한 영역계산
-            const parentWidth = container.offsetWidth - 2*Number(container.style.borderWidth.replace('px',''));
-            const parentHeight = container.offsetHeight - 2*Number(container.style.borderWidth.replace('px',''));;
+        draggableImg.addEventListener("drag", (e) => {
+            if (e.clientX === 0 && e.clientY === 0) return; // 드래그 종료 시 무시
+
+            const parentRect = container.getBoundingClientRect();
             const imgWidth = draggableImg.offsetWidth;
             const imgHeight = draggableImg.offsetHeight;
 
-            // 새로운 위치 계산
-            let newX = e.clientX - offsetX;
-            let newY = e.clientY - offsetY;
+            let newX = e.clientX - parentRect.left - offsetX;
+            let newY = e.clientY - parentRect.top - offsetY;
 
-            // 부모 영역 내에서만 이동하도록 제한
-            newX = Math.max(0, Math.min(newX, parentWidth - imgWidth));
-            newY = Math.max(0, Math.min(newY, parentHeight - imgHeight));
+            // 부모 영역 내에서만 이동
+            newX = Math.max(0, Math.min(newX, parentRect.width - imgWidth));
+            newY = Math.max(0, Math.min(newY, parentRect.height - imgHeight));
 
             draggableImg.style.left = `${newX}px`;
             draggableImg.style.top = `${newY}px`;
-        }
+        });
 
-        function onMouseUp() {
-            isDragging = false;
-            draggableImg.style.cursor = "grab";
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-        }
+        draggableImg.addEventListener("dragover", (e) => {
+            e.preventDefault(); // 기본 드래그 동작 방지
+        });
 
-        draggableImg.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            offsetX = e.clientX - draggableImg.offsetLeft;
-            offsetY = e.clientY - draggableImg.offsetTop;
-            draggableImg.style.cursor = "grabbing";
-
-            // document에서만 move/up 이벤트를 받아야 원활한 드래그 가능
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
+        draggableImg.addEventListener("drop", (e) => {
+            e.preventDefault();
         });
     }
 </script>
