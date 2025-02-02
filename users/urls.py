@@ -13,4 +13,6 @@ urlpatterns = [
     path('accounts/kakao/callback/', kakao_callback, name='login_kakao_callback'),
     path('logout/', logout_view, name='logout'),
     path('main/', main , name='main'),
+    path('profile/', profile, name='profile'),  
+    path('alarm/', alarm, name='alarm'), 
 ]
