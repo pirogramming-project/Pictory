@@ -12,7 +12,7 @@
         </div>
         <div class="create_diary_right_container_ksy">
             <div class="create_diary_button_ksy">
-                <button type="submit" class="create_button_save_ksy">
+                <button type="button" class="create_button_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
                         <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
                     </svg>
@@ -27,45 +27,56 @@
             </div>
             <div class="create_diary_first_ksy">
                 <div class="create_diary_first_title_ksy">
-                    <h1 class="create_diary_letter_ksy">Title</h1>
+                    <h1 class="create_diary_letter_ksy">{{ diary.title }}</h1>
                 </div>
                 <div class="create_diary_first_title_ksy">
-                    <h1 class="create_diary_letter_ksy">날짜</h1>
+                    <h1 class="create_diary_letter_ksy">{{ diary.date }}</h1>
                 </div>
             </div>
         
             <div class="create_diary_second_ksy">
                 <div class="create_diary_second_title_ksy">
                     <h1 class="create_diary_letter_ksy">날씨</h1>
+                    <span>{{ diary.get_weather_display }}</span>
                 </div>
                 <div class="create_diary_second_title_ksy">
                     <h1 class="create_diary_letter_ksy">감정</h1>
+                    <span>{{ diary.emotion }}점</span>
                 </div>
             </div>
         
             <div class="create_diary_third_ksy">
                 <div class="create_diary_third_title_ksy">
                     <h1 class="create_diary_letter_ksy">게시물 태그</h1>
-                    <input type="text" name="create_diary_post" placeholder="#으로 구분해서 태그를 추가하세요" class="create_diary_content_ksy" required>
+                    <div class="create_diary_content_ksy">
+                        {% for tag in diary.tags.all %}
+                            <span>#{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div class="create_diary_third_title_ksy">
                     <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                        <div class="create_diary_usertag_item_kes">
-                        </div>
-                        
+                    <div class="create_diary_usertag_item_kes">
+                        {% for user_tag in user_tags %}
+                            <span>@{{ user_tag.user.nickname }}</span>
+                        {% empty %}
+                            <span>태그된 친구가 없습니다.</span>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         
             <div class="create_diary_fourth_ksy">
                 <div class="create_diary_fourth_title_ksy">
                     <h1 class="create_diary_letter_ksy">장소</h1>
-                    <div class="create_diary_map_ksy"></div>
+                    <div class="create_diary_map_ksy">{{ diary.place }}</div>
                 </div>
             </div>
         
             <div class="create_diary_fifth_ksy">
+                <h1 class="create_diary_letter_ksy">일기 내용</h1>
+                <p>{{ diary.content }}</p>
             </div>
         </div>
-
     </div>
 {% endblock %}
