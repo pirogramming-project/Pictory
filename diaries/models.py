@@ -7,6 +7,7 @@ class Frame(models.Model):
     frame_css = models.TextField("프레임 css")
     # 스티커는 역참조 stickers로 접근.
     # 사진들도 역참조 photos로 접근
+    logo_text = models.CharField("로고 text", max_length=20, default='pictory')
     
 class Photo(models.Model):
     frame = models.ForeignKey(Frame, models.CASCADE, related_name="photos")
@@ -15,7 +16,11 @@ class Photo(models.Model):
 
 class Sticker(models.Model):
     frame = models.ForeignKey(Frame, models.CASCADE, related_name="stickers")
-    sticker_image = models.FilePathField("스티커 이미지")
+    sticker_image = models.FilePathField(
+        "스티커 이미지",    
+        path='static/images/stickers', 
+        match=r".*\.(png|jpg|jpeg|gif|webp|bmp|tiff)$", 
+        recursive=True)
     coor_x = models.FloatField("x좌표")
     coor_y = models.FloatField("y좌표")
     
