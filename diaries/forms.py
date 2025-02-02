@@ -4,7 +4,7 @@ from users.models import User
 
 class DiaryForm(forms.ModelForm):
     user_tags = forms.ModelMultipleChoiceField(
-        queryset=User.objects.all(),  # 전체 유저 중에서 선택 가능  TODO: 추후 친구 목록으로 수정
+        queryset=User.objects.none(),         # 전체 유저 중에서 선택 가능  TODO: 추후 친구 목록으로 수정
         widget=forms.CheckboxSelectMultiple,  # 여러 개 선택할 수 있도록 체크박스 UI 제공
         required=False
     )
@@ -60,3 +60,8 @@ class DiaryForm(forms.ModelForm):
                 }
             ),
         }
+    
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["user_tags"].queryset = User.objects.all()  # 실제 user 목록 설정 # TODO: 추후 전체 유저 말고 친구 목록에서 가져오도록 수정.
