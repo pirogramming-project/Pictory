@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% load static %}  
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'diaries/community.css' %}"> 
+{% endblock %}  
+
+{% block content %}     
+    <script>         
+        document.body.classList.add('community-page_ksy');     
+    </script>      
+
+    <div class="community-container_ksy">         
+        <!-- 검색 영역 -->         
+        <div class="community_search-container_ksy">             
+            <form class="community_search-form_ksy">                 
+                {% csrf_token %}                 
+                <input type="text" class="community_search-input_ksy" placeholder="#으로 검색해주세요" required>                 
+                <button type="submit" class="community_search-button-container_ksy">                     
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="community_search-button_ksy" viewBox="0 0 16 16">                         
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>                     
+                    </svg>                 
+                </button>             
+            </form>         
+        </div>          
+
+        <!-- 사진 그리드 -->         
+        <div class="community_photo-grid-container_ksy">             
+            <div class="community_photo-grid_ksy" id="photoGrid_ksy">                 
+                {% with ""|center:"10" as range_list %}
+                    {% for _ in range_list %}
+                        <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', 'Title', '#픽토리')">                         
+                            <img src="{% static 'images/pictory-frame2.png' %}" alt="Pictory">                     
+                        </div>
+                    {% endfor %}
+                {% endwith %}         
+            </div>         
+        </div>     
+    </div>      
+
+    <!-- 이미지 클릭시 확대 -->     
+    <div id="community_detailModal_ksy" class="community_detail-overlay_ksy">         
+        <div class="community_detail-container_ksy">             
+            <div class="community_detail-header_ksy">                 
+                <h1 class="community_detail-title_ksy" id="community_detailModalTitle_ksy"></h1>                 
+                <button class="community_detail-close_ksy" onclick="hideDetail_ksy()">&times;</button>             
+            </div>             
+            <div class="community_detail-content_ksy">                 
+                <div class="community_detail-image_ksy">                     
+                    <img id="community_detailModalImage_ksy" src="" alt="일기 이미지">                 
+                </div>             
+            </div>             
+            <div class="community_detail-footer_ksy">                 
+                <div class="community_detail-hashtags_ksy" id="community_detailModalTags_ksy"></div>             
+            </div>         
+        </div>     
+    </div>      
+
+    <script>         
+    function showDetail_ksy(image, title, tags) {             
+        document.body.classList.add('community_detail-page_ksy');             
+        const modal = document.getElementById('community_detailModal_ksy');             
+        const modalImage = document.getElementById('community_detailModalImage_ksy');             
+        const modalTitle = document.getElementById('community_detailModalTitle_ksy');             
+        const modalTags = document.getElementById('community_detailModalTags_ksy');              
+        
+        modalImage.src = "{% static 'images/' %}" + image;             
+        modalTitle.textContent = title;             
+        modalTags.textContent = tags;                          
+        
+        modal.style.display = 'block';         
+    }          
+
+    function hideDetail_ksy() {             
+        document.body.classList.remove('community_detail-page_ksy');             
+        document.getElementById('community_detailModal_ksy').style.display = 'none';         
+    }     
+    </script> 
+{% endblock %}

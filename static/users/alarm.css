@@ -11,8 +11,8 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 1rem;
-    margin-bottom: 0.8rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
     background-color: #B5DAFF;
     border: none;
     border-radius: 0.5rem;
@@ -57,8 +57,9 @@
 }
 
 .alarm_text_ksy {
+    font-family: var(--main_font);
     color: #333;
-    font-size: 0.9rem;
+    font-size: 23px;
     line-height: 1.4;
     flex: 1;
     word-break: break-word;
@@ -69,11 +70,11 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.8rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
     background-color: #B5DAFF;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     text-align: left;
     transition: all 0.2s ease;
 }
@@ -84,15 +85,16 @@
 }
 
 .alarm_write_btn_ksy {
+    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10) inset, -2px -2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-family: var(--main_font);
     display: flex;
     align-items: center;
     gap: 4px;
     padding: 4px 12px;
     background-color: white;
     color: #333;
-    border: 1px solid #D9D9D9;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 23px;
     cursor: pointer;
     margin-left: auto;
 }

@@ -229,3 +229,4 @@ def profile(request):
 
 def alarm(request):
     return render(request, 'users/alarm.html')
+
