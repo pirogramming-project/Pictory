@@ -4,15 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Pictory{% endblock %}</title>
+  <title>{% block title %}인생네컷{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'base.css' %}">
-  <link rel="stylesheet" href="{% static 'reset.css' %}">
-  <link rel="stylesheet" href="{% static 'global.css' %}">
   {% block extra_css %}{% endblock %}
 </head>
 <body class="base_body_ksy">
   <div class="base_layout_ksy">
-    <div class="base_side-area_ksy base_left_ksy"></div>
+    <div></div>
     <div class="base_content-area_ksy">
       <header class="base_header_ksy">
         <!-- 햄버거 버튼 -->
@@ -21,11 +19,11 @@
           <span></span>
           <span></span>
         </button>
-        <!-- X 버튼 (초기 숨김) -->
-        <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
         <div class="base_logo_ksy">
           <img src="{% static 'images/pictoryLogo.png' %}" alt="Pictory">
         </div>
+        <!-- X 버튼 (초기 숨김) -->
+        <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
       </header>
       <!-- 사이드바 (초기 숨김) -->
       <div class="base_side-nav_ksy" id="base_sidebar_ksy">
@@ -47,8 +45,8 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-    <div class="base_side-area_ksy base_right_ksy"></div>
   </div>
+  <div></div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
