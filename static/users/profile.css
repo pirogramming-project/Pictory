@@ -1,0 +1,179 @@
+.profile-wrapper_psy {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile_psy {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding-bottom: 20px;
+}
+
+.profile-section_psy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    font-family: 'GangwonEduSaeeum';
+}
+
+.profile-image_psy {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background-color: white;
+    overflow: hidden;
+}
+
+.profile-image_psy img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info_psy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.id-box_psy, .visitor-box_psy {
+    background-color: #B9E2FA;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: #1E3269;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+                inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+                inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.visitor-box_psy:hover {
+    background-color: #A5D8FA;
+}
+
+.button-group_psy {
+    display: flex;
+    gap: 35px;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.action-btn_psy {
+    background-color: #B9E2FA;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1.4;
+    color: #1E3269;
+    transition: background-color 0.2s ease;
+    transform: scale(1.2);
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+                inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+                inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.action-btn_psy:hover {
+    background-color: #A5D8FA;
+}
+
+.badges-section_psy {
+    background-color: #B9E2FA;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+    inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.badges-title_psy {
+    font-size: 22px;
+    color: #1E3269;
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+.badges-container_psy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.badge-icon_psy {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.graph-section_psy {
+    background-color:#B9E2FA;
+    padding: 20px;
+    border-radius: 15px;
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+    inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.graph-title_psy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px 0;
+    font-size: 22px;
+    color: #1E3269
+}
+
+.graph-container_psy {
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.graph-placeholder_psy {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent 39px, #eee 40px);
+    background-size: 40px 100%;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .profile-wrapper_psy {
+        padding: 15px;
+    }
+
+    .button-group_psy {
+        flex-direction: column;
+    }
+
+    .action-btn_psy {
+        width: 100%;
+    }
+
+    .badges-container_psy {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .badge-icon_psy {
+        width: 35px;
+        height: 35px;
+    }
+}

@@ -42,12 +42,12 @@
             <div class="create_diary_third_ksy">
                 <h1 class="create_diary_letter_ksy">친구 태그</h1>
                 <div class="create_diary_usertag_item_kes">
-                    {% for user in all_users %}
-                        <label>
-                            <input type="checkbox" name="user_tags" value="{{ user.id }}"
-                            {% if user in user_tags.all %}checked{% endif %}>
-                            @{{ user.nickname }}
-                        </label>
+                    {% for user in form.user_tags.field.queryset %}
+                    <label>
+                        <input type="checkbox" name="user_tags" value="{{ user.login_id }}"
+                            {% if user in form.instance.user_tags.all %}checked{% endif %}>
+                        @{{ user.nickname }}
+                    </label>
                     {% endfor %}
                 </div>
             </div>
