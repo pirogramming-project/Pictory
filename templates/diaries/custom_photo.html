@@ -26,6 +26,15 @@
 
         <!-- AJAX로 불러올 내용을 표시할 영역 -->
         <div id="customization-area_psy">
+            <div id="customization-save_kes">
+                <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
+                    <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
+                    
+                    <button type="button" onclick="prepareAndSubmitForm_kes()">저장하고 다음으로</button>
+                </form>
+            </div>
             <div id="customization-color_kes">
                 {% include "diaries/pages/color.html" %}
             </div>
@@ -41,9 +50,44 @@
         </div>
     </div>
 
-    <input type="file" id="imageInput_psy" accept="image/*" style="display: none;" onchange="previewImage_psy(event)">
+    
 
     <script>
+        function prepareAndSubmitForm_kes() {
+            // 프레임 색상, 두께 - css text 형태로 저장
+            const frame = document.getElementById("pictory-frame_psy");  // 대상 요소
+            const computedStyle = window.getComputedStyle(frame);  // 요소의 CSS 속성값 가져오기
+            const cssText = computedStyle.cssText || Object.values(computedStyle).join("; "); // CSS를 문자열로 변환
+            document.getElementById("frame_cssInput_kes").value = cssText;  // 숨겨진 input에 값 저장
+            
+            // 로고 - text 저장
+            document.getElementById("frame_logoInput_kes").value = document.querySelector('.custom-logo_psy').textContent;  // 숨겨진 input에 값 저장
+
+            // sticker들 저장
+            const stickers = frame.querySelectorAll(".added_sticker_kes");
+            const form = document.getElementById("frameSaveForm_kes");
+            stickers.forEach(img => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "sticker_srcs";  // 같은 name을 사용하면 리스트로 전송됨
+                srcsplit = img.src.split('/');
+                input.value = srcsplit[srcsplit.length - 1];
+                form.appendChild(input);
+
+                const coorXInput = document.createElement("input");
+                coorXInput.type = "hidden";
+                coorXInput.name = "sticker_coorXs";  // 같은 name을 사용하면 리스트로 전송됨
+                coorXInput.value = Number(img.style.left.replace('px',''));
+                form.appendChild(coorXInput);
+                const coorYInput = document.createElement("input");
+                coorYInput.type = "hidden";
+                coorYInput.name = "sticker_coorYs";  // 같은 name을 사용하면 리스트로 전송됨
+                coorYInput.value = Number(img.style.top.replace('px',''));
+                form.appendChild(coorYInput);
+            });
+            form.submit();  // form 제출
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll(".cloud-btn_psy").forEach(button_psy => {
                 button_psy.addEventListener("click", function () {
@@ -67,8 +111,28 @@
         }
 
         function uploadImage_psy(slotIndex_psy) {
-            selectedSlot_psy = slotIndex_psy;
-            document.getElementById("imageInput_psy").click();
+            selectedSlot_psy = slotIndex_psy;   // 이미지 preview 위한 assign
+
+            const form = document.getElementById("frameSaveForm_kes");
+            // 만약에 폼에 이미 대응되는 file input이 있다 -> 그거를 클릭하면됨
+            const existInput = document.getElementById(`imageInput_kes_${slotIndex_psy}`);
+            if (existInput) {
+                existInput.click();
+            }
+            else {
+                // 없다 -> 추가
+                const input = document.createElement("input");
+                input.type = "file";
+                input.id = `imageInput_kes_${slotIndex_psy}`
+                input.className = "imageInput_kes";
+                input.name = "photos";  // 같은 name을 사용하면 리스트로 전송됨
+                input.accept = "image/*";
+                input.style.display = "none";
+                input.addEventListener("change", (event) => previewImage_psy(event));
+                form.appendChild(input);
+                input.click();
+            }
+
         }
 
         function previewImage_psy(event) {
@@ -84,7 +148,7 @@
         }
 
         function resetCustomizeField_kes() {
-            loadCustomizationPage_kes("");
+            loadCustomizationPage_kes("save");
         }
         resetCustomizeField_kes();
     </script>

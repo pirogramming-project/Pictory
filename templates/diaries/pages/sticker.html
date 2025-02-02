@@ -9,8 +9,9 @@
     function addSticker_psy(sticker_psy) {
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
         let newSticker_psy = document.createElement("img");
-        newSticker_psy.draggable="true"
+        newSticker_psy.draggable="true";
         newSticker_psy.src = sticker_psy.src;
+        newSticker_psy.className = "added_sticker_kes"
         newSticker_psy.style.position = "absolute";
         newSticker_psy.style.width = `${sticker_psy.offsetWidth}px`;
         newSticker_psy.style.left = "20px";

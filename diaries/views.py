@@ -1,18 +1,120 @@
-from django.shortcuts import render, redirect
-from .models import Diary, Frame, Tag
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
 from datetime import date
+from django.urls import reverse
+
+
+# 디테일 페이지
+def diary_detail(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)  
+    user_tags = User_Tag.objects.filter(diary=diary)  
+    return render(request, 'diaries/detail.html', {'diary': diary, 'user_tags': user_tags})
+
+@login_required
+def edit_diary(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+
+    if request.method == 'POST':
+        form = DiaryForm(request.POST, instance=diary)
+
+        if form.is_valid():
+            print("폼 검증 성공")
+            diary = form.save(commit=False)
+            diary.save()
+            form.save_m2m()
+
+            # 기존 태그 삭제 후 새 태그 저장
+            diary.tags.clear()  
+            tag_string = request.POST.get('create_diary_post', '')
+            tag_list = [tag.strip() for tag in tag_string.split('#') if tag.strip()]
+            for tag in tag_list:
+                new_tag, created = Tag.objects.get_or_create(diary=diary, name=tag)
+
+            # 기존 유저 태그 삭제 후 새 태그 저장
+            User_Tag.objects.filter(diary=diary).delete()
+            user_ids = request.POST.getlist('user_tags')
+            selected_users = User.objects.filter(id__in=user_ids)  
+
+            for user in selected_users:
+                User_Tag.objects.create(diary=diary, user=user)
+
+            return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))
+
+
+        else:
+            print("폼 유효성 검사 실패:", form.errors)  # 에러 확인용
+
+    else:
+        form = DiaryForm(instance=diary)
+
+    all_users = User.objects.all()
+    user_tags = diary.user_tags.all()
+    diary_tags = diary.tags.all()
+
+    context = {
+        'form': form,
+        'diary': diary,
+        'all_users': all_users,
+        'user_tags': user_tags,
+        'diary_tags': diary_tags,
+    }
+    return render(request, 'diaries/edit_diary.html', context)
 
 
 # 인생네컷 추가 페이지3
+@login_required
 def custom_photo(request):
+    if request.method == "POST":
+        '''사진 관련 데이터 몽땅 저장하고 다음 페이지로 이동 '''
+        # 1. 사진 프레임 저장
+        frame_css = request.POST.get("frame_css")  # 프레임 CSS 속성
+        logo_text = request.POST.get("logo_text")  # 프레임 로고 속성
+
+        if frame_css and logo_text:
+            created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text)
+            if not created_frame:
+                print("[프레임]저장실패.. 다시시도")
+                return render(request, 'diaries/custom_photo.html')
+        
+        # 2. 스티커 저장
+        stickers_filenames = request.POST.getlist("sticker_srcs")  # 이미지 파일명들을 리스트로 받음
+        stickers_Xs = request.POST.getlist("sticker_coorXs")
+        stickers_Ys = request.POST.getlist("sticker_coorYs")
+        if stickers_filenames:
+            for i in range(len(stickers_filenames)):
+                sticker_filename = stickers_filenames[i]
+                sticker_X = stickers_Xs[i]
+                sticker_Y = stickers_Ys[i]
+                
+                Sticker.objects.create(
+                    frame=created_frame,
+                    sticker_image=f'static/images/stickers/{sticker_filename}',
+                    coor_x=sticker_X,
+                    coor_y=sticker_Y
+                    )
+                
+        # 3. 사진들 저장
+        if request.FILES:
+            uploaded_files = request.FILES.getlist("photos")  # 여러 개의 파일 받기
+            print(uploaded_files)
+            for file in uploaded_files:
+                Photo.objects.create(frame=created_frame, photo=file)  # 이미지 저장
+        
+        # 저장 성공 시 리다이렉트
+        if created_frame:
+            return redirect("diaries:create_diary", created_frame.id)
+        
+        print("저장실패.. 다시시도?")
+    
     return render(request, 'diaries/custom_photo.html')
 
 
 # 인생네컷 추가 페이지4
 @login_required
-def create_diary(request):
+def create_diary(request, related_frame_id):
+    related_frame = Frame.objects.get(id=related_frame_id)
     if request.method == 'POST':
         four_cut_photo = Frame.objects.create(frame_css = "test")   ## TODO: 실제 네컷사진 불러오는 걸로 수정 필요
         
@@ -40,6 +142,7 @@ def create_diary(request):
                     diary = diary,
                     name = tag
                 )
+
             # diary와 관련된 M2M 필드 저장 (user_tag)
             form.save_m2m()
             
