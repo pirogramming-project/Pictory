@@ -224,3 +224,8 @@ def logout_view(request):
 def main(request):
     return render(request, 'users/main.html')
 
+def profile(request):
+    return render(request, 'users/profile.html')
+
+def alarm(request):
+    return render(request, 'users/alarm.html')
