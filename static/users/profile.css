@@ -1,0 +1,158 @@
+.profile-wrapper_psy {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-section_psy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-image_psy {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.profile-image_psy img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info_psy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.id-box_psy, .visitor-box_psy {
+    background-color: #E8F4FF;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+}
+
+.button-group_psy {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.action-btn_psy {
+    flex: 1;
+    background-color: #E8F4FF;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1.4;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.action-btn_psy:hover {
+    background-color: #D9EBFF;
+}
+
+.badges-section_psy {
+    background-color: #E8F4FF;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.badges-title_psy {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+.badges-container_psy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.badge-icon_psy {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.graph-section_psy {
+    background-color: #E8F4FF;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.graph-title_psy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.graph-stats_psy {
+    background-color: #96C2FF;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 12px;
+}
+
+.graph-container_psy {
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.graph-placeholder_psy {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent 39px, #eee 40px);
+    background-size: 40px 100%;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .profile-wrapper_psy {
+        padding: 15px;
+    }
+
+    .button-group_psy {
+        flex-direction: column;
+    }
+
+    .action-btn_psy {
+        width: 100%;
+    }
+
+    .badges-container_psy {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .badge-icon_psy {
+        width: 35px;
+        height: 35px;
+    }
+}
