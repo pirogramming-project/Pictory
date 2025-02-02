@@ -1,7 +1,7 @@
 .map_container_ksy {
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    gap: 80px;
     height: 100%;
     width: 100%;
     max-width: 1200px;
