@@ -45,7 +45,7 @@
                     {% for user in all_users %}
                         <label>
                             <input type="checkbox" name="user_tags" value="{{ user.id }}"
-                                {% if user in user_tags.all %}checked{% endif %}>
+                            {% if user in user_tags.all %}checked{% endif %}>
                             @{{ user.nickname }}
                         </label>
                     {% endfor %}
