@@ -7,6 +7,7 @@ from django.urls import reverse
 
 
 # 디테일 페이지
+@login_required
 def diary_detail(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)  
     user_tags = User_Tag.objects.filter(diary=diary)  
@@ -65,6 +66,12 @@ def edit_diary(request, diary_id):
     }
     return render(request, 'diaries/edit_diary.html', context)
 
+# 인생네컷 추가 페이지1
+def select_photo_type(request):
+    return render(request, 'diaries/photo_type.html')
+# 인생네컷 추가 페이지2
+def select_frame(request):
+    return render(request, 'diaries/frame_select.html')
 
 # 인생네컷 추가 페이지3
 @login_required
