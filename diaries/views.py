@@ -4,17 +4,25 @@ from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
 from datetime import date
 from django.urls import reverse
-
+from django.http import Http404
 
 # 디테일 페이지
 def diary_detail(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)  
     user_tags = User_Tag.objects.filter(diary=diary)  
+
+    if diary.writer != request.user:
+        raise Http404("존재하지 않는 페이지입니다.")  
+    
     return render(request, 'diaries/detail.html', {'diary': diary, 'user_tags': user_tags})
 
+# 다이어리 수정
 @login_required
 def edit_diary(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)
+
+    if diary.writer != request.user:
+        raise Http404("존재하지 않는 페이지입니다.")  
 
     if request.method == 'POST':
         form = DiaryForm(request.POST, instance=diary)
@@ -64,6 +72,15 @@ def edit_diary(request, diary_id):
         'diary_tags': diary_tags,
     }
     return render(request, 'diaries/edit_diary.html', context)
+
+# 다이어리 삭제
+@login_required
+def delete_diary(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+    diary.delete()
+    return redirect('users:main')
+
+
 
 
 # 인생네컷 추가 페이지3
