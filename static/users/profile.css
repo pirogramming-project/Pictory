@@ -4,23 +4,33 @@
     padding: 20px;
 }
 
+.profile_psy {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding-bottom: 20px;
+}
+
 .profile-section_psy {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+    font-family: 'GangwonEduSaeeum';
 }
 
 .profile-image_psy {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 20px;
+    border-radius: 50%;
+    background-color: white;
+    overflow: hidden;
 }
 
 .profile-image_psy img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
 }
 
@@ -34,49 +44,64 @@
 }
 
 .id-box_psy, .visitor-box_psy {
-    background-color: #E8F4FF;
+    background-color: #B9E2FA;
     padding: 12px 24px;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 20px;
     text-align: center;
-    color: #333;
+    color: #1E3269;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+                inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+                inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.visitor-box_psy:hover {
+    background-color: #A5D8FA;
 }
 
 .button-group_psy {
     display: flex;
-    gap: 10px;
+    gap: 35px;
     justify-content: center;
     width: 100%;
     max-width: 300px;
 }
 
 .action-btn_psy {
-    flex: 1;
-    background-color: #E8F4FF;
+    background-color: #B9E2FA;
     border: none;
-    padding: 15px 20px;
+    padding: 12px 24px;
     border-radius: 15px;
-    font-size: 14px;
+    font-size: 20px;
     cursor: pointer;
     line-height: 1.4;
-    color: #333;
+    color: #1E3269;
     transition: background-color 0.2s ease;
+    transform: scale(1.2);
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+                inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+                inset -2px -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .action-btn_psy:hover {
-    background-color: #D9EBFF;
+    background-color: #A5D8FA;
 }
 
 .badges-section_psy {
-    background-color: #E8F4FF;
-    padding: 20px;
+    background-color: #B9E2FA;
+    padding: 30px;
     border-radius: 15px;
     margin-bottom: 20px;
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+    inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .badges-title_psy {
-    font-size: 14px;
-    color: #333;
+    font-size: 22px;
+    color: #1E3269;
     margin: 0 0 15px 0;
     text-align: left;
 }
@@ -95,9 +120,13 @@
 }
 
 .graph-section_psy {
-    background-color: #E8F4FF;
+    background-color:#B9E2FA;
     padding: 20px;
     border-radius: 15px;
+    font-family: 'GangwonEduSaeeum';
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 
+    inset -2px 0px 10px rgba(121, 201, 246, 0.25), 
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .graph-title_psy {
@@ -105,16 +134,8 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 0 15px 0;
-    font-size: 14px;
-    color: #333;
-}
-
-.graph-stats_psy {
-    background-color: #96C2FF;
-    padding: 5px 10px;
-    border-radius: 10px;
-    color: white;
-    font-size: 12px;
+    font-size: 22px;
+    color: #1E3269
 }
 
 .graph-container_psy {
