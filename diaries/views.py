@@ -20,26 +20,29 @@ def edit_diary(request, diary_id):
         form = DiaryForm(request.POST, instance=diary)
 
         if form.is_valid():
-            print("폼 검증 성공")
             diary = form.save(commit=False)
             diary.save()
             form.save_m2m()
 
             # 기존 태그 삭제 후 새 태그 저장
-            diary.tags.clear()  
-            tag_string = request.POST.get('create_diary_post', '')
-            tag_list = [tag.strip() for tag in tag_string.split('#') if tag.strip()]
-            for tag in tag_list:
-                new_tag, created = Tag.objects.get_or_create(diary=diary, name=tag)
+            Tag.objects.filter(diary=diary).delete()  # 기존 태그 삭제
+            ## 새로운 태그 추가
+            raw_tag_string = request.POST['create_diary_post']
+            raw_tags = raw_tag_string.split('#')
+            tags = set([])
+            for raw_tag in raw_tags:
+                tag = raw_tag.strip()
+                if tag:
+                    tags.add(tag)
+            for tag in tags:
+                Tag.objects.create(
+                    diary = diary,
+                    name = tag
+                )
 
             # 기존 유저 태그 삭제 후 새 태그 저장
-            User_Tag.objects.filter(diary=diary).delete()
-            user_ids = request.POST.getlist('user_tags')
-            selected_users = User.objects.filter(id__in=user_ids)  
-
-            for user in selected_users:
-                User_Tag.objects.create(diary=diary, user=user)
-
+            diary.user_tags.set(form.cleaned_data["user_tags"])
+            
             return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))
 
 
