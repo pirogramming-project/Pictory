@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pictory{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="base_body_ksy">
+    <div class="base_layout_ksy">
+        <div></div>
+        <div class="base_content-area_ksy">
+            <header class="base_header_ksy">
+                <!-- 햄버거 버튼 -->
+                <button class="base_menu-button_ksy" id="base_menuButton_ksy">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="base_logo_ksy">
+                    <img src="{% static 'images/pictoryLogo.png' %}" alt="Pictory">
+                </div>
+            </header>
+
+            <!-- 사이드바 -->
+            <div class="base_side-nav_ksy" id="base_sidebar_ksy">
+                <!-- X 버튼을 사이드바 내부로 이동 -->
+                <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
+                <div class="base_profile_ksy">
+                    <div class="base_profile-image_ksy"></div>
+                    <form action="{% url 'users:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="base_logout_ksy">로그아웃</button>
+                    </form>
+                </div>
+                <button class="base_menu-item_ksy">MY</button>
+                <button class="base_menu-item_ksy">알림</button>
+                <button class="base_menu-item_ksy">지도</button>
+                <button class="base_menu-item_ksy">인생네컷 만들기</button>
+                <button class="base_menu-item_ksy">community</button>
+                <button class="base_menu-item_ksy">친구 요청 보내기</button>
+            </div>
+
+            <div class="base_content-scroll_ksy">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <div></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const menuButton = document.getElementById("base_menuButton_ksy");
+          const closeButton = document.getElementById("base_closeButton_ksy");
+          const sidebar = document.getElementById("base_sidebar_ksy");
+          
+          // 햄버거 메뉴 클릭 시
+          menuButton.addEventListener("click", function () {
+              menuButton.style.display = "none"; // 햄버거 버튼 즉시 숨기기
+              sidebar.style.display = "flex";
+              closeButton.style.display = "block"; 
+              requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
+          });
+          
+          // X 버튼 클릭 시
+          closeButton.addEventListener("click", function () {
+              sidebar.classList.remove("base_active_ksy");
+              setTimeout(() => {
+                  sidebar.style.display = "none";
+                  closeButton.style.display = "none";
+                  menuButton.style.display = "flex"; 
+              }, 100); 
+          });
+      });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
