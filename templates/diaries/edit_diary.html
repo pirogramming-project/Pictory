@@ -2,11 +2,14 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'diaries/create_diary.css' %}">
+<link rel="stylesheet" href="{% static 'diaries/edit_diary.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="create_diary_container_ksy">
+    <div class="create_diary_left_container_ksy">
+        <img src="{% static 'images/pictory-frame2.png' %}" alt="프레임 2">
+    </div>
     <div class="create_diary_right_container_ksy">
         <form method="post" action="{% url 'diaries:edit_diary' diary.id %}">
             {% csrf_token %}

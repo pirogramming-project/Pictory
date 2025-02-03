@@ -2,5 +2,5 @@
 
 {% block content %}
 <h2>{{ selected_date|date:"Y년 m월 d일" }}에는 작성된 일기가 없습니다.</h2>
-<a href="{% url 'diaries:create_diary' %}">새로운 일기 작성하기</a>
+<a href="{% url 'diaries:select_frame' %}">새로운 일기 작성하기</a>
 {% endblock %}

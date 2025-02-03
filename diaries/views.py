@@ -220,3 +220,6 @@ def friend_request(request):
 
 def diary_map(request):
     return render(request, 'diaries/diary_map.html')
+
+def mydiaries(request):
+    return render(request, 'diaries/mydiaries.html')
