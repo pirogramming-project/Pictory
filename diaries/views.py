@@ -2,22 +2,46 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
-from datetime import date
-from django.urls import reverse
+from datetime import date, datetime
+from django.urls import reverse=
 from django.core.files.base import ContentFile
 import base64
-
+from django.http import Http404
 
 # 디테일 페이지
 @login_required
 def diary_detail(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)  
     user_tags = User_Tag.objects.filter(diary=diary)  
+
+    if diary.writer != request.user:
+        raise Http404("존재하지 않는 페이지입니다.")  
+    
     return render(request, 'diaries/detail.html', {'diary': diary, 'user_tags': user_tags})
 
 @login_required
+def diaries_by_date(request, year, month, day):
+    # 로그인한 유저가 작성한 특정 날짜의 다이어리 조회
+    selected_date = datetime(year, month, day)
+    diaries = Diary.objects.filter(writer=request.user, date=selected_date)
+
+    if not diaries.exists():
+        return render(request, 'diaries/no_diary.html', {'selected_date': selected_date})
+
+    # 다이어리가 하나인 경우 바로 디테일 페이지로 이동
+    if diaries.count() == 1:
+        return redirect('diaries:diary_detail', diary_id=diaries.first().id)
+
+    # 여러 다이어리가 있는 경우 선택 화면으로 이동
+    return render(request, 'diaries/diary_list.html', {'diaries': diaries, 'selected_date': selected_date})
+
+# 다이어리 수정
+@login_required
 def edit_diary(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)
+
+    if diary.writer != request.user:
+        raise Http404("존재하지 않는 페이지입니다.")  
 
     if request.method == 'POST':
         form = DiaryForm(request.POST, instance=diary)
@@ -68,13 +92,22 @@ def edit_diary(request, diary_id):
     }
     return render(request, 'diaries/edit_diary.html', context)
 
+
+# 다이어리 삭제
+@login_required
+def delete_diary(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+    diary.delete()
+    return redirect('users:main')
+
 # 인생네컷 추가 페이지1
 def select_photo_type(request):
     return render(request, 'diaries/photo_type.html')
+  
 # 인생네컷 추가 페이지2
 def select_frame(request):
     return render(request, 'diaries/frame_select.html')
-
+  
 # 인생네컷 추가 페이지3
 @login_required
 def custom_photo(request):
@@ -176,3 +209,14 @@ def create_diary(request, related_frame_id):
         'related_frame_img' :related_frame.image_file,
     }
     return render(request, 'diaries/create_diary.html', context)
+
+
+
+def community(request):
+    return render(request, 'diaries/community.html')
+
+def friend_request(request):
+    return render(request, 'diaries/friend_request.html')
+
+def diary_map(request):
+    return render(request, 'diaries/diary_map.html')

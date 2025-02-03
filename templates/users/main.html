@@ -37,6 +37,12 @@
         
         let currentDate = new Date();
         let selectedDate = null;
+
+        // 날짜 클릭이벤트 추가
+        function handleDateClick(year, month, day) {
+            const url = `/diary/by_date/${year}/${month + 1}/${day}/`; // URL에 날짜 추가
+            window.location.href = url; // 해당 URL로 이동
+        }
         
         function renderCalendar() {
             const year = currentDate.getFullYear();
@@ -65,6 +71,13 @@
                 dayElement.appendChild(daySpan);
         
                 const fullDate = new Date(year, month, day);
+
+                // 날짜 클릭 이벤트
+                dayElement.addEventListener("click", () => {
+                    handleDateClick(year, month, day); // 특정 날짜 클릭 시 이동
+                });
+
+                daysContainer.appendChild(dayElement); //
         
                 if (
                     fullDate.getFullYear() === today.getFullYear() &&
