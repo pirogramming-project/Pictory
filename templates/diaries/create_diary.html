@@ -8,7 +8,7 @@
 {% block content %}
     <div class="create_diary_container_ksy">
         <div class="create_diary_left_container_ksy">
-            <img>
+            <img src="{{related_frame_img.url}}">
         </div>
         <div class="create_diary_right_container_ksy">
             <form class="create_diary_form_ksy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
