@@ -3,7 +3,7 @@ from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
 from datetime import date, datetime
-from django.urls import reverse=
+from django.urls import reverse
 from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
