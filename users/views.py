@@ -249,7 +249,7 @@ def generate_emotion_graph():
     ax.plot(dates, recent_emotion_scores, marker="o", linestyle="-", color="b", linewidth=2)
     ax.set_xlabel("날짜", fontsize=12)
     ax.set_ylabel("감정 점수 (1~7)", fontsize=12)
-    ax.set_ylim(1, 7)  # 감정 점수 범위 설정
+    ax.set_ylim(0, 8)  # 감정 점수 범위 설정
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)

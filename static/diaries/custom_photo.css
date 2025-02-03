@@ -6,6 +6,12 @@
     padding: 20px;
 }
 
+.first-container_psy{
+    display: flex;
+    flex-direction: row;
+    gap: 30px
+}
+
 /* 프레임 스타일 */
 #pictory-frame_psy {
     width: 200px;
@@ -92,6 +98,7 @@
 .cloud-btn_psy p {
     margin: 0;
     font-size: 13px;
+    font-weight: bold;
     color:var(--font_color);
     position: absolute;
     top: 50%;

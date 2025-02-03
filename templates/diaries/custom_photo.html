@@ -9,44 +9,63 @@
 <body>
 
     <div class="container_psy">
-        <div id="pictory-frame_psy">
-            <div class="image-slot_psy" onclick="uploadImage_psy(0)"><span>+</span></div>
-            <div class="image-slot_psy" onclick="uploadImage_psy(1)"><span>+</span></div>
-            <div class="image-slot_psy" onclick="uploadImage_psy(2)"><span>+</span></div>
-            <div class="image-slot_psy" onclick="uploadImage_psy(3)"><span>+</span></div>
-            <p class="custom-logo_psy">pictory</p>
+        <div class="first-container_psy">
+            <div id="pictory-frame_psy">
+                <div class="image-slot_psy" onclick="uploadImage_psy(0)"><span>+</span></div>
+                <div class="image-slot_psy" onclick="uploadImage_psy(1)"><span>+</span></div>
+                <div class="image-slot_psy" onclick="uploadImage_psy(2)"><span>+</span></div>
+                <div class="image-slot_psy" onclick="uploadImage_psy(3)"><span>+</span></div>
+                <p class="custom-logo_psy">pictory</p>
+            </div>
+    
+            <!-- AJAX로 불러올 내용을 표시할 영역 -->
+            <div id="customization-area_psy">
+                <div id="customization-save_kes">
+                    <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
+                        <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
+                        <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
+                        <button type="button" onclick="prepareAndSubmitForm_kes()">저장하고 다음으로</button>
+                    </form>
+                </div>
+                <div id="customization-color_kes">
+                    {% include "diaries/pages/color.html" %}
+                </div>
+                <div id="customization-logo_kes">
+                    {% include "diaries/pages/logo.html" %}
+                </div>
+                <div id="customization-sticker_kes">
+                    {% include "diaries/pages/sticker.html" %}
+                </div>
+                <div id="customization-thickness_kes">
+                    {% include "diaries/pages/thickness.html" %}
+                </div>
+            </div>
         </div>
-
         <div class="custom-buttons_psy">
-            <button class="cloud-btn_psy" data-page_psy="color">색깔</button>
-            <button class="cloud-btn_psy" data-page_psy="logo">로고 수정</button>
-            <button class="cloud-btn_psy" data-page_psy="thickness">두께</button>
-            <button class="cloud-btn_psy" data-page_psy="sticker">스티커</button>
-        </div>
-
-        <!-- AJAX로 불러올 내용을 표시할 영역 -->
-        <div id="customization-area_psy">
-            <div id="customization-save_kes">
-                <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' %}">
-                    {% csrf_token %}
-                    <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
-                    <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
-                    <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
-                    <button type="button" onclick="prepareAndSubmitForm_kes()">저장하고 다음으로</button>
-                </form>
-            </div>
-            <div id="customization-color_kes">
-                {% include "diaries/pages/color.html" %}
-            </div>
-            <div id="customization-logo_kes">
-                {% include "diaries/pages/logo.html" %}
-            </div>
-            <div id="customization-sticker_kes">
-                {% include "diaries/pages/sticker.html" %}
-            </div>
-            <div id="customization-thickness_kes">
-                {% include "diaries/pages/thickness.html" %}
-            </div>
+            <button class="cloud-btn_psy" data-page_psy="color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
+                    <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                </svg>
+                <p>색깔</P>
+            </button>
+            <button class="cloud-btn_psy" data-page_psy="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
+                <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                </svg>
+                <p>로고</P></button>
+            <button class="cloud-btn_psy" data-page_psy="thickness">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
+                <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                </svg>
+                <p>두께</P></button>
+            <button class="cloud-btn_psy" data-page_psy="sticker">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
+                    <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                </svg>
+                <p>스티커</P>
+            </button>
         </div>
     </div>
 
