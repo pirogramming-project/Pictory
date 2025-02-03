@@ -24,19 +24,14 @@
 
         <!-- 사진 그리드 -->         
         <div class="community_photo-grid-container_ksy">             
-            <div class="community_photo-grid_ksy" id="photoGrid_ksy">                 
-                {% with ""|center:"10" as photos %}
-                    {% for diary in my_diaries %}
-                        {% for tag in diary.tags.all %}
-                        <p>{{tag}}</p>
-                        <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', '{{ diary.title }}', '#픽토리')"> 
-                            <img src="{{ diary.four_cut_photo.image_file.url }}" alt="네컷사진">
-                        </div>
-                        {% endfor %}
-                    {% endfor %}
-                {% endwith %}         
+            <div class="community_photo-grid_ksy" id="photoGrid_ksy">
+                {% for diary in my_diaries %}
+                <div class="community_photo-item_ksy" onclick="location.href='{% url 'diaries:diary_detail' diary.id %}'">                         
+                    <img src="{{ diary.four_cut_photo.image_file.url }}" alt="네컷사진">
+                </div>
+                {% endfor %}   
             </div>         
-        </div>     
+        </div>      
     </div>      
 
     <!-- 이미지 클릭시 확대 -->     
@@ -55,26 +50,5 @@
                 <div class="community_detail-hashtags_ksy" id="community_detailModalTags_ksy"></div>             
             </div>         
         </div>     
-    </div>      
-
-    <script>         
-    function showDetail_ksy(image, title, tags) {             
-        document.body.classList.add('community_detail-page_ksy');             
-        const modal = document.getElementById('community_detailModal_ksy');             
-        const modalImage = document.getElementById('community_detailModalImage_ksy');             
-        const modalTitle = document.getElementById('community_detailModalTitle_ksy');             
-        const modalTags = document.getElementById('community_detailModalTags_ksy');              
-        
-        modalImage.src = "{% static 'images/' %}" + image;             
-        modalTitle.textContent = title;             
-        modalTags.textContent = tags;                          
-        
-        modal.style.display = 'block';         
-    }          
-
-    function hideDetail_ksy() {             
-        document.body.classList.remove('community_detail-page_ksy');             
-        document.getElementById('community_detailModal_ksy').style.display = 'none';         
-    }     
-    </script> 
+    </div>
 {% endblock %}
