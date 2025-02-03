@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{KAKAO_MAP_APPKEY_JS}}&libraries=services"></script>
 <link rel="stylesheet" href="{% static 'diaries/create_diary.css' %}">
 {% endblock %}
 
@@ -55,7 +56,7 @@
                     <div class="create_diary_fourth_title_ksy">
                         <h1 class="create_diary_letter_ksy">장소</h1>
                         {{ form.place }}
-                        <div class="create_diary_map_ksy"></div>
+                        <div class="create_diary_map_ksy" style="height: 150px; width: 200px;"></div>
                     </div>
                 </div>
             
@@ -74,4 +75,82 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let inputField = document.querySelector(".create_diary_content_ksy#id_place");
+            
+            if (inputField) {
+                inputField.addEventListener("change", function() {
+                    if (this.value) {
+                        placeSearch(this.value);
+                    }
+                });
+            }
+        });
+
+
+        // 1. 지도 초기화
+        const mapContainer = document.querySelector('.create_diary_map_ksy');
+        const map = new kakao.maps.Map(mapContainer, {
+          center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+          level: 6, // 지도 확대 레벨
+        });
+    
+        const geocoder = new kakao.maps.services.Geocoder(); // 주소 검색 객체
+        const markers = {}; // 마커 저장 객체
+    
+        // 장소 검색 객체를 생성합니다
+        var ps = new kakao.maps.services.Places(); 
+    
+        function placeSearch(keyword) {
+          // 키워드 검색
+          ps.keywordSearch(keyword, placesSearchCB); 
+        }
+    
+        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        function placesSearchCB (data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+              targetPlace = data[0];  // 가장 가능성 높은 장소를 타겟으로 설정
+              console.log(targetPlace['address_name'])  // 주소 가져오기
+       
+                addLocation(targetPlace['address_name']);
+            } else {
+              alert("장소를 찾을 수 없습니다.")
+            }
+        }
+
+        var marker;
+        // 2. 마커 추가 함수
+        function addLocation(address) {
+          const input = address;
+    
+          if (!input) {
+            alert('장소를 찾을 수 없습니다.');
+            return;
+          }
+    
+          // 2. addressSearch : 주소 -> 좌표 변환해주는 함수
+          geocoder.addressSearch(input, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+              // 마커를 생성합니다
+              if (marker) {
+                  marker.setMap(null);  // 이전 마커 제거
+              }
+                marker = new kakao.maps.Marker({
+                    position: coords
+                });
+                // 마커가 지도 위에 표시되도록 설정합니다
+                marker.setMap(map);
+    
+              // 지도 중심 이동
+              map.panTo(coords);
+            } else {
+              alert('장소를 찾을 수 없습니다.');
+            }
+          });
+        }
+      </script>
 {% endblock %}
