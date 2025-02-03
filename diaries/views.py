@@ -5,6 +5,7 @@ from .forms import DiaryForm
 from datetime import date
 from django.urls import reverse
 from django.http import Http404
+from datetime import datetime
 
 # 디테일 페이지
 def diary_detail(request, diary_id):
@@ -15,6 +16,22 @@ def diary_detail(request, diary_id):
         raise Http404("존재하지 않는 페이지입니다.")  
     
     return render(request, 'diaries/detail.html', {'diary': diary, 'user_tags': user_tags})
+
+@login_required
+def diaries_by_date(request, year, month, day):
+    # 로그인한 유저가 작성한 특정 날짜의 다이어리 조회
+    selected_date = datetime(year, month, day)
+    diaries = Diary.objects.filter(writer=request.user, date=selected_date)
+
+    if not diaries.exists():
+        return render(request, 'diaries/no_diary.html', {'selected_date': selected_date})
+
+    # 다이어리가 하나인 경우 바로 디테일 페이지로 이동
+    if diaries.count() == 1:
+        return redirect('diaries:diary_detail', diary_id=diaries.first().id)
+
+    # 여러 다이어리가 있는 경우 선택 화면으로 이동
+    return render(request, 'diaries/diary_list.html', {'diaries': diaries, 'selected_date': selected_date})
 
 # 다이어리 수정
 @login_required
