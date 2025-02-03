@@ -1,0 +1,187 @@
+.create_diary_container_ksy {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    min-height: calc(100vh - 40px);
+    position: relative;
+    padding: 20px;
+    width: 90%;
+}
+
+.create_diary_left_container_ksy {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+}
+
+.create_diary_left_container_ksy img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
+}
+
+.create_diary_right_container_ksy {
+    flex: 1.5;
+    padding: 30px;
+}
+
+.create_diary_button_ksy {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+.create_button_save_ksy {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 20px;
+    min-width: 100px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'GangwonEduSaeeum';
+    transition: transform 0.2s ease;
+}
+
+.create_button_save_ksy svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: #d0e8ff;
+    z-index: 1;
+}
+
+.create_button_save_ksy {
+    color: #1E3269;
+    font-size: 14px;
+}
+
+.create_button_save_ksy svg + span {
+    position: relative;
+    z-index: 2;
+}
+
+.create_button_save_ksy:hover {
+    transform: translateY(-2px);
+}
+
+.create_diary_first_ksy,
+.create_diary_second_ksy,
+.create_diary_third_ksy,
+.create_diary_fourth_ksy,
+.create_diary_fifth_ksy {
+    margin-bottom: 30px;
+}
+
+.create_diary_letter_ksy {
+    font-size: 20px;
+    color: #1E3269;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-family: 'GangwonEduSaeeum';
+}
+
+.create_diary_date_ksy{
+    font-size: 14px;
+    color: #1E3269;
+    margin: 10px;
+    font-weight: bold;
+    font-family: 'GangwonEduSaeeum';
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create_diary_first_title_ksy {
+    margin-bottom: 15px;
+}
+
+.create_diary_second_ksy {
+    display: flex;
+    gap: 30px;
+    font-family: 'GangwonEduSaeeum';
+}
+
+.create_diary_second_title_ksy {
+    flex: 1;
+    font-family: 'GangwonEduSaeeum';
+}
+
+.create_diary_second_title_ksy span {
+    display: block;
+    color: #1E3269;
+    margin-top: 5px;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+}
+
+.create_diary_third_ksy {
+    display: flex;
+    gap: 85px;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+}
+.create_diary_content_ksy span,
+.create_diary_usertag_item_kes span {
+    display: inline-block;
+    color: #1E3269;
+    margin-right: 10px;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+}
+
+.create_diary_map_ksy {
+    color: #1E3269;
+    margin-top: 5px;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+}
+
+.create_diary_fifth_ksy {
+    background: white;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+}
+
+.create_diary_fifth_ksy p {
+    color: #1E3269;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    background: #DDE9FE;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .create_diary_container_ksy {
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .create_diary_second_ksy {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .create_diary_button_ksy {
+        flex-wrap: wrap;
+    }
+
+    .create_button_save_ksy {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
