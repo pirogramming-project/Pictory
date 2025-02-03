@@ -240,7 +240,7 @@ from django.shortcuts import render
 def generate_emotion_graph():
     """ 최근 7일 감정 그래프를 생성하고 Base64로 변환하는 함수 """
     # 최근 7개의 감정 점수를 DB에서 가져오는 예제 (ORM을 사용하는 것이 일반적)
-    recent_emotion_scores = [3, 5, 2, 7, 4, 6, 3]
+    recent_emotion_scores = [2, 7, 6, 3, 7, 6, 1]
     dates = ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31"]
 
     # 그래프 생성
