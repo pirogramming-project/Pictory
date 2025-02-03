@@ -8,6 +8,7 @@ class Frame(models.Model):
     # 스티커는 역참조 stickers로 접근.
     # 사진들도 역참조 photos로 접근
     logo_text = models.CharField("로고 text", max_length=20, default='pictory')
+    image_file = models.ImageField("최종 이미지 파일", upload_to="images/frames/%Y/%m/%d")
     
 class Photo(models.Model):
     frame = models.ForeignKey(Frame, models.CASCADE, related_name="photos")
