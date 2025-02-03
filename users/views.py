@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import secrets
 import requests
@@ -269,3 +270,13 @@ def profile(request):
 
     return render(request, "users/profile.html", {"graph": graph})
 
+
+
+def user_search_ajax(request):
+    query = request.GET.get("query", "")  # 검색어를 GET 파라미터로 받음
+    if query[0] == '@':
+        # 유저검색
+        results = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:]).values("nickname", "profile_photo")
+    else:
+        results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo")
+    return JsonResponse({"result": list(results)})

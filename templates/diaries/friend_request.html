@@ -19,5 +19,57 @@
             </button>
         </form>
     </div>
+    <div class="friend_search-result_kes">
+
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".friend_search-input_ksy");
+        const resultsContainer = document.querySelector(".friend_search-result_kes");
+
+        const searchResultItemClassName = "user_search_result_item_kes";    // 모든 검색된 아이템 컨테이너div 클래스명
+        const profileImageClassName = "user_search_result_item_profileimage_kes";   // 검색결과 프사 이미지 클래스명
+        const userNicknameClassName = "user_search_result_item_nickname_kes";       // 검색결과 닉네임 클래스명
+        const friendRequestButtonClassName = "user_search_request_button_kes"; // '친구 추가' 버튼 클래스명
+        const noResultTextClassName = "user_search_no_result_text_kes"; // 검색결과 없을 때 뜨는 텍스트 클래스명
+
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+            if (query === "") {
+                resultsContainer.innerHTML = "";  // 검색어 없으면 결과 초기화
+                return;
+            }
+
+            fetch(`/search_ajax/?query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resultsContainer.innerHTML = "";  // 기존 결과 초기화
+                    if (data.result.length > 0) {
+                        data.result.forEach(user => {
+                            const userElement = document.createElement("div");
+                            userElement.className = searchResultItemClassName;
+                            userElement.innerHTML = `
+                                <img class="${profileImageClassName}" src="/media/${user.profile_photo}" alt="프로필 사진"/>
+                                <p class="${userNicknameClassName}">${user.nickname}</p>
+                                <button class="${friendRequestButtonClassName}">친구 추가</button>
+                            `;
+                            resultsContainer.appendChild(userElement);
+                        });
+                    } else {
+                        resultsContainer.innerHTML = `<p class="${noResultTextClassName}">검색 결과가 없습니다.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching posts:", error);
+                });
+        });
+    });
+</script>
 {% endblock %}

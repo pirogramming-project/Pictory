@@ -15,4 +15,5 @@ urlpatterns = [
     path('main/', main , name='main'),
     path('profile/', profile, name='profile'),  
     path('alarm/', alarm, name='alarm'), 
+    path('search_ajax/', user_search_ajax, name="user_search_ajax"),
 ]
