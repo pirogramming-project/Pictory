@@ -172,5 +172,6 @@ def create_diary(request, related_frame_id):
     form = DiaryForm()
     context = {
         'form' : form,
+        'related_frame_id' : related_frame_id,
     }
     return render(request, 'diaries/create_diary.html', context)

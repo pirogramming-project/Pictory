@@ -4,7 +4,7 @@ from .views import *
 app_name = 'diaries'
 
 urlpatterns = [
-    path('create/', create_diary, name='create_diary'),
+    path('create/<int:related_frame_id>/', create_diary, name='create_diary'),
     path('create/type', select_photo_type, name='select_photo_type'),
     path('create/frame', select_frame, name='select_frame'),
     path('create/customize', custom_photo, name='custom_photo'),

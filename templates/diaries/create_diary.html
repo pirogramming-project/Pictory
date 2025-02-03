@@ -11,7 +11,7 @@
             <img>
         </div>
         <div class="create_diary_right_container_ksy">
-            <form class="create_diary_form_ksy" method="post" action="{% url 'diaries:create_diary' %}">
+            <form class="create_diary_form_ksy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
                 {% csrf_token %}
                 <div class="create_diary_first_ksy">
                     <div class="create_diary_first_title_ksy">
