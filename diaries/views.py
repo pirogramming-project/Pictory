@@ -234,9 +234,16 @@ def community(request):
 def friend_request(request):
     return render(request, 'diaries/friend_request.html')
 
+@login_required
 def diary_map(request):
-    return render(request, 'diaries/diary_map.html')
+    myPlaces = list(Diary.objects.filter(writer=request.user).values_list("place", flat=True))
+    context = {
+        "KAKAO_MAP_APPKEY_JS" : KAKAO_APPKEY_JS,
+        "my_places" : myPlaces,
+    }
+    return render(request, 'diaries/diary_map.html', context)
 
+@login_required
 def mydiaries(request):
     myDiaryList = Diary.objects.filter(writer=request.user)
     context = {
