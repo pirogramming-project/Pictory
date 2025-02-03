@@ -13,11 +13,17 @@ from django.http import Http404
 def diary_detail(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)  
     user_tags = User_Tag.objects.filter(diary=diary)  
+    photo = diary.four_cut_photo.image_file
 
     if diary.writer != request.user:
         raise Http404("존재하지 않는 페이지입니다.")  
     
-    return render(request, 'diaries/detail.html', {'diary': diary, 'user_tags': user_tags})
+    context = {
+        'diary': diary,
+        'user_tags': user_tags,
+        'photo' : photo,
+    }
+    return render(request, 'diaries/detail.html', context)
 
 @login_required
 def diaries_by_date(request, year, month, day):
@@ -166,7 +172,7 @@ def custom_photo(request):
 def create_diary(request, related_frame_id):
     related_frame = Frame.objects.get(id=related_frame_id)
     if request.method == 'POST':
-        four_cut_photo = Frame.objects.create(frame_css = "test")   ## TODO: 실제 네컷사진 불러오는 걸로 수정 필요
+        four_cut_photo = related_frame
         
         form = DiaryForm(request.POST)
         if form.is_valid():
