@@ -230,3 +230,42 @@ def profile(request):
 def alarm(request):
     return render(request, 'users/alarm.html')
 
+
+# 감정 그래프
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+from django.shortcuts import render
+
+def generate_emotion_graph():
+    """ 최근 7일 감정 그래프를 생성하고 Base64로 변환하는 함수 """
+    # 최근 7개의 감정 점수를 DB에서 가져오는 예제 (ORM을 사용하는 것이 일반적)
+    recent_emotion_scores = [3, 5, 2, 7, 4, 6, 3]
+    dates = ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31"]
+
+    # 그래프 생성
+    plt.rcParams["font.family"] = "Malgun Gothic"
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(dates, recent_emotion_scores, marker="o", linestyle="-", color="b", linewidth=2)
+    ax.set_xlabel("날짜", fontsize=12)
+    ax.set_ylabel("감정 점수 (1~7)", fontsize=12)
+    ax.set_ylim(1, 7)  # 감정 점수 범위 설정
+    ax.grid(False) 
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # 이미지를 Base64로 변환
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    buffer.close()
+    
+    return image_base64
+
+def profile(request):
+    """ 프로필 페이지 뷰 """
+    graph = generate_emotion_graph()  # 감정 그래프 생성
+
+    return render(request, "users/profile.html", {"graph": graph})
+
