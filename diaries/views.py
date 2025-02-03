@@ -177,3 +177,14 @@ def create_diary(request, related_frame_id):
         'form' : form,
     }
     return render(request, 'diaries/create_diary.html', context)
+
+
+
+def community(request):
+    return render(request, 'diaries/community.html')
+
+def friend_request(request):
+    return render(request, 'diaries/friend_request.html')
+
+def diary_map(request):
+    return render(request, 'diaries/diary_map.html')

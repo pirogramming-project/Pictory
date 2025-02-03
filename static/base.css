@@ -140,17 +140,19 @@
 
 /* 로그아웃 버튼 */
 .base_logout_ksy {
-    color: #1E3269;
-    font-size: 14px;
+    font-family: var(--main_font);
+    font-size: 25px;
+    color: #78a9ed;
     margin-top: 10px;
 }
 
 /* 메뉴 아이템 스타일 */
 .base_menu-item_ksy {
+    font-family: var(--main_font);
     width: 80%;
     background-color: white;
     border: none;
-    font-size: 18px;
+    font-size: 25px;
     padding: 15px;
     margin: 5px 0;
     border-radius: 10px;
@@ -158,7 +160,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1E3269;
+    color: var(--font_color);
     cursor: pointer;
     transition: 0.2s;
 }

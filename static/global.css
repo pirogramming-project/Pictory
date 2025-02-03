@@ -1,7 +1,15 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --login_signup_hint: rgba(0,0,0,0.41);
     --login_signup_background: #DDE9FE;
     --login_signup_button: #9BC3FF;
     --font_color: #1E3269;
     --login_signup_link: #78A9ED;
+    --main_font: 'GangwonEduSaeeum_OTFMediumA';
 }

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pictory{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body class="base_body_ksy">
@@ -37,10 +39,10 @@
                 </div>
                 <button class="base_menu-item_ksy" onclick="location.href='{% url 'users:profile' %}'">MY</button>
                 <button class="base_menu-item_ksy" onclick="location.href='{% url 'users:alarm' %}'">알림</button>
-                <button class="base_menu-item_ksy">지도</button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:diary_map' %}'">지도</button>
                 <button class="base_menu-item_ksy">인생네컷 만들기</button>
-                <button class="base_menu-item_ksy">community</button>
-                <button class="base_menu-item_ksy">친구 요청 보내기</button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:community' %}'">community</button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:friend_request' %}'">친구 요청 보내기</button>
             </div>
 
             <div class="base_content-scroll_ksy">
