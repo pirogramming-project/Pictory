@@ -223,7 +223,7 @@ def create_diary(request, related_frame_id):
 
 
 def community(request):
-    friendDiaryList = Diary.objects.all()   # TODO: 친구들 다이어리로 수정필요
+    friendDiaryList = Diary.objects.all()   # TODO: 친구들 다이어리 다 뜨게 수정필요 ==> '태그로 검색'
 
     context = {
         'friend_diaries' : friendDiaryList
