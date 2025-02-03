@@ -31,7 +31,7 @@
                     {% csrf_token %}
                     <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
                     <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
-                    
+                    <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
                     <button type="button" onclick="prepareAndSubmitForm_kes()">저장하고 다음으로</button>
                 </form>
             </div>
@@ -51,7 +51,7 @@
     </div>
 
     
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         function prepareAndSubmitForm_kes() {
             // 프레임 색상, 두께 - css text 형태로 저장
@@ -85,7 +85,15 @@
                 coorYInput.value = Number(img.style.top.replace('px',''));
                 form.appendChild(coorYInput);
             });
-            form.submit();  // form 제출
+
+            // 프레임 이미지 자체 저장
+            const captureArea = document.getElementById("pictory-frame_psy");
+
+            html2canvas(captureArea).then(canvas => {
+                let imgData = canvas.toDataURL("image/png");  // Base64 인코딩된 이미지 데이터
+                document.getElementById("saved_photo_image_kes").value = imgData;
+                form.submit();  // form 제출
+            });
         }
 
         document.addEventListener("DOMContentLoaded", function () {

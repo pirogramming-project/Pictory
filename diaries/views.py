@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
-from datetime import date
-from django.urls import reverse
+from datetime import date, datetime
+from django.urls import reverse=
+from django.core.files.base import ContentFile
+import base64
 from django.http import Http404
-from datetime import datetime
 
 # 디테일 페이지
+@login_required
 def diary_detail(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)  
     user_tags = User_Tag.objects.filter(diary=diary)  
@@ -90,6 +92,7 @@ def edit_diary(request, diary_id):
     }
     return render(request, 'diaries/edit_diary.html', context)
 
+
 # 다이어리 삭제
 @login_required
 def delete_diary(request, diary_id):
@@ -97,9 +100,14 @@ def delete_diary(request, diary_id):
     diary.delete()
     return redirect('users:main')
 
-
-
-
+# 인생네컷 추가 페이지1
+def select_photo_type(request):
+    return render(request, 'diaries/photo_type.html')
+  
+# 인생네컷 추가 페이지2
+def select_frame(request):
+    return render(request, 'diaries/frame_select.html')
+  
 # 인생네컷 추가 페이지3
 @login_required
 def custom_photo(request):
@@ -108,9 +116,14 @@ def custom_photo(request):
         # 1. 사진 프레임 저장
         frame_css = request.POST.get("frame_css")  # 프레임 CSS 속성
         logo_text = request.POST.get("logo_text")  # 프레임 로고 속성
+        saved_photo = request.POST.get("saved_photo") # 최종 이미지
 
-        if frame_css and logo_text:
-            created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text)
+        created_frame = None
+        if frame_css and logo_text and saved_photo:
+            format, imgstr = saved_photo.split(";base64,")  # Base64 데이터(saved_photo) 분리
+            ext = format.split("/")[-1]  # 확장자 추출 (png, jpg 등)
+            img_file = ContentFile(base64.b64decode(imgstr), name=f"frame_{request.user.login_id}.{ext}")   # Base64 디코딩하여 파일로 변환
+            created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text, image_file=img_file)
             if not created_frame:
                 print("[프레임]저장실패.. 다시시도")
                 return render(request, 'diaries/custom_photo.html')
@@ -138,7 +151,7 @@ def custom_photo(request):
             print(uploaded_files)
             for file in uploaded_files:
                 Photo.objects.create(frame=created_frame, photo=file)  # 이미지 저장
-        
+                     
         # 저장 성공 시 리다이렉트
         if created_frame:
             return redirect("diaries:create_diary", created_frame.id)
@@ -192,6 +205,8 @@ def create_diary(request, related_frame_id):
     form = DiaryForm()
     context = {
         'form' : form,
+        'related_frame_id' : related_frame_id,
+        'related_frame_img' :related_frame.image_file,
     }
     return render(request, 'diaries/create_diary.html', context)
 
