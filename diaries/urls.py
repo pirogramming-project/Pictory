@@ -15,4 +15,5 @@ urlpatterns = [
     path('friend_request/', friend_request, name='friend_request'),
     path('diary_map', diary_map, name='diary_map'),
     path('by_date/<int:year>/<int:month>/<int:day>/', diaries_by_date, name='diaries_by_date'),
+    path('mydiaries/', mydiaries, name='mydiaries'),
 ]
