@@ -5,10 +5,11 @@
     background: white;
     border-radius: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    min-height: calc(100vh - 40px);
     position: relative;
     padding: 20px;
     width: 90%;
+    height: calc(100vh - 150px);
+    overflow-y: auto;
 }
 
 .create_diary_left_container_ksy {
@@ -92,6 +93,10 @@ textarea {
     color: #1E3269;
     font-size: 14px;
     cursor: pointer;
+}
+
+.create_diary_usertag_item_kes label.selected {
+    background-color: #c7e4ff;
 }
 
 /* 저장 버튼 */
