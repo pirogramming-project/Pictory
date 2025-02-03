@@ -228,4 +228,9 @@ def diary_map(request):
     return render(request, 'diaries/diary_map.html')
 
 def mydiaries(request):
-    return render(request, 'diaries/mydiaries.html')
+    myDiaryList = Diary.objects.filter(writer=request.user)
+    context = {
+        'my_diaries' : myDiaryList
+    }
+    
+    return render(request, 'diaries/mydiaries.html', context)

@@ -25,10 +25,10 @@
         <!-- 사진 그리드 -->         
         <div class="community_photo-grid-container_ksy">             
             <div class="community_photo-grid_ksy" id="photoGrid_ksy">                 
-                {% with ""|center:"10" as range_list %}
-                    {% for _ in range_list %}
-                        <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', 'Title', '#픽토리')">                         
-                            <img src="{% static 'images/pictory-frame2.png' %}" alt="Pictory">                     
+                {% with ""|center:"10" as photos %}
+                    {% for diary in my_diaries %}
+                        <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', '{{ diary.title }}', '#픽토리')"> 
+                            <img src="{{ diary.four_cut_photo.image_file.url }}" alt="네컷사진">
                         </div>
                     {% endfor %}
                 {% endwith %}         
