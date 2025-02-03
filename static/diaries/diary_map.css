@@ -3,10 +3,13 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 50px;
 }
 
 .map_search-container_ksy {
+    margin-top: 20px;
+    position: absolute;
+    z-index: 10;
     width: 100%;
     display: flex;
     justify-content: center;
