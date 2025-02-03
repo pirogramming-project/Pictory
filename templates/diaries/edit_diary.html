@@ -71,4 +71,23 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".create_diary_usertag_item_kes input[type='checkbox']");
+    
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                const label = this.closest("label");
+    
+                if (this.checked) {
+                    label.classList.add("selected"); // 선택된 경우 스타일 변경
+                } else {
+                    label.classList.remove("selected"); // 선택 해제 시 원래 스타일 복구
+                }
+            });
+        });
+    });
+    
+</script>
+
 {% endblock %}
