@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
 from django.contrib.auth.decorators import login_required
@@ -7,6 +8,8 @@ from django.urls import reverse
 from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
+
+KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
 # 디테일 페이지
 @login_required
@@ -212,7 +215,8 @@ def create_diary(request, related_frame_id):
     context = {
         'form' : form,
         'related_frame_id' : related_frame_id,
-        'related_frame_img' :related_frame.image_file,
+        'related_frame_img' : related_frame.image_file,
+        'KAKAO_MAP_APPKEY_JS' : KAKAO_APPKEY_JS,
     }
     return render(request, 'diaries/create_diary.html', context)
 
@@ -230,9 +234,16 @@ def community(request):
 def friend_request(request):
     return render(request, 'diaries/friend_request.html')
 
+@login_required
 def diary_map(request):
-    return render(request, 'diaries/diary_map.html')
+    myPlaces = list(Diary.objects.filter(writer=request.user).values_list("place", flat=True))
+    context = {
+        "KAKAO_MAP_APPKEY_JS" : KAKAO_APPKEY_JS,
+        "my_places" : myPlaces,
+    }
+    return render(request, 'diaries/diary_map.html', context)
 
+@login_required
 def mydiaries(request):
     myDiaryList = Diary.objects.filter(writer=request.user)
     context = {
