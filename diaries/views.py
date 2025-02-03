@@ -219,7 +219,13 @@ def create_diary(request, related_frame_id):
 
 
 def community(request):
-    return render(request, 'diaries/community.html')
+    friendDiaryList = Diary.objects.all()   # TODO: 친구들 다이어리로 수정필요
+
+    context = {
+        'friend_diaries' : friendDiaryList
+    }
+    
+    return render(request, 'diaries/community.html', context)
 
 def friend_request(request):
     return render(request, 'diaries/friend_request.html')

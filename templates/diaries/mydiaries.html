@@ -27,9 +27,12 @@
             <div class="community_photo-grid_ksy" id="photoGrid_ksy">                 
                 {% with ""|center:"10" as photos %}
                     {% for diary in my_diaries %}
+                        {% for tag in diary.tags.all %}
+                        <p>{{tag}}</p>
                         <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', '{{ diary.title }}', '#픽토리')"> 
                             <img src="{{ diary.four_cut_photo.image_file.url }}" alt="네컷사진">
                         </div>
+                        {% endfor %}
                     {% endfor %}
                 {% endwith %}         
             </div>         

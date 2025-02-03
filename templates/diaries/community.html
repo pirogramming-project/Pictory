@@ -24,14 +24,13 @@
 
         <!-- 사진 그리드 -->         
         <div class="community_photo-grid-container_ksy">             
-            <div class="community_photo-grid_ksy" id="photoGrid_ksy">                 
-                {% with ""|center:"10" as range_list %}
-                    {% for _ in range_list %}
-                        <div class="community_photo-item_ksy" onclick="showDetail_ksy('pictory-frame2.png', 'Title', '#픽토리')">                         
-                            <img src="{% static 'images/pictory-frame2.png' %}" alt="Pictory">                     
-                        </div>
-                    {% endfor %}
-                {% endwith %}         
+            <div class="community_photo-grid_ksy" id="photoGrid_ksy">
+                {% for diary in friend_diaries %}
+                <div class="community_photo-item_ksy" onclick="showDetail_ksy(this, '{{ diary.title }}', '{% for tag in diary.tags.all %}#{{tag.name}} {% endfor %}')">                         
+                    <img src="{{ diary.four_cut_photo.image_file.url }}" alt="네컷사진">
+                </div>
+
+                {% endfor %}   
             </div>         
         </div>     
     </div>      
@@ -55,14 +54,15 @@
     </div>      
 
     <script>         
-    function showDetail_ksy(image, title, tags) {             
+    function showDetail_ksy(clicked_div, title, tags) {             
         document.body.classList.add('community_detail-page_ksy');             
         const modal = document.getElementById('community_detailModal_ksy');             
         const modalImage = document.getElementById('community_detailModalImage_ksy');             
         const modalTitle = document.getElementById('community_detailModalTitle_ksy');             
         const modalTags = document.getElementById('community_detailModalTags_ksy');              
-        
-        modalImage.src = "{% static 'images/' %}" + image;             
+
+        imageSrc = clicked_div.querySelector('img').src;
+        modalImage.src = imageSrc;             
         modalTitle.textContent = title;             
         modalTags.textContent = tags;                          
         
