@@ -11,6 +11,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
 from django.shortcuts import get_list_or_404
 from diaries.models import Diary
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -228,6 +230,7 @@ def logout_view(request):
 def main(request):
     return render(request, 'users/main.html')
 
+@login_required
 def profile(request):
     return render(request, 'users/profile.html')
 
@@ -409,3 +412,16 @@ def get_diaries_by_date(request, year, month, day):
         diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+@login_required
+def update_profile_photo(request):
+    if request.method == "POST" and request.FILES.get("profile_photo"):
+        user = request.user
+        user.profile_photo = request.FILES["profile_photo"]
+        user.save()
+        
+        messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
+        return redirect("users:profile")  
+    
+    messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
+    return redirect("users:profile")
