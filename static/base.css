@@ -157,7 +157,7 @@
 .base_menu-item_ksy {
     font-family: "Gravitas One", serif;
     position: relative;
-    width: 83%;
+    width: 82%;
     background-color: var(--background);
     border: none;
     font-size: 20px;
@@ -189,4 +189,23 @@
     font-size: 14px;
     position: absolute;
     bottom: 0;
+}
+
+.base_content-area_ksy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+/* 사이드바가 열렸을 때 배경 투명도 적용 */
+.base_content-area_ksy.base_active_opacity::before {
+    opacity: 0.5;
 }
