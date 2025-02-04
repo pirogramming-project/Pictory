@@ -65,14 +65,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 ## 유저 이웃 관련 모델들
 class NeighborRequest(models.Model):
     """이웃 추가 신청"""
-    STATUS_CHOICES = [
-        ('waiting', '대기 중'),
-        ('accepted', '수락됨'),
-    ]
     
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_neighbor_requests", verbose_name="신청 보낸 유저")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_neighbor_requests", verbose_name="신청 받은 유저")
-    status = models.CharField("상태", max_length=10, choices=STATUS_CHOICES, default='waiting')
     created_at = models.DateTimeField("생성시간", auto_now_add=True)
 
     class Meta:
