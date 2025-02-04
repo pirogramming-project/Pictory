@@ -2,9 +2,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import secrets
 import requests
+import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User
+from users.models import User, NeighborRequest, Neighbor
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -276,7 +277,101 @@ def user_search_ajax(request):
     query = request.GET.get("query", "")  # 검색어를 GET 파라미터로 받음
     if query[0] == '@':
         # 유저검색
-        results = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:]).values("nickname", "profile_photo")
+        results = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:]).values("nickname", "profile_photo", "login_id")
     else:
-        results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo")
+        results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo", "login_id")
     return JsonResponse({"result": list(results)})
+
+
+##### 친구 신청 관련 Util함수들 #####
+def are_neighbors(user_a, user_b):
+    """두 유저가 이웃인지 확인"""
+    user1, user2 = sorted([user_a, user_b], key=lambda u: u.login_id)
+    return Neighbor.objects.filter(user1=user1, user2=user2).exists()
+def addUsersToFriend(user1, user2):
+    ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 '''
+    Neighbor.objects.get_or_create(
+        user1=user1,
+        user2=user2
+    )
+    return user1, user2
+##### 끝. 친구 신청 관련 Util함수들 끝. #####
+
+def cancel_friend_request_ajax(request):
+    ''' 이웃 신청 취소 '''
+    if request.method == "POST":
+        data = json.loads(request.body)
+        fromUser = request.user
+        try:
+            toUser = User.objects.exclude(login_id=fromUser.login_id).get(login_id=data.get('to_user_loginid'))
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })
+        
+        if not NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).exists():
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })       
+        
+        NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).delete()
+        return JsonResponse({
+                "success": True,
+                "message": "이웃 요청을 취소했습니다."
+            })
+
+def send_friend_request_ajax(request):
+    ''' 이웃 신청 '''
+    # ajax 포스트 요청일 때:
+    if request.method == "POST":
+        data = json.loads(request.body)
+        fromUser = request.user
+        try:
+            toUser = User.objects.exclude(login_id=fromUser.login_id).get(login_id=data.get('to_user_loginid'))
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+                })
+    
+        # 이미 이웃인지 검사
+        if are_neighbors(fromUser, toUser):
+            return JsonResponse({
+                "success": False,
+                "message": "이미 이웃인 유저입니다."
+                })
+        
+        # 친구가 아닐 떄..
+        my_all_requests = NeighborRequest.objects.filter(sender=fromUser)   # 내가 보낸 모든 친구신청들
+        my_all_received_requests = NeighborRequest.objects.filter(receiver=fromUser)    # 내가 받은 모든 친구신청들
+        # (1) 이미 신청을 보냈거나 받은 유저다.
+        if my_all_requests.filter(receiver=toUser).exists():
+            ## (1-1) 이미 신청을 보냈다면
+            return JsonResponse({
+                "success": False,
+                "message": "상대방의 수락을 기다리는 중입니다."
+                })  
+        if my_all_received_requests.filter(sender=toUser).exists():
+            ## (1-2) 이미 신청을 받았다면 친구 수락으로 처리.
+            addUsersToFriend(fromUser, toUser)
+            return JsonResponse({
+                "success": False,
+                "message": f"상대방의 친구 요청을 수락했습니다. @{toUser.nickname}과 친구가 되었습니다."
+                })  
+                      
+        # (2) 그게 아니면 이웃 신청 보낸다.
+        newRequest, created = NeighborRequest.objects.get_or_create(
+            sender = fromUser,
+            receiver = toUser
+        )
+        if created:
+            # (2)번케이스
+            return JsonResponse({
+                "success": True,
+                "message": "성공적으로 이웃 신청을 보냈습니다."
+                })
+    
+    # get요청일때: pass
+

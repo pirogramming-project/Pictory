@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+    <meta name="csrf_token" content="{{ csrf_token }}">
     <link rel="stylesheet" href="{% static 'diaries/friend_request.css' %}">
 {% endblock %}
 
@@ -53,12 +54,13 @@
                     resultsContainer.innerHTML = "";  // 기존 결과 초기화
                     if (data.result.length > 0) {
                         data.result.forEach(user => {
+                            console.log(user)
                             const userElement = document.createElement("div");
                             userElement.className = searchResultItemClassName;
                             userElement.innerHTML = `
                                 <img class="${profileImageClassName}" src="/media/${user.profile_photo}" alt="프로필 사진"/>
                                 <p class="${userNicknameClassName}">${user.nickname}</p>
-                                <button class="${friendRequestButtonClassName}">친구 추가</button>
+                                <button onclick="FriendRequestOnClick('${user.login_id}')" class="${friendRequestButtonClassName}">친구 추가</button>
                             `;
                             resultsContainer.appendChild(userElement);
                         });
@@ -71,5 +73,34 @@
                 });
         });
     });
+    function FriendRequestOnClick(targetloginId) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/send_friend_request_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              to_user_loginid: targetloginId,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success) {
+                    alert("성공: " + data.message);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+    }
 </script>
 {% endblock %}
