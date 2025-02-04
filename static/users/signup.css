@@ -1,4 +1,5 @@
 .signup-body_psy {
+    grid-template-columns: 1fr 0.7fr 1fr; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,7 +50,7 @@
 /* 제목 */
 .title_psy{
     position: relative;
-    font-family: 'GangwonEduSaeeum';
+    font-family: var(--main_font);
     font-style: normal;
     font-weight: 400;
     font-size: 5rem;
