@@ -280,3 +280,17 @@ def user_search_ajax(request):
     else:
         results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo")
     return JsonResponse({"result": list(results)})
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_list_or_404
+from diaries.models import Diary
+
+#달력에 해당 날짜의 일기 반환
+def get_diaries_by_date(request, year, month, day):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # AJAX 요청 확인
+        diaries = Diary.objects.filter(date__year=year, date__month=month, date__day=day)
+        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        return JsonResponse(diary_list, safe=False)
+    return JsonResponse({"error": "Invalid request"}, status=400)

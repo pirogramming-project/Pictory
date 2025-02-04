@@ -251,3 +251,4 @@ def mydiaries(request):
     }
     
     return render(request, 'diaries/mydiaries.html', context)
+
