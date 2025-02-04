@@ -91,30 +91,34 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          const menuButton = document.getElementById("base_menuButton_ksy");
-          const closeButton = document.getElementById("base_closeButton_ksy");
-          const sidebar = document.getElementById("base_sidebar_ksy");
-          
-          // 햄버거 메뉴 클릭 시
-          menuButton.addEventListener("click", function () {
-              menuButton.style.display = "none"; // 햄버거 버튼 즉시 숨기기
-              sidebar.style.display = "flex";
-              closeButton.style.display = "block"; 
-              requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
-          });
-          
-          // X 버튼 클릭 시
-          closeButton.addEventListener("click", function () {
-              sidebar.classList.remove("base_active_ksy");
-              setTimeout(() => {
-                  sidebar.style.display = "none";
-                  closeButton.style.display = "none";
-                  menuButton.style.display = "flex"; 
-              }, 100); 
-          });
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuButton = document.getElementById("base_menuButton_ksy");
+            const closeButton = document.getElementById("base_closeButton_ksy");
+            const sidebar = document.getElementById("base_sidebar_ksy");
+            const contentArea = document.querySelector(".base_content-area_ksy");
+        
+            // 햄버거 메뉴 클릭 시
+            menuButton.addEventListener("click", function () {
+                menuButton.style.display = "none"; // 햄버거 버튼 숨기기
+                sidebar.style.display = "flex"; // 사이드바 보이기
+                closeButton.style.display = "block"; 
+                contentArea.classList.add("base_active_opacity"); 
+                requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
+            });
+        
+            // 닫기 버튼 클릭 시
+            closeButton.addEventListener("click", function () {
+                sidebar.classList.remove("base_active_ksy");
+                contentArea.classList.remove("base_active_opacity"); // opacity 원래대로 복구
+                setTimeout(() => {
+                    sidebar.style.display = "none";
+                    closeButton.style.display = "none";
+                    menuButton.style.display = "flex"; 
+                }, 100);
+            });
+        });
     </script>
+        
 
     {% block extra_js %}{% endblock %}
 </body>
