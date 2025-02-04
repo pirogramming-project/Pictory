@@ -7,6 +7,7 @@
 
 .main-container_psy{
     display: block;
+    position: relative;
 }
 
 .calendar-wrapper_psy {
@@ -137,6 +138,8 @@
     max-height: 200px;
     overflow-y: auto;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 6;
+    position: absolute;
 }
 
 
@@ -146,10 +149,12 @@
     list-style-type: none;  /* ✅ 기존 '•' 제거 */
     padding: 8px 0;  /* ✅ 각 항목 간격 조정 */
     border-bottom: 1px solid #DAE6F8;  /* ✅ 항목 구분선 추가 */
+    z-index: 6;
 }
 
 #diaryListContainer li:last-child {
     border-bottom: none;  /* ✅ 마지막 항목 구분선 제거 */
+    z-index: 6;
 }
 
 #diaryListContainer a {
@@ -160,4 +165,5 @@
     padding: 5px 10px;
     border-radius: 4px;
     transition: background 0.2s ease-in-out;
+    z-index: 6;
 }

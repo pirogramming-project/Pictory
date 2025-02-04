@@ -241,19 +241,24 @@ from django.shortcuts import render
 def generate_emotion_graph():
     """ 최근 7일 감정 그래프를 생성하고 Base64로 변환하는 함수 """
     # 최근 7개의 감정 점수를 DB에서 가져오는 예제 (ORM을 사용하는 것이 일반적)
-    recent_emotion_scores = [2, 7, 6, 3, 7, 6, 1]
+    recent_emotion_scores = [2, 4, 6, 3, 7, 6, 5]
     dates = ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31"]
 
     # 그래프 생성
-    plt.rcParams["font.family"] = "Malgun Gothic"
+    plt.rcParams["font.family"] = "GangwonEduSaeeum"
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(dates, recent_emotion_scores, marker="o", linestyle="-", color="b", linewidth=2)
-    ax.set_xlabel("날짜", fontsize=12)
-    ax.set_ylabel("감정 점수 (0~8)", fontsize=12)
+    ax.plot(dates, recent_emotion_scores, marker="p", color="#1E3269", linewidth=4, markeredgewidth=2,)
+    ax.set_xlabel("날짜", fontsize=20, color="#1E3269", labelpad=15 )
+    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#1E3269", labelpad=15)
     ax.set_ylim(0, 8)  # 감정 점수 범위 설정
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
+    ax.tick_params(axis="x", labelsize=18, colors="#1E3269")
+    ax.tick_params(axis="y", labelsize=18, colors="#1E3269")
+    ax.set_xticklabels(dates, fontsize=18, fontweight='bold', color='#1E3269')
+    ax.set_yticklabels(range(9), fontsize=18, fontweight='bold', color='#1E3269')
+    fig.tight_layout()
 
     # 이미지를 Base64로 변환
     buffer = BytesIO()
@@ -263,6 +268,7 @@ def generate_emotion_graph():
     buffer.close()
     
     return image_base64
+
 
 def profile(request):
     """ 프로필 페이지 뷰 """
