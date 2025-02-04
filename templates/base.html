@@ -33,7 +33,7 @@
                 <!-- X 버튼을 사이드바 내부로 이동 -->
                 <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
                 <div class="base_profile_ksy">
-                    <div class="base_profile-image_ksy"></div>
+                    <div class="base_profile-image_ksy" style="background-image: url('{{ user.profile_photo.url }}');"></div>                    
                     <form action="{% url 'users:logout' %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="base_logout_ksy">로그아웃</button>
