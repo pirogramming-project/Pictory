@@ -55,7 +55,7 @@
 }
 
 /* 검색결과로 나오는 요소들입니다~~ 예쁘게 해주세요 */
-/* 순서대로 컨테이너, 프사이미지, 닉네임, 친추버튼 */
+/* 순서대로 컨테이너, 프사이미지, 닉네임, 친추버튼, 친추취소버튼 */
 .user_search_result_item_kes {
     display: flex;
     gap: 10px;
@@ -73,6 +73,11 @@
 }
 .user_search_request_button_kes {
     background-color: blue;
+    color: white;
+    border-radius: 5px;
+}
+.user_search_request_cancel_button_kes {
+    background-color: red;
     color: white;
     border-radius: 5px;
 }

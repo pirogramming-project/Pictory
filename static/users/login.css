@@ -37,7 +37,7 @@
 }
 
 .login_title_ksy {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    font-family: var(--main_font);
     font-size: 48px;
     color: var(--font_color);
     font-style: normal;

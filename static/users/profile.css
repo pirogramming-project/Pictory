@@ -37,10 +37,19 @@
     object-fit: cover;
 }
 
+.profile-img_psy p{
+    color: #1E3269;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+
+}
+
 .change_image_psy {
     color: #1E3269;
     font-family: 'GangwonEduSaeeum';
-
 }
 
 .profile-info_psy {
@@ -150,7 +159,7 @@
 .graph-container_psy {
     width: 100%;
     height: 200px;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 10px;
     overflow: hidden;
 }

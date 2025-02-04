@@ -54,24 +54,24 @@
     </div>      
 
     <script>         
-    function showDetail_ksy(clicked_div, title, tags) {             
-        document.body.classList.add('community_detail-page_ksy');             
-        const modal = document.getElementById('community_detailModal_ksy');             
-        const modalImage = document.getElementById('community_detailModalImage_ksy');             
-        const modalTitle = document.getElementById('community_detailModalTitle_ksy');             
-        const modalTags = document.getElementById('community_detailModalTags_ksy');              
+        function showDetail_ksy(clicked_div, title, tags) {             
+            document.body.classList.add('community_detail-page_ksy');             
+            const modal = document.getElementById('community_detailModal_ksy');             
+            const modalImage = document.getElementById('community_detailModalImage_ksy');             
+            const modalTitle = document.getElementById('community_detailModalTitle_ksy');             
+            const modalTags = document.getElementById('community_detailModalTags_ksy');              
 
-        imageSrc = clicked_div.querySelector('img').src;
-        modalImage.src = imageSrc;             
-        modalTitle.textContent = title;             
-        modalTags.textContent = tags;                          
-        
-        modal.style.display = 'block';         
-    }          
+            imageSrc = clicked_div.querySelector('img').src;
+            modalImage.src = imageSrc;             
+            modalTitle.textContent = title;             
+            modalTags.textContent = tags;                          
+            
+            modal.style.display = 'block';         
+        }          
 
-    function hideDetail_ksy() {             
-        document.body.classList.remove('community_detail-page_ksy');             
-        document.getElementById('community_detailModal_ksy').style.display = 'none';         
-    }     
+        function hideDetail_ksy() {             
+            document.body.classList.remove('community_detail-page_ksy');             
+            document.getElementById('community_detailModal_ksy').style.display = 'none';         
+        }     
     </script> 
 {% endblock %}

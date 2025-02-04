@@ -9,13 +9,21 @@
     <div class="profile-wrapper_psy">
 
         <div class="profile_psy">
-            <div class="profile-image_psy">
-                <img src="#" alt="프로필 사진">  
+            <div class="profile-img_psy">
+                <img src="{{ user.profile_photo.url }}" alt="프로필 사진" class="profile-image_psy"> 
+
+                 <!-- 숨겨진 파일임임 -->
+                <form id="profileUploadForm" action="{% url 'users:update_profile_photo' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" id="profileInput" name="profile_photo" accept="image/*" style="display: none;">
+                </form>
+
+                <p onclick="document.getElementById('profileInput').click();">프로필 사진 변경하기</p> 
             </div>
             <div class="profile-section_psy">   
                 <div class="profile-info_psy">
                     <div class="id-box_psy">@{{ request.user.nickname }}</div>
-                    <div class="visitor-box_psy">이웃 52명</div>
+                    <div class="visitor-box_psy">이웃 {{ friend_count }}명</div>
                 </div>
     
                 <div class="button-group_psy">
@@ -50,4 +58,9 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById("profileInput").addEventListener("change", function() {
+            document.getElementById("profileUploadForm").submit();
+        });
+    </script>
 {% endblock %}

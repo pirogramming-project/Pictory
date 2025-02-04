@@ -2,12 +2,18 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import secrets
 import requests
+import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User
+from users.models import User, NeighborRequest, Neighbor
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
+from django.shortcuts import get_list_or_404
+from diaries.models import Diary
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -94,7 +100,7 @@ def kakao_callback(request):
         headers={"Authorization": f"Bearer {access_token}"},
     )
     user_info = user_info_request.json()
-
+    
     kakao_id = user_info["id"]
     login_id = f'kakao_{kakao_id}'
     nickname = user_info["properties"]['nickname']
@@ -225,8 +231,16 @@ def logout_view(request):
 def main(request):
     return render(request, 'users/main.html')
 
+@login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
+    graph = generate_emotion_graph()  # 감정 그래프 생성
+    context = {
+        "friend_count" : my_friends_count,
+        "graph": graph,
+    }
+    return render(request, 'users/profile.html', context)
+
 
 def alarm(request):
     return render(request, 'users/alarm.html')
@@ -241,19 +255,24 @@ from django.shortcuts import render
 def generate_emotion_graph():
     """ 최근 7일 감정 그래프를 생성하고 Base64로 변환하는 함수 """
     # 최근 7개의 감정 점수를 DB에서 가져오는 예제 (ORM을 사용하는 것이 일반적)
-    recent_emotion_scores = [2, 7, 6, 3, 7, 6, 1]
+    recent_emotion_scores = [2, 4, 6, 3, 7, 6, 5]
     dates = ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31"]
 
     # 그래프 생성
-    plt.rcParams["font.family"] = "Malgun Gothic"
+    plt.rcParams["font.family"] = "GangwonEduSaeeum"
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(dates, recent_emotion_scores, marker="o", linestyle="-", color="b", linewidth=2)
-    ax.set_xlabel("날짜", fontsize=12)
-    ax.set_ylabel("감정 점수 (0~8)", fontsize=12)
+    ax.plot(dates, recent_emotion_scores, marker="p", color="#1E3269", linewidth=4, markeredgewidth=2,)
+    ax.set_xlabel("날짜", fontsize=20, color="#1E3269", labelpad=15 )
+    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#1E3269", labelpad=15)
     ax.set_ylim(0, 8)  # 감정 점수 범위 설정
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
+    ax.tick_params(axis="x", labelsize=18, colors="#1E3269")
+    ax.tick_params(axis="y", labelsize=18, colors="#1E3269")
+    ax.set_xticklabels(dates, fontsize=18, fontweight='bold', color='#1E3269')
+    ax.set_yticklabels(range(9), fontsize=18, fontweight='bold', color='#1E3269')
+    fig.tight_layout()
 
     # 이미지를 Base64로 변환
     buffer = BytesIO()
@@ -264,11 +283,8 @@ def generate_emotion_graph():
     
     return image_base64
 
-def profile(request):
-    """ 프로필 페이지 뷰 """
-    graph = generate_emotion_graph()  # 감정 그래프 생성
 
-    return render(request, "users/profile.html", {"graph": graph})
+
 
 
 
@@ -276,16 +292,122 @@ def user_search_ajax(request):
     query = request.GET.get("query", "")  # 검색어를 GET 파라미터로 받음
     if query[0] == '@':
         # 유저검색
-        results = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:]).values("nickname", "profile_photo")
+        users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:])
     else:
-        results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo")
-    return JsonResponse({"result": list(results)})
+        users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query)
+        
+    results = []
+    for user in users:
+        friend_status = "신청가능"  # 기본 상태
+
+        if Neighbor.objects.filter(user1=request.user, user2=user).exists() or \
+           Neighbor.objects.filter(user1=user, user2=request.user).exists():
+            friend_status = "현재 친구"
+        elif NeighborRequest.objects.filter(sender=request.user, receiver=user).exists():
+            friend_status = "신청 중"
+
+        results.append({
+            "login_id": user.login_id,
+            "nickname": user.nickname,
+            "profile_photo": (str(user.profile_photo)),
+            "friend_status": friend_status,
+        })
+        
+    return JsonResponse({"result": results})
 
 
+##### 친구 신청 관련 Util함수들 #####
+def are_neighbors(user_a, user_b):
+    """두 유저가 이웃인지 확인"""
+    user1, user2 = sorted([user_a, user_b], key=lambda u: u.login_id)
+    return Neighbor.objects.filter(user1=user1, user2=user2).exists()
+def addUsersToFriend(user1, user2):
+    ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 '''
+    Neighbor.objects.get_or_create(
+        user1=user1,
+        user2=user2
+    )
+    return user1, user2
+##### 끝. 친구 신청 관련 Util함수들 끝. #####
 
-from django.http import JsonResponse
-from django.shortcuts import get_list_or_404
-from diaries.models import Diary
+def cancel_friend_request_ajax(request):
+    ''' 이웃 신청 취소 '''
+    if request.method == "POST":
+        data = json.loads(request.body)
+        fromUser = request.user
+        try:
+            toUser = User.objects.exclude(login_id=fromUser.login_id).get(login_id=data.get('to_user_loginid'))
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })
+        
+        if not NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).exists():
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })       
+        
+        NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).delete()
+        return JsonResponse({
+                "success": True,
+                "message": "이웃 요청을 취소했습니다."
+            })
+
+def send_friend_request_ajax(request):
+    ''' 이웃 신청 '''
+    # ajax 포스트 요청일 때:
+    if request.method == "POST":
+        data = json.loads(request.body)
+        fromUser = request.user
+        try:
+            toUser = User.objects.exclude(login_id=fromUser.login_id).get(login_id=data.get('to_user_loginid'))
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+                })
+    
+        # 이미 이웃인지 검사
+        if are_neighbors(fromUser, toUser):
+            return JsonResponse({
+                "success": False,
+                "message": "이미 이웃인 유저입니다."
+                })
+        
+        # 친구가 아닐 떄..
+        my_all_requests = NeighborRequest.objects.filter(sender=fromUser)   # 내가 보낸 모든 친구신청들
+        my_all_received_requests = NeighborRequest.objects.filter(receiver=fromUser)    # 내가 받은 모든 친구신청들
+        # (1) 이미 신청을 보냈거나 받은 유저다.
+        if my_all_requests.filter(receiver=toUser).exists():
+            ## (1-1) 이미 신청을 보냈다면
+            return JsonResponse({
+                "success": False,
+                "message": "상대방의 수락을 기다리는 중입니다."
+                })  
+        if my_all_received_requests.filter(sender=toUser).exists():
+            ## (1-2) 이미 신청을 받았다면 친구 수락으로 처리.
+            addUsersToFriend(fromUser, toUser)
+            return JsonResponse({
+                "success": False,
+                "message": f"상대방의 친구 요청을 수락했습니다. @{toUser.nickname}과 친구가 되었습니다."
+                })  
+                      
+        # (2) 그게 아니면 이웃 신청 보낸다.
+        newRequest, created = NeighborRequest.objects.get_or_create(
+            sender = fromUser,
+            receiver = toUser
+        )
+        if created:
+            # (2)번케이스
+            return JsonResponse({
+                "success": True,
+                "message": "성공적으로 이웃 신청을 보냈습니다."
+                })
+    
+    # get요청일때: pass
+
 
 #달력에 해당 날짜의 일기 반환
 def get_diaries_by_date(request, year, month, day):
@@ -294,3 +416,16 @@ def get_diaries_by_date(request, year, month, day):
         diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+@login_required
+def update_profile_photo(request):
+    if request.method == "POST" and request.FILES.get("profile_photo"):
+        user = request.user
+        user.profile_photo = request.FILES["profile_photo"]
+        user.save()
+        
+        messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
+        return redirect("users:profile")  
+    
+    messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
+    return redirect("users:profile")

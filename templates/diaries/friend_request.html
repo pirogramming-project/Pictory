@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+    <meta name="csrf_token" content="{{ csrf_token }}">
     <link rel="stylesheet" href="{% static 'diaries/friend_request.css' %}">
 {% endblock %}
 
@@ -33,6 +34,7 @@
         const profileImageClassName = "user_search_result_item_profileimage_kes";   // 검색결과 프사 이미지 클래스명
         const userNicknameClassName = "user_search_result_item_nickname_kes";       // 검색결과 닉네임 클래스명
         const friendRequestButtonClassName = "user_search_request_button_kes"; // '친구 추가' 버튼 클래스명
+        const friendRequestCancelButtonClassName = "user_search_request_cancel_button_kes"; // '친구 추가' 버튼 클래스명
         const noResultTextClassName = "user_search_no_result_text_kes"; // 검색결과 없을 때 뜨는 텍스트 클래스명
 
         searchInput.addEventListener("input", function () {
@@ -53,15 +55,35 @@
                     resultsContainer.innerHTML = "";  // 기존 결과 초기화
                     if (data.result.length > 0) {
                         data.result.forEach(user => {
+                            friend_status = user.friend_status // "신청가능" or "현재 친구" or "신청 중"
+
+                            let lastField = '';
+                            if (friend_status === "신청가능") {
+                                lastField = `<button class="${friendRequestButtonClassName}">친구 추가</button>`
+                            } else if (friend_status === "현재 친구") {
+                                lastField = `<p>소중한 친구입니다..</p>`;
+                            } else {
+                                lastField = `<button class="${friendRequestCancelButtonClassName}">요청 취소</button>`;
+                            }
+
                             const userElement = document.createElement("div");
                             userElement.className = searchResultItemClassName;
                             userElement.innerHTML = `
-                                <img class="${profileImageClassName}" src="/media/${user.profile_photo}" alt="프로필 사진"/>
+                                <img class="${profileImageClassName}" src='/media/${user.profile_photo}' alt="프로필 사진"/>
                                 <p class="${userNicknameClassName}">${user.nickname}</p>
-                                <button class="${friendRequestButtonClassName}">친구 추가</button>
+                                ${lastField}
                             `;
                             resultsContainer.appendChild(userElement);
+                            
+                            document.querySelectorAll(`.${friendRequestCancelButtonClassName}`).forEach(btn => {
+                                btn.addEventListener('click', () => FriendRequestCancelOnClick(user.login_id, this));
+                            })
+                            document.querySelectorAll(`.${friendRequestButtonClassName}`).forEach(btn => {
+                                btn.addEventListener('click', () => FriendRequestOnClick(user.login_id, this));
+                            })
                         });
+
+
                     } else {
                         resultsContainer.innerHTML = `<p class="${noResultTextClassName}">검색 결과가 없습니다.</p>`;
                     }
@@ -71,5 +93,87 @@
                 });
         });
     });
+    function FriendRequestOnClick(targetloginId, btnDOM) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/send_friend_request_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              to_user_loginid: targetloginId,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success) {
+                    alert("성공: " + data.message);
+                    changeButtonState(btnDOM, targetloginId);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+    }
+    function FriendRequestCancelOnClick(targetloginId, btnDOM) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/cancel_friend_request_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              to_user_loginid: targetloginId,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success) {
+                    alert("성공: " + data.message);
+                    changeButtonState(btnDOM, targetloginId);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+    }
+
+    function changeButtonState(btnDOM, targetloginId) {
+        if (btnDOM.className === "user_search_request_cancel_button_kes") {
+            // 요청취소버튼 -> 친구추가버튼
+            btnDOM.className = "user_search_request_button_kes";
+            btnDOM.textContent = "친구 추가";
+            btnDOM.onclick=null;
+            btnDOM.removeAttribute("onclick");
+            btnDOM.addEventListener('click', () => 
+            FriendRequestOnClick(targetloginId, btnDOM)
+            );
+        } else if (btnDOM.className === "user_search_request_button_kes") {
+            // 친구추가버튼 -> 요청취소버튼
+            btnDOM.className = "user_search_request_cancel_button_kes";
+            btnDOM.textContent = "요청 취소";
+            btnDOM.onclick=null;
+            btnDOM.removeAttribute("onclick");
+            btnDOM.addEventListener('click', () => 
+                FriendRequestCancelOnClick(targetloginId, btnDOM)
+            );
+        }
+    }
 </script>
 {% endblock %}
