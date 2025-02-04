@@ -1,10 +1,3 @@
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .main-container_psy{
     display: block;
     position: relative;
@@ -14,9 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center; 
-    width: 100%;
-    /* min-height: calc(100vh - 100px);  */
-    
+    width: 100%;    
     background: #EBF5FF;
     overflow-y: auto; 
     padding: 40px 0; 
@@ -40,9 +31,8 @@
     align-items: center;
     font-size: 1.5rem; 
     margin-bottom: 10px;
-    font-family: 'GangwonEduSaeeum';
-    font-weight: bold;
-    color: #1E3269;
+    font-family: 'Gravitas One';
+    color: #515738;
     text-transform: uppercase;
 }
 
