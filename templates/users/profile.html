@@ -9,8 +9,9 @@
     <div class="profile-wrapper_psy">
 
         <div class="profile_psy">
-            <div class="profile-image_psy">
-                <img src="#" alt="프로필 사진">  
+            <div class="profile-img_psy">
+                <img src="{% static 'images/pictory-frame2.png' %}" alt="프로필 사진" class="profile-image_psy"> 
+                <p>프로필 사진 변경하기</p> 
             </div>
             <div class="profile-section_psy">   
                 <div class="profile-info_psy">
@@ -20,7 +21,7 @@
     
                 <div class="button-group_psy">
                     <button class="action-btn_psy" onclick="location.href='{% url 'diaries:mydiaries' %}'">내 일기<br>보러가기</button>
-                    <button class="action-btn_psy">일기 작성<br>하러 가기</button>
+                    <button class="action-btn_psy" onclick="location.href='{% url 'diaries:select_photo_type' %}'">일기 작성<br>하러 가기</button>
                 </div>
             </div>
         </div>

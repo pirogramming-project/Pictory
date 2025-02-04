@@ -1,23 +1,18 @@
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+/* 화면 중앙 정렬을 위한 그리드 레이아웃 */
+.login_body_ksy {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 1fr;  
+    width: 100%;
+    height: 100vh;
 }
 
-
-.login_body_ksy {
+/* 로그인 컨테이너 크기 고정 */
+.login_container_ksy {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-}
-
-.login_container_ksy {
-    width: 400px;
+    flex-direction: column;
     background: white;
     padding: 20px;
     border-radius: 15px;
@@ -26,6 +21,7 @@
                 -3px 0px 4px 0px rgba(0, 0, 0, 0.10),
                 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
 }
+
 
 .login_background_ksy {
     background-color: var(--login_signup_background);
@@ -111,4 +107,10 @@
 .login_naverSocial_img_ksy {
     width: 48px;
     height: 48px;
+}
+.login_secondContainer_ksy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
 }
