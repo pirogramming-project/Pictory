@@ -6,28 +6,47 @@
 {% endblock %}
 
 {% block content %}
-    <div class="calendar-wrapper_psy">
-        <div class="calendar_psy">
-
-            <div class="month_psy">
-                <span id="prevMonth_psy">&lt;</span>
-                <h2 id="currentMonth_psy"></h2>
-                <span id="nextMonth_psy">&gt;</span>
+    <div class="main-container_psy">
+        <div class="calendar-wrapper_psy">
+            <div class="calendar_psy">
+    
+                <div class="month_psy">
+                    <span id="prevMonth_psy">&lt;</span>
+                    <h2 id="currentMonth_psy"></h2>
+                    <span id="nextMonth_psy">&gt;</span>
+                </div>
+    
+                <div class="weekdays_psy">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+    
+                <div class="days_psy" id="days_psy"></div>
             </div>
+        </div>
 
-            <div class="weekdays_psy">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
+        <div class="today_diary_psy">
+            <div class="today_diary_list_psy">
+                <h2>{{ selected_date|date:"Y년 m월 d일" }}에 작성된 일기 목록</h2>
             </div>
-
-            <div class="days_psy" id="days_psy"></div>
+            <div class="today_diary_content_psy">
+                <ul>
+                    {% for diary in diaries %}
+                    <li>
+                        <a href="{% url 'diaries:diary_detail' diary.id %}">{{ diary.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
+    
+
 
     <script>
         const currentMonthElement = document.getElementById("currentMonth_psy");
