@@ -65,19 +65,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 ## 유저 이웃 관련 모델들
 class NeighborRequest(models.Model):
     """이웃 추가 신청"""
-    STATUS_CHOICES = [
-        ('waiting', '대기 중'),
-        ('accepted', '수락됨'),
-    ]
     
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_neighbor_requests", verbose_name="신청 보낸 유저")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_neighbor_requests", verbose_name="신청 받은 유저")
-    status = models.CharField("상태", max_length=10, choices=STATUS_CHOICES, default='waiting')
     created_at = models.DateTimeField("생성시간", auto_now_add=True)
 
     class Meta:
         unique_together = ('sender', 'receiver')  # 같은 유저에게 중복 신청 방지
-
+                
     def __str__(self):
         return f"{self.sender} → {self.receiver} ({self.get_status_display()})"
 
@@ -95,7 +90,7 @@ class Neighbor(models.Model):
 
     def save(self, *args, **kwargs):
         """항상 user1 < user2 순서로 저장하여 중복 방지"""
-        if self.user1.id > self.user2.id:
+        if self.user1.login_id > self.user2.login_id:
             self.user1, self.user2 = self.user2, self.user1
         super().save(*args, **kwargs)
 

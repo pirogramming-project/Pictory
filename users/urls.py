@@ -16,5 +16,7 @@ urlpatterns = [
     path('profile/', profile, name='profile'),  
     path('alarm/', alarm, name='alarm'), 
     path('search_ajax/', user_search_ajax, name="user_search_ajax"),
-     path('diary/by_date/<int:year>/<int:month>/<int:day>/', get_diaries_by_date, name='diary_by_date'),
+    path('send_friend_request_ajax/', send_friend_request_ajax, name="send_friend_request_ajax"),
+    path('cancel_friend_request_ajax/', cancel_friend_request_ajax, name="cancel_friend_request_ajax"),
+    path('diary/by_date/<int:year>/<int:month>/<int:day>/', get_diaries_by_date, name='diary_by_date'),
 ]
