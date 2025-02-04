@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
+from users.models import Neighbor
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
 from datetime import date, datetime
@@ -8,6 +9,7 @@ from django.urls import reverse
 from django.core.files.base import ContentFile
 import base64
 from django.http import Http404
+from django.db.models import Q
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
@@ -226,8 +228,19 @@ def create_diary(request, related_frame_id):
 
 
 def community(request):
-    friendDiaryList = Diary.objects.all()   # TODO: 친구들 다이어리 다 뜨게 수정필요 ==> '태그로 검색'
+    myNeightbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).select_related("user1", "user2")
 
+    friendDiaryList = []
+    
+    for neighbor in myNeightbors:
+        user1 = neighbor.user1
+        user2 = neighbor.user2
+        if user1 != request.user:
+            friendDiaryList.extend(Diary.objects.filter(writer=user1))
+        else:
+            friendDiaryList.extend(Diary.objects.filter(writer=user2))
+            
+    print(friendDiaryList)
     context = {
         'friend_diaries' : friendDiaryList
     }
