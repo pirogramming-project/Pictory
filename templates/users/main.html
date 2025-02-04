@@ -6,116 +6,173 @@
 {% endblock %}
 
 {% block content %}
-    <div class="calendar-wrapper_psy">
-        <div class="calendar_psy">
+    <div class="main-container_psy">
+        <div class="calendar-wrapper_psy">
+            <div class="calendar_psy">
+                <div class="month_psy">
+                    <span id="prevMonth_psy">&lt;</span>
+                    <h2 id="currentMonth_psy"></h2>
+                    <span id="nextMonth_psy">&gt;</span>
+                </div>
 
-            <div class="month_psy">
-                <span id="prevMonth_psy">&lt;</span>
-                <h2 id="currentMonth_psy"></h2>
-                <span id="nextMonth_psy">&gt;</span>
+                <div class="weekdays_psy">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+
+                <div class="days_psy" id="days_psy"></div>
             </div>
+        </div>
 
-            <div class="weekdays_psy">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
+        <div class="today_diary_psy">
+            <div class="today_diary_list_psy">
+                <h2 id="selectedDateTitle">선택한 날짜의 일기 목록</h2>
             </div>
-
-            <div class="days_psy" id="days_psy"></div>
+            <div class="today_diary_content_psy">
+                <ul id="diaryListContainer"></ul>
+            </div>
         </div>
     </div>
 
     <script>
-        const currentMonthElement = document.getElementById("currentMonth_psy");
-        const daysContainer = document.getElementById("days_psy");
-        const prevMonthButton = document.getElementById("prevMonth_psy");
-        const nextMonthButton = document.getElementById("nextMonth_psy");
-        
-        let currentDate = new Date();
-        let selectedDate = null;
-
-        // 날짜 클릭이벤트 추가
-        function handleDateClick(year, month, day) {
-            const url = `/diary/by_date/${year}/${month + 1}/${day}/`; // URL에 날짜 추가
-            window.location.href = url; // 해당 URL로 이동
-        }
-        
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-        
-            currentMonthElement.textContent = new Date(year, month).toLocaleString("en-US", { year: "numeric", month: "long" });
-        
-            const firstDayIndex = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-            const today = new Date();
-        
-            daysContainer.innerHTML = "";
-        
-            for (let i = 0; i < firstDayIndex; i++) {
-                const emptyDiv = document.createElement("div");
-                emptyDiv.classList.add("empty");
-                daysContainer.appendChild(emptyDiv);
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentMonthElement = document.getElementById("currentMonth_psy");
+            const daysContainer = document.getElementById("days_psy");
+            const prevMonthButton = document.getElementById("prevMonth_psy");
+            const nextMonthButton = document.getElementById("nextMonth_psy");
+            const diaryListContainer = document.getElementById("diaryListContainer");
+            const selectedDateTitle = document.getElementById("selectedDateTitle");
+    
+            let currentDate = new Date();
+            let selectedDate = null;
+    
+            function handleDateClick(year, month, day) {
+                if (!diaryListContainer) {
+                    console.error("🔴 diaryListContainer를 찾을 수 없습니다.");
+                    return;
+                }
+    
+                const url = `/diary/by_date/${year}/${month + 1}/${day}/`;
+                console.log("🔵 AJAX 요청 보냄:", url);
+    
+                fetch(url, { 
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("🟢 받은 데이터:", data);
+                    updateDiaryList(data, year, month, day);
+                })
+                .catch(error => console.error("🔴 오류 발생:", error));
             }
-        
-            for (let day = 1; day <= lastDate; day++) {
-                const dayElement = document.createElement("div");
-                dayElement.classList.add("day_psy");
-        
-                const daySpan = document.createElement("span");
-                daySpan.textContent = day;
-                dayElement.appendChild(daySpan);
-        
-                const fullDate = new Date(year, month, day);
-
-                // 날짜 클릭 이벤트
-                dayElement.addEventListener("click", () => {
-                    handleDateClick(year, month, day); // 특정 날짜 클릭 시 이동
-                });
-
-                daysContainer.appendChild(dayElement); //
-        
-                if (
-                    fullDate.getFullYear() === today.getFullYear() &&
-                    fullDate.getMonth() === today.getMonth() &&
-                    fullDate.getDate() === today.getDate()
-                ) {
-                    dayElement.classList.add("today");
+    
+            function updateDiaryList(diaries, year, month, day) {
+                console.log("🟡 updateDiaryList 실행됨", diaries);
+            
+                const diaryListContainer = document.getElementById("diaryListContainer");
+            
+                if (!diaryListContainer) {
+                    console.error("🔴 diaryListContainer를 찾을 수 없습니다! HTML 구조를 확인하세요.");
+                    return;
                 }
-        
-                if (fullDate < today) {
-                    dayElement.classList.add("past");
+            
+                diaryListContainer.innerHTML = ""; // 기존 목록 초기화
+                document.getElementById("selectedDateTitle").textContent = `${year}년 ${month + 1}월 ${day}일에 작성된 일기 목록`;
+            
+                if (diaries.length === 0) {
+                    console.log("🟠 해당 날짜에 작성된 일기가 없습니다.");
+                    diaryListContainer.innerHTML = "<li>📌 작성된 일기가 없습니다.</li>";
+                } else {
+                    console.log("✅ 일기 데이터 존재, UI 업데이트 진행");
+                    diaries.forEach(diary => {
+                        console.log(`📝 추가됨: ${diary.title} (ID: ${diary.id})`);
+                        const listItem = document.createElement("li");
+                        const link = document.createElement("a");
+            
+                        link.href = `/diaries/${diary.id}/`; // 일기 상세 페이지 링크
+                        link.textContent = diary.title;
+                        listItem.appendChild(link);
+                        diaryListContainer.appendChild(listItem);
+                    });
                 }
-        
-                dayElement.addEventListener("click", () => {
-                    if (!dayElement.classList.contains("past")) {
+            
+                console.log("🟢 UI 업데이트 완료!");
+            }
+    
+            function renderCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                currentMonthElement.textContent = new Date(year, month).toLocaleString("ko-KR", { year: "numeric", month: "long" });
+    
+                const firstDayIndex = new Date(year, month, 1).getDay();
+                const lastDate = new Date(year, month + 1, 0).getDate();
+                const today = new Date();
+    
+                daysContainer.innerHTML = "";
+    
+                for (let i = 0; i < firstDayIndex; i++) {
+                    const emptyDiv = document.createElement("div");
+                    emptyDiv.classList.add("empty");
+                    daysContainer.appendChild(emptyDiv);
+                }
+    
+                for (let day = 1; day <= lastDate; day++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.classList.add("day_psy");
+    
+                    const daySpan = document.createElement("span");
+                    daySpan.textContent = day;
+                    dayElement.appendChild(daySpan);
+    
+                    const fullDate = new Date(year, month, day);
+    
+                    dayElement.addEventListener("click", () => {
+                        handleDateClick(year, month, day);
+    
                         if (selectedDate) {
                             selectedDate.classList.remove("selected");
                         }
                         dayElement.classList.add("selected");
                         selectedDate = dayElement;
+                    });
+    
+                    if (
+                        fullDate.getFullYear() === today.getFullYear() &&
+                        fullDate.getMonth() === today.getMonth() &&
+                        fullDate.getDate() === today.getDate()
+                    ) {
+                        dayElement.classList.add("today");
                     }
-                });
-        
-                daysContainer.appendChild(dayElement);
+    
+                    if (fullDate < today) {
+                        dayElement.classList.add("past");
+                    }
+    
+                    daysContainer.appendChild(dayElement);
+                }
             }
-        }
-        
-        prevMonthButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
+    
+            prevMonthButton.addEventListener("click", () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+    
+            nextMonthButton.addEventListener("click", () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+    
             renderCalendar();
         });
-        
-        nextMonthButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        });
-        
-        renderCalendar();
     </script>
+    
 
 {% endblock %}

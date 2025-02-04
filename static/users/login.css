@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .login_body_ksy {
     display: flex;
     justify-content: center;
@@ -29,7 +37,7 @@
 }
 
 .login_title_ksy {
-    font-family: var(--main_font);
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
     font-size: 48px;
     color: var(--font_color);
     font-style: normal;

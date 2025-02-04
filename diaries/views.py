@@ -251,3 +251,19 @@ def mydiaries(request):
     }
     
     return render(request, 'diaries/mydiaries.html', context)
+
+@login_required
+def upload_photo(request):
+    if request.method == 'POST' and request.FILES.get('photo'):
+        uploaded_photo = request.FILES['photo']
+
+        # 새로운 Frame 생성
+        new_frame = Frame.objects.create(image_file=uploaded_photo)
+
+        # 업로드한 사진을 Photo 모델에 저장
+        Photo.objects.create(frame=new_frame, photo=uploaded_photo)
+
+        # 저장 후 create_diary 페이지로 이동 (사진을 업로드한 Frame ID 포함)
+        return redirect('diaries:create_diary', related_frame_id=new_frame.id)
+
+    return redirect('diaries:select_photo_type')  # 실패하면 다시 선택 페이지로    

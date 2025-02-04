@@ -249,7 +249,7 @@ def generate_emotion_graph():
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.plot(dates, recent_emotion_scores, marker="o", linestyle="-", color="b", linewidth=2)
     ax.set_xlabel("날짜", fontsize=12)
-    ax.set_ylabel("감정 점수 (1~7)", fontsize=12)
+    ax.set_ylabel("감정 점수 (0~8)", fontsize=12)
     ax.set_ylim(0, 8)  # 감정 점수 범위 설정
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
@@ -280,3 +280,17 @@ def user_search_ajax(request):
     else:
         results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo")
     return JsonResponse({"result": list(results)})
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_list_or_404
+from diaries.models import Diary
+
+#달력에 해당 날짜의 일기 반환
+def get_diaries_by_date(request, year, month, day):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # AJAX 요청 확인
+        diaries = Diary.objects.filter(date__year=year, date__month=month, date__day=day)
+        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        return JsonResponse(diary_list, safe=False)
+    return JsonResponse({"error": "Invalid request"}, status=400)
