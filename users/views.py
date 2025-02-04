@@ -95,7 +95,7 @@ def kakao_callback(request):
         headers={"Authorization": f"Bearer {access_token}"},
     )
     user_info = user_info_request.json()
-
+    
     kakao_id = user_info["id"]
     login_id = f'kakao_{kakao_id}'
     nickname = user_info["properties"]['nickname']
@@ -277,10 +277,28 @@ def user_search_ajax(request):
     query = request.GET.get("query", "")  # 검색어를 GET 파라미터로 받음
     if query[0] == '@':
         # 유저검색
-        results = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:]).values("nickname", "profile_photo", "login_id")
+        users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:])
     else:
-        results = User.objects.filter(nickname__icontains=query).values("nickname", "profile_photo", "login_id")
-    return JsonResponse({"result": list(results)})
+        users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query)
+        
+    results = []
+    for user in users:
+        friend_status = "신청가능"  # 기본 상태
+
+        if Neighbor.objects.filter(user1=request.user, user2=user).exists() or \
+           Neighbor.objects.filter(user1=user, user2=request.user).exists():
+            friend_status = "현재 친구"
+        elif NeighborRequest.objects.filter(sender=request.user, receiver=user).exists():
+            friend_status = "신청 중"
+
+        results.append({
+            "login_id": user.login_id,
+            "nickname": user.nickname,
+            "profile_photo": (str(user.profile_photo)),
+            "friend_status": friend_status,
+        })
+        
+    return JsonResponse({"result": results})
 
 
 ##### 친구 신청 관련 Util함수들 #####

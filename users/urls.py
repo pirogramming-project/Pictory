@@ -17,4 +17,5 @@ urlpatterns = [
     path('alarm/', alarm, name='alarm'), 
     path('search_ajax/', user_search_ajax, name="user_search_ajax"),
     path('send_friend_request_ajax/', send_friend_request_ajax, name="send_friend_request_ajax"),
+    path('cancel_friend_request_ajax/', cancel_friend_request_ajax, name="cancel_friend_request_ajax"),
 ]
