@@ -53,12 +53,10 @@
     
             function handleDateClick(year, month, day) {
                 if (!diaryListContainer) {
-                    console.error("🔴 diaryListContainer를 찾을 수 없습니다.");
                     return;
                 }
     
                 const url = `/diary/by_date/${year}/${month + 1}/${day}/`;
-                console.log("🔵 AJAX 요청 보냄:", url);
     
                 fetch(url, { 
                     method: "GET",
@@ -68,19 +66,18 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("🟢 받은 데이터:", data);
                     updateDiaryList(data, year, month, day);
                 })
-                .catch(error => console.error("🔴 오류 발생:", error));
+                .catch(error => {
+
+                });
             }
     
             function updateDiaryList(diaries, year, month, day) {
-                console.log("🟡 updateDiaryList 실행됨", diaries);
             
                 const diaryListContainer = document.getElementById("diaryListContainer");
             
                 if (!diaryListContainer) {
-                    console.error("🔴 diaryListContainer를 찾을 수 없습니다! HTML 구조를 확인하세요.");
                     return;
                 }
             
@@ -88,23 +85,19 @@
                 document.getElementById("selectedDateTitle").textContent = `${year}년 ${month + 1}월 ${day}일에 작성된 일기 목록`;
             
                 if (diaries.length === 0) {
-                    console.log("🟠 해당 날짜에 작성된 일기가 없습니다.");
                     diaryListContainer.innerHTML = "<li>📌 작성된 일기가 없습니다.</li>";
                 } else {
-                    console.log("✅ 일기 데이터 존재, UI 업데이트 진행");
                     diaries.forEach(diary => {
-                        console.log(`📝 추가됨: ${diary.title} (ID: ${diary.id})`);
                         const listItem = document.createElement("li");
                         const link = document.createElement("a");
             
-                        link.href = `/diaries/${diary.id}/`; // 일기 상세 페이지 링크
+                        link.href = `/diary/detail/${diary.id}/`; // 일기 상세 페이지 링크
                         link.textContent = diary.title;
                         listItem.appendChild(link);
                         diaryListContainer.appendChild(listItem);
                     });
                 }
             
-                console.log("🟢 UI 업데이트 완료!");
             }
     
             function renderCalendar() {
