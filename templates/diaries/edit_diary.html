@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'diaries/edit_diary.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="create_diary_container_ksy">
+    <div class="create_diary_left_container_ksy">
+        <img src="{% static 'images/pictory-frame2.png' %}" alt="프레임 2">
+    </div>
+    <div class="create_diary_right_container_ksy">
+        <form method="post" action="{% url 'diaries:edit_diary' diary.id %}">
+            {% csrf_token %}
+
+            <!-- 제목 -->
+            <div class="create_diary_first_ksy">
+                <h1 class="create_diary_letter_ksy">제목</h1>
+                {{ form.title }}
+            </div>
+
+            <!-- 날짜 -->
+            <div class="create_diary_first_ksy">
+                <h1 class="create_diary_letter_ksy">날짜</h1>
+                {{ form.date }}
+            </div>
+
+            <!-- 날씨 및 감정 -->
+            <div class="create_diary_second_ksy">
+                <h1 class="create_diary_letter_ksy">날씨</h1>
+                {{ form.weather }}
+                <h1 class="create_diary_letter_ksy">감정</h1>
+                {{ form.emotion }}
+            </div>
+
+            <!-- 게시물 태그 -->
+            <div class="create_diary_third_ksy">
+                <h1 class="create_diary_letter_ksy">게시물 태그</h1>
+                <input type="text" name="create_diary_post"
+                       value="{% for tag in diary_tags %}#{{ tag.name }} {% endfor %}">
+            </div>
+
+            <!-- 친구 태그 -->
+            <div class="create_diary_third_ksy">
+                <h1 class="create_diary_letter_ksy">친구 태그</h1>
+                <div class="create_diary_usertag_item_kes">
+                    {% for user in form.user_tags.field.queryset %}
+                    <label>
+                        <input type="checkbox" name="user_tags" value="{{ user.login_id }}"
+                            {% if user in form.instance.user_tags.all %}checked{% endif %}>
+                        @{{ user.nickname }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- 장소 -->
+            <div class="create_diary_first_ksy">
+                <h1 class="create_diary_letter_ksy">장소</h1>
+                {{ form.place }}
+            </div>
+
+            <!-- 일기 내용 -->
+            <div class="create_diary_fifth_ksy">
+                <h1 class="create_diary_letter_ksy">일기 내용</h1>
+                {{ form.content }}
+            </div>
+
+            <button type="submit" class="create_button_save_ksy">저장</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".create_diary_usertag_item_kes input[type='checkbox']");
+    
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                const label = this.closest("label");
+    
+                if (this.checked) {
+                    label.classList.add("selected"); // 선택된 경우 스타일 변경
+                } else {
+                    label.classList.remove("selected"); // 선택 해제 시 원래 스타일 복구
+                }
+            });
+        });
+    });
+    
+</script>
+
+{% endblock %}

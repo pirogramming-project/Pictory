@@ -1,0 +1,146 @@
+.create_diary_container_ksy {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding: 20px;
+    width: 90%;
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.create_diary_left_container_ksy {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.create_diary_left_container_ksy img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
+}
+
+.create_diary_right_container_ksy {
+    flex: 1.5;
+    padding: 30px;
+}
+
+/* 폼 요소 스타일링 */
+.create_diary_first_ksy,
+.create_diary_second_ksy,
+.create_diary_third_ksy,
+.create_diary_fifth_ksy {
+    margin-bottom: 20px;
+}
+
+.create_diary_letter_ksy {
+    font-size: 16px;
+    color: #1E3269;
+    margin-bottom: 10px;
+    font-family: 'GangwonEduSaeeum';
+}
+
+/* 입력 필드 스타일링 */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #E8F4FF;
+    color: #1E3269;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* 구름 모양 입력 필드 */
+input[type="text"],
+textarea {
+    position: relative;
+    background-color: #E8F4FF;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-top: 5px;
+}
+
+/* 체크박스 컨테이너 */
+.create_diary_usertag_item_kes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 체크박스 레이블 */
+.create_diary_usertag_item_kes label {
+    display: inline-flex;
+    align-items: center;
+    background-color: #E8F4FF;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-family: 'GangwonEduSaeeum';
+    color: #1E3269;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.create_diary_usertag_item_kes label.selected {
+    background-color: #c7e4ff;
+}
+
+/* 저장 버튼 */
+.create_button_save_ksy {
+    background-color: #E8F4FF;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    color: #1E3269;
+    font-family: 'GangwonEduSaeeum';
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    float: right;
+    transition: transform 0.2s ease;
+}
+
+.create_button_save_ksy:hover {
+    transform: translateY(-2px);
+    background-color: #D0E8FF;
+}
+
+/* 지도 영역 */
+.map-placeholder {
+    width: 100%;
+    height: 150px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.create_diary_second_ksy {
+    margin-bottom: 20px;
+}
+
+/* 선택 박스 스타일링 */
+select {
+    appearance: none;
+    background-color: #E8F4FF;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    width: 100%;
+    font-family: 'GangwonEduSaeeum';
+    color: #1E3269;
+    cursor: pointer;
+}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{KAKAO_MAP_APPKEY_JS}}&libraries=services"></script>
+<link rel="stylesheet" href="{% static 'diaries/create_diary.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="create_diary_container_ksy">
+        <div class="create_diary_left_container_ksy">
+            <img src="{{related_frame_img.url}}">
+        </div>
+        <div class="create_diary_right_container_ksy">
+            <form class="create_diary_form_ksy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
+                {% csrf_token %}
+                <div class="create_diary_first_ksy">
+                    <div class="create_diary_first_title_ksy">
+                        <h1 class="create_diary_letter_ksy">Title</h1>
+                        {{ form.title }}
+                    </div>
+                    <div class="create_diary_first_title_ksy">
+                        <h1 class="create_diary_letter_ksy">날짜</h1>
+                        {{ form.date }}
+                    </div>
+                </div>
+            
+                <div class="create_diary_second_ksy">
+                    <div class="create_diary_second_title_ksy">
+                        <h1 class="create_diary_letter_ksy">날씨</h1>
+                        {{ form.weather }}
+                    </div>
+                    <div class="create_diary_second_title_ksy">
+                        <h1 class="create_diary_letter_ksy">감정</h1>
+                        {{ form.emotion }}
+                    </div>
+                </div>
+            
+                <div class="create_diary_third_ksy">
+                    <div class="create_diary_third_title_ksy">
+                        <h1 class="create_diary_letter_ksy">게시물 태그</h1>
+                        <input type="text" name="create_diary_post" placeholder="#으로 구분해서 태그를 추가하세요" class="create_diary_content_ksy" required>
+                    </div>
+                    <div class="create_diary_third_title_ksy">
+                        <h1 class="create_diary_letter_ksy">친구 태그</h1>
+                            {% for checkbox in form.user_tags %}
+                                <div class="create_diary_usertag_item_kes">
+                                    {{ checkbox.tag }}
+                                    <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            
+                <div class="create_diary_fourth_ksy">
+                    <div class="create_diary_fourth_title_ksy">
+                        <h1 class="create_diary_letter_ksy">장소</h1>
+                        {{ form.place }}
+                        <div class="create_diary_map_ksy" style="height: 150px; width: 200px;"></div>
+                    </div>
+                </div>
+            
+                <div class="create_diary_fifth_ksy">
+                    {{ form.content }}
+                </div>
+            
+                <button type="submit" class="create_button_save_ksy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
+                        <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                    </svg>
+                    저장
+                </button>
+            </form>
+            
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let inputField = document.querySelector(".create_diary_content_ksy#id_place");
+            
+            if (inputField) {
+                inputField.addEventListener("change", function() {
+                    if (this.value) {
+                        placeSearch(this.value);
+                    }
+                });
+            }
+        });
+
+
+        // 1. 지도 초기화
+        const mapContainer = document.querySelector('.create_diary_map_ksy');
+        const map = new kakao.maps.Map(mapContainer, {
+          center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+          level: 6, // 지도 확대 레벨
+        });
+    
+        const geocoder = new kakao.maps.services.Geocoder(); // 주소 검색 객체
+        const markers = {}; // 마커 저장 객체
+    
+        // 장소 검색 객체를 생성합니다
+        var ps = new kakao.maps.services.Places(); 
+    
+        function placeSearch(keyword) {
+          // 키워드 검색
+          ps.keywordSearch(keyword, placesSearchCB); 
+        }
+    
+        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        function placesSearchCB (data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+              targetPlace = data[0];  // 가장 가능성 높은 장소를 타겟으로 설정
+              console.log(targetPlace['address_name'])  // 주소 가져오기
+       
+                addLocation(targetPlace['address_name']);
+            } else {
+              alert("장소를 찾을 수 없습니다.")
+            }
+        }
+
+        var marker;
+        // 2. 마커 추가 함수
+        function addLocation(address) {
+          const input = address;
+    
+          if (!input) {
+            alert('장소를 찾을 수 없습니다.');
+            return;
+          }
+    
+          // 2. addressSearch : 주소 -> 좌표 변환해주는 함수
+          geocoder.addressSearch(input, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+              // 마커를 생성합니다
+              if (marker) {
+                  marker.setMap(null);  // 이전 마커 제거
+              }
+                marker = new kakao.maps.Marker({
+                    position: coords
+                });
+                // 마커가 지도 위에 표시되도록 설정합니다
+                marker.setMap(map);
+    
+              // 지도 중심 이동
+              map.panTo(coords);
+            } else {
+              alert('장소를 찾을 수 없습니다.');
+            }
+          });
+        }
+      </script>
+{% endblock %}

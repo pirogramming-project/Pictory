@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pictory{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&display=swap" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="base_body_ksy">
+    <div class="base_layout_ksy">
+        <div></div>
+        <div class="base_content-area_ksy">
+            <header class="base_header_ksy">
+                <!-- 햄버거 버튼 -->
+                <button class="base_menu-button_ksy" id="base_menuButton_ksy">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="base_logo_ksy">
+                    <a href="{% url 'users:main' %}">  <!-- 메인 페이지로 이동하는 링크 추가 -->
+                        <h1 class="base_logo_title_ksy">Pictory</h1>
+                    </a>
+                </div>
+            </header>
+
+            <!-- 사이드바 -->
+            <div class="base_side-nav_ksy" id="base_sidebar_ksy">
+                <!-- X 버튼을 사이드바 내부로 이동 -->
+                <button class="base_close-button_ksy" id="base_closeButton_ksy">&times;</button>
+                <div class="base_profile_ksy">
+                    <div class="base_profile-image_ksy" style="background-image: url('{{ user.profile_photo.url }}');"></div>                    
+                    <form action="{% url 'users:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="base_logout_ksy">로그아웃</button>
+                    </form>
+                </div>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'users:profile' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    MY
+                </button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'users:alarm' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    알림
+                </button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:diary_map' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    지도
+                </button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:select_photo_type' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    인생네컷 만들기
+                </button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:community' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    community
+                </button>
+                <button class="base_menu-item_ksy" onclick="location.href='{% url 'diaries:friend_request' %}'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="219" height="59" viewBox="0 0 219 59" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M213.753 3H5C3.89543 3 3 3.89543 3 5V22H0V5C0 2.23858 2.23858 0 5 0H213.753C216.515 0 218.753 2.23858 218.753 5V22H215.753V5C215.753 3.89543 214.858 3 213.753 3ZM3 37V54C3 55.1046 3.89543 56 5 56H213.753C214.858 56 215.753 55.1046 215.753 54V37H218.753V54C218.753 56.7614 216.515 59 213.753 59H5C2.23857 59 0 56.7614 0 54V37H3Z" fill="#515738"/>
+                    </svg>
+                    친구 요청 보내기
+                </button>
+            </div>
+
+            <div class="base_content-scroll_ksy">
+                {% block content %}{% endblock %}
+            </div>
+            <footer class="base_footer_ksy">
+                <p>&copy; 2024 Pictory. All rights reserved.</p>
+            </footer>
+        </div>
+        <div></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const menuButton = document.getElementById("base_menuButton_ksy");
+          const closeButton = document.getElementById("base_closeButton_ksy");
+          const sidebar = document.getElementById("base_sidebar_ksy");
+          
+          // 햄버거 메뉴 클릭 시
+          menuButton.addEventListener("click", function () {
+              menuButton.style.display = "none"; // 햄버거 버튼 즉시 숨기기
+              sidebar.style.display = "flex";
+              closeButton.style.display = "block"; 
+              requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
+          });
+          
+          // X 버튼 클릭 시
+          closeButton.addEventListener("click", function () {
+              sidebar.classList.remove("base_active_ksy");
+              setTimeout(() => {
+                  sidebar.style.display = "none";
+                  closeButton.style.display = "none";
+                  menuButton.style.display = "flex"; 
+              }, 100); 
+          });
+      });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

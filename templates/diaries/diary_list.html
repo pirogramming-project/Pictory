@@ -1,0 +1,18 @@
+<!--{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ selected_date|date:"Y년 m월 d일" }}에 작성된 일기 목록</h2>
+
+{% if diaries %}
+    <ul>
+        {% for diary in diaries %}
+        <li>
+            <a href="{% url 'diaries:diary_detail' diary.id %}">{{ diary.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>작성된 다이어리가 없습니다.</p>
+{% endif %}
+
+{% endblock %}

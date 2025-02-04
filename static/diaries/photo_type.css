@@ -1,0 +1,63 @@
+.photo-type-container_psy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 50%;
+}
+
+.photo-type_psy {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: 8%; 
+    width: 80%; 
+}
+
+.cloud-btn_psy {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25%;
+    width: 100%;
+}
+
+.cloud-btn1_psy, .cloud-btn2_psy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%; 
+    height: 18%;
+    min-width: 200px;
+    min-height: 140px;
+}
+
+.cloud-btn1_psy svg, .cloud-btn2_psy svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scale(2.0);
+}
+
+.cloud-btn1_psy svg {
+    fill: #BECDFF;
+}
+
+.cloud-btn2_psy svg {
+    fill: #AECDFF;
+}
+
+.cloud-text {
+    position: absolute;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #1E3269;
+    text-align: center;
+    line-height: 1.4;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: 'GangwonEduSaeeum';
+}

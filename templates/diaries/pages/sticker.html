@@ -1,0 +1,59 @@
+{% load static %}
+<h3>스티커 선택</h3>
+<div class="stickers_list_kes">
+    <img src="{% static "images/stickers/test_sticker.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
+    <img src="{% static "images/stickers/test_sticker_2.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
+</div>
+
+<script>
+    function addSticker_psy(sticker_psy) {
+        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        let newSticker_psy = document.createElement("img");
+        newSticker_psy.draggable="true";
+        newSticker_psy.src = sticker_psy.src;
+        newSticker_psy.className = "added_sticker_kes"
+        newSticker_psy.style.position = "absolute";
+        newSticker_psy.style.width = `${sticker_psy.offsetWidth}px`;
+        newSticker_psy.style.left = "20px";
+        newSticker_psy.style.top = "20px";
+        addImageDragEventListeners_kes(newSticker_psy);
+        pictoryFrame_psy.appendChild(newSticker_psy);
+    }
+
+    function addImageDragEventListeners_kes(draggableImg) {
+        let offsetX = 0, offsetY = 0;
+        const container = document.getElementById("pictory-frame_psy");
+
+        draggableImg.addEventListener("dragstart", (e) => {
+            offsetX = e.offsetX;
+            offsetY = e.offsetY;
+            e.dataTransfer.setData("text/plain", ""); // 기본 동작 방지용
+        });
+
+        draggableImg.addEventListener("drag", (e) => {
+            if (e.clientX === 0 && e.clientY === 0) return; // 드래그 종료 시 무시
+
+            const parentRect = container.getBoundingClientRect();
+            const imgWidth = draggableImg.offsetWidth;
+            const imgHeight = draggableImg.offsetHeight;
+
+            let newX = e.clientX - parentRect.left - offsetX;
+            let newY = e.clientY - parentRect.top - offsetY;
+
+            // 부모 영역 내에서만 이동
+            newX = Math.max(0, Math.min(newX, parentRect.width - imgWidth));
+            newY = Math.max(0, Math.min(newY, parentRect.height - imgHeight));
+
+            draggableImg.style.left = `${newX}px`;
+            draggableImg.style.top = `${newY}px`;
+        });
+
+        draggableImg.addEventListener("dragover", (e) => {
+            e.preventDefault(); // 기본 드래그 동작 방지
+        });
+
+        draggableImg.addEventListener("drop", (e) => {
+            e.preventDefault();
+        });
+    }
+</script>

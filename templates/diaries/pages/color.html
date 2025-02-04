@@ -1,0 +1,28 @@
+<div class="pagesColor_content_ksy">
+    <h3 class="pagesColor_choice_ksy">색상 선택</h3>
+    <input type="color" value="#ffffff" id="borderColorPicker_psy">
+</div>
+<div class="pagesColor_content_ksy">
+    <p class="pagesColor_choice_ksy">투명도 조절</p>
+    <input type="range" min="0" max="100" id="opacitySlider_psy">
+</div>
+<div class="pagesColor_content1_ksy">
+    <p class="pagesColor_choice_ksy">그라데이션 선택</p>
+    <input type="color" id="gradientPicker_psy">
+</div>
+<button class="pagesColor_button_complete"  onclick="resetCustomizeField_kes()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#D7F1FA" class="pagesColor_cloud_ksy" viewBox="0 0 16 16">
+        <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+    </svg>
+    <span class="pagesColor_text_ksy">완료</span>
+</button>
+
+<script>
+    const colorPicker_kes = document.getElementById("borderColorPicker_psy");
+    colorPicker_kes.addEventListener("input", applyColor_psy)
+    function applyColor_psy() {
+        let color_psy = document.getElementById("borderColorPicker_psy").value;
+        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        pictoryFrame_psy.style.backgroundColor = color_psy;
+    }
+</script>
