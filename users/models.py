@@ -72,7 +72,13 @@ class NeighborRequest(models.Model):
 
     class Meta:
         unique_together = ('sender', 'receiver')  # 같은 유저에게 중복 신청 방지
-
+        
+    def save(self, *args, **kwargs):
+        """항상 user1 < user2 순서로 저장하여 중복 방지"""
+        if self.user1.login_id > self.user2.login_id:
+            self.user1, self.user2 = self.user2, self.user1
+        super().save(*args, **kwargs)
+        
     def __str__(self):
         return f"{self.sender} → {self.receiver} ({self.get_status_display()})"
 
@@ -90,7 +96,7 @@ class Neighbor(models.Model):
 
     def save(self, *args, **kwargs):
         """항상 user1 < user2 순서로 저장하여 중복 방지"""
-        if self.user1.id > self.user2.id:
+        if self.user1.login_id > self.user2.login_id:
             self.user1, self.user2 = self.user2, self.user1
         super().save(*args, **kwargs)
 
