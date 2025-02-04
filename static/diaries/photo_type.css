@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 50%;
+    top: 25%;
 }
 
 .photo-type_psy {
@@ -15,16 +15,16 @@
     width: 80%; 
 }
 
-.cloud-btn_psy {
+.select-btn_psy {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 25%;
+    gap: 20px;
     width: 100%;
 }
 
-.cloud-btn1_psy, .cloud-btn2_psy {
+.select-btn1_psy, .select-btn2_psy {
     position: relative;
     display: flex;
     align-items: center;
@@ -35,29 +35,20 @@
     min-height: 140px;
 }
 
-.cloud-btn1_psy svg, .cloud-btn2_psy svg {
+.select-btn1_psy img, .select-btn2_psy img {
     position: absolute;
     width: 100%;
     height: 100%;
-    transform: scale(2.0);
 }
 
-.cloud-btn1_psy svg {
-    fill: #BECDFF;
-}
-
-.cloud-btn2_psy svg {
-    fill: #AECDFF;
-}
-
-.cloud-text {
+.select-text {
     position: absolute;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    color: #1E3269;
+    color: var(--title_color);
     text-align: center;
     line-height: 1.4;
     pointer-events: none;
     white-space: nowrap;
-    font-family: 'GangwonEduSaeeum';
+    font-family: 'Gravitas One';
 }
