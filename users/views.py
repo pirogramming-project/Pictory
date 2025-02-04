@@ -13,6 +13,7 @@ from django.shortcuts import get_list_or_404
 from diaries.models import Diary
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -232,7 +233,14 @@ def main(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
+    graph = generate_emotion_graph()  # 감정 그래프 생성
+    context = {
+        "friend_count" : my_friends_count,
+        "graph": graph,
+    }
+    return render(request, 'users/profile.html', context)
+
 
 def alarm(request):
     return render(request, 'users/alarm.html')
@@ -276,11 +284,7 @@ def generate_emotion_graph():
     return image_base64
 
 
-def profile(request):
-    """ 프로필 페이지 뷰 """
-    graph = generate_emotion_graph()  # 감정 그래프 생성
 
-    return render(request, "users/profile.html", {"graph": graph})
 
 
 

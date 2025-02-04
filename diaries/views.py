@@ -240,7 +240,6 @@ def community(request):
         else:
             friendDiaryList.extend(Diary.objects.filter(writer=user2))
             
-    print(friendDiaryList)
     context = {
         'friend_diaries' : friendDiaryList
     }
