@@ -3,6 +3,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'diaries/custom_photo.css' %}">
+<link rel="stylesheet" href="{% static "diaries/custom_frames/custom_frame_"|add:frame_option|add:".css" %}">
+
 {% endblock %}
 
 {% block content %}
@@ -10,18 +12,14 @@
 
     <div class="container_psy">
         <div class="first-container_psy">
-            <div id="pictory-frame_psy">
-                <div class="image-slot_psy" onclick="uploadImage_psy(0)"><span>+</span></div>
-                <div class="image-slot_psy" onclick="uploadImage_psy(1)"><span>+</span></div>
-                <div class="image-slot_psy" onclick="uploadImage_psy(2)"><span>+</span></div>
-                <div class="image-slot_psy" onclick="uploadImage_psy(3)"><span>+</span></div>
-                <p class="custom-logo_psy">pictory</p>
-            </div>
-    
+            {% with "diaries/photo_frames/photo_frame_"|add:frame_option|add:".html" as frame_template %}
+                {% include frame_template %}
+            {% endwith %}
+
             <!-- AJAX로 불러올 내용을 표시할 영역 -->
             <div id="customization-area_psy">
                 <div id="customization-save_kes">
-                    <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' %}">
+                    <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
                         {% csrf_token %}
                         <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
                         <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">

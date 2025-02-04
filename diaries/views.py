@@ -119,7 +119,7 @@ def select_frame(request):
   
 # 인생네컷 추가 페이지3
 @login_required
-def custom_photo(request):
+def custom_photo(request, frame_type):
     if request.method == "POST":
         '''사진 관련 데이터 몽땅 저장하고 다음 페이지로 이동 '''
         # 1. 사진 프레임 저장
@@ -167,7 +167,10 @@ def custom_photo(request):
         
         print("저장실패.. 다시시도?")
     
-    return render(request, 'diaries/custom_photo.html')
+    context = {
+        'frame_option' : str(frame_type)
+    }
+    return render(request, 'diaries/custom_photo.html', context)
 
 
 # 인생네컷 추가 페이지4
