@@ -1,216 +1,89 @@
-.signup-body_psy {
-    grid-template-columns: 1fr 0.7fr 1fr; 
+.gravitas-one-regular {
+    font-family: "Gravitas One", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.signup_body_psy {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100dvh;
+    min-height: 100vh;
     background-color: #ffffff;
 }
 
-/* 카메라 배경 */
-.camera-wrapper_psy {
-    position: relative;
+.signup_wrapper_psy {
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* 카메라 이미지 배경 */
-.camera-img_psy {
-    display: block;
-    height: 65%;
-    width: 65%;
-    padding: 3%;
-}
-
-/* 카메라 셔터 버튼 */
-.shutters_psy {
-    position: absolute;
-    display: flex;
-    top: 2%;
-    left: 67%;
     flex-direction: column;
-    align-items: center;
+    background: #FFF9EA;
+    padding: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), inset 0px -1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
 }
 
-.shutter1_psy{
-    position: relative;
-    width: 28px;
-    height: 11px;
-    background: var(--font_color);
-}
-
-.shutter2_psy {
-    position: relative;
-    width: 45px;
-    height: 15px;
-    background: #DAE6F8;
-}
-
-/* 제목 */
-.title_psy{
-    position: relative;
-    font-family: var(--main_font);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 5rem;
-    color: var(--font_color);
-    padding-left: 8%;
-}
-
-/* 상단 점들 */
-.top-dots_psy{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    opacity: 0.5;
-    gap: 0.4rem;
-    box-shadow: inset 0px 4px 4px #1E3269, inset 0px -2px 4px #1E3269;
-    border-radius: 2rem;
-    align-items: center;
-    justify-content: center;
-    width: 4%;
-    height: 45%;
-    top: 42%;
-    left: 27%;
-}
-
-.dot1_psy, .dot2_psy {
-    position: relative;
-    width: 50%;
-    border-radius: 50%;
-    padding: 1rem 0;
-}
-
-.dot1_psy {
-    background-color: #739BE1;
-}
-
-.dot2_psy {
-    background-color: #557DE1;
-}
-
-.camera-line_psy{
-    position: absolute;
-    width: 68%;
-    height: 25%;
-    top: 110%;
-    left: 21%;
-    background: #9BC3FF;
-    opacity: 0.8;
-    z-index: -1;
-}
-
-/* 플래시 부분 */
-.flash_psy {
-    position: absolute;
-    top: 52%;
-    left: 68%;
-    border-radius: 3px;
-    transform: scale(0.5);
-}
-
-.camera-body_psy {
-    position: absolute;
-    top: 3%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 75%;
+.signup_title_psy {
     text-align: center;
 }
 
-/* 카메라 렌즈 */
-.lens_psy {
-    position: absolute;
-    background-color: #DDEAFE;
-    border-radius: 50%;
-    width: 48%;
-    height: 331%;
-    left: 32%;
-    z-index: 1;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25);
+.signup_title_psy p {
+    color: #515738;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-/* 회원가입 폼 */
-.signup-form_psy {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    top: 195%;
-    left: 40%;
-    width: 32%;
-    z-index: 2;
-    transform: scale(1.1);
+.signup_title_psy h1 {
+    font-size: 32px;
+    font-family: 'Gravitas One';
+    font-style: normal;
+    font-weight: 400;
+    color: #515738;
 }
 
-/* 입력 필드 */
-.input-field_psy {
+.signup_container_psy{
+    border: 2px solid #515738;
+    padding: 20px;
+}
+
+
+.signup_form_psy {
+    position: relative;
+    border-radius: 5px;
+}
+
+.signup_input_psy {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 0px -2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 2px solid #515738;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #FFF9EA;
+    color: #515738;
 }
 
-/* 회원가입 버튼 */
-.signup-button_psy {
-    background-color: #9BC3FF;
+.signup_button_psy {
     width: 100%;
+    padding: 12px;
+    background-color: #96A48B;
     color: white;
-    padding: 8px;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.signup-button_psy:hover {
-    background-color: #78A9ED;
+.login_link_psy {
+    text-align: center;
+    color: #515738;
+    font-size: 14px;
+    margin-bottom: 20px;
 }
 
-.login-text_psy {
-    position: absolute;
-    margin-top: 8px;
-    font-size: 1.3rem;
-    width: 100%;
-    z-index: 2;
-    top: 330%;
-    left: 5%;
-    color: #1E3269;
-}
-
-.login-link_psy {
-    color: #78A9ED;
-    font-weight: bold;
-}
-
-.login-link_psy:hover {
+.login_link_psy a {
+    color: #96A48B;
+    margin-left: 5px;
     text-decoration: underline;
-}
-
-/* 하단 점들 */
-.bottom-dots_psy {
-    position: absolute;
-    left: 79%;
-    top: 415%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-}
-
-.dot3_psy{
-    background-color: #ffffff;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-}
-
-.dot4_psy {
-    width: 18px;
-    height: 18px;
-    background-color: #1E3269;
-    opacity: 0.6;
-    border-radius: 50%;
 }
