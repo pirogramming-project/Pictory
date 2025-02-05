@@ -17,4 +17,5 @@ urlpatterns = [
     path('by_date/<int:year>/<int:month>/<int:day>/', diaries_by_date, name='diaries_by_date'),
     path('mydiaries/', mydiaries, name='mydiaries'),
     path('upload_photo/', upload_photo, name='upload_photo'),
+    path('mydiaries_tag_search_ajax/', mydiariesTagSearchAjax, name='mydiaries_tag_search_ajax'),
 ]

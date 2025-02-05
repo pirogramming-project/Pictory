@@ -8,8 +8,9 @@ from datetime import date, datetime
 from django.urls import reverse
 from django.core.files.base import ContentFile
 import base64
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.db.models import Q
+import json
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
@@ -133,7 +134,7 @@ def custom_photo(request, frame_type):
         if frame_css and logo_text and saved_photo:
             format, imgstr = saved_photo.split(";base64,")  # Base64 데이터(saved_photo) 분리
             ext = format.split("/")[-1]  # 확장자 추출 (png, jpg 등)
-            img_file = ContentFile(base64.b64decode(imgstr), name=f"frame_{request.user.login_id}.{ext}")   # Base64 디코딩하여 파일로 변환
+            img_file = ContentFile(base64.b64decode(imgstr), name=f"frame.{ext}")   # Base64 디코딩하여 파일로 변환
             created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text, image_file=img_file)
             if not created_frame:
                 print("[프레임]저장실패.. 다시시도")
@@ -266,6 +267,33 @@ def mydiaries(request):
     }
     
     return render(request, 'diaries/mydiaries.html', context)
+
+def mydiariesTagSearchAjax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        query = data.get("query")  # 검색어
+        
+        if(query):
+            queries = set([])
+            for item in query.split('#'):
+                if item:
+                    queries.add(item.strip())
+            queries = list(queries)
+            diaries = Diary.objects.filter(tags__name__icontains=queries[0])
+            for q in queries[1:]:
+                diaries = diaries.filter(tags__name__icontains=q)
+            diaries = diaries.distinct()
+            result = [{"id": diary.id, "thumbnail": diary.four_cut_photo.image_file.url} for diary in diaries]
+            
+            return JsonResponse(result, safe=False)
+
+
+
+
+
+
+
+
 
 @login_required
 def upload_photo(request):
