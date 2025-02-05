@@ -43,12 +43,14 @@
                     </div>
                     <div class="create_diary_third_title_ksy">
                         <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                            {% for checkbox in form.user_tags %}
-                                <div class="create_diary_usertag_item_kes">
-                                    {{ checkbox.tag }}
-                                    <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
-                                </div>
-                            {% endfor %}
+                        {% for neighbor in neighbors %}
+                        <div class="create_diary_usertag_item_kes">
+                            <input type="checkbox" name="user_tags" value="{{ neighbor.login_id }}" id="neighbor_{{ neighbor.login_id }}">
+                            <label for="neighbor_{{ neighbor.login_id }}">{{ neighbor.nickname }}</label>
+                        </div>
+                        {% empty %}
+                            <p>이웃이 없습니다.</p>
+                        {% endfor %}
                     </div>
                 </div>
             
