@@ -45,12 +45,14 @@
             <div class="create_diary_third_ksy">
                 <h1 class="create_diary_letter_ksy">친구 태그</h1>
                 <div class="create_diary_usertag_item_kes">
-                    {% for user in form.user_tags.field.queryset %}
+                    {% for neighbor in neighbors %}
                     <label>
-                        <input type="checkbox" name="user_tags" value="{{ user.login_id }}"
-                            {% if user in form.instance.user_tags.all %}checked{% endif %}>
-                        @{{ user.nickname }}
+                        <input type="checkbox" name="user_tags" value="{{ neighbor.login_id }}"
+                            {% if neighbor in user_tags %}checked{% endif %}>
+                        @{{ neighbor.nickname }}
                     </label>
+                    {% empty %}
+                        <p>이웃이 없습니다.</p>
                     {% endfor %}
                 </div>
             </div>

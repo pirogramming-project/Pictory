@@ -54,6 +54,10 @@ def edit_diary(request, diary_id):
 
     if diary.writer != request.user:
         raise Http404("존재하지 않는 페이지입니다.")  
+    
+    neighbors = User.objects.filter(
+        Q(neighbors1__user2=request.user) | Q(neighbors2__user1=request.user)
+    ).exclude(login_id=request.user.login_id).distinct()
 
     if request.method == 'POST':
         form = DiaryForm(request.POST, instance=diary)
@@ -91,15 +95,16 @@ def edit_diary(request, diary_id):
     else:
         form = DiaryForm(instance=diary)
 
-    all_users = User.objects.all()
+    #all_users = User.objects.all()
     user_tags = diary.user_tags.all()
     diary_tags = diary.tags.all()
 
     context = {
         'form': form,
         'diary': diary,
-        'all_users': all_users,
-        'user_tags': user_tags,
+        # 'all_users': all_users,
+        'neighbors':neighbors, #이웃들만
+        'user_tags': user_tags, #create에서 태그했던 이웃들들
         'diary_tags': diary_tags,
     }
     return render(request, 'diaries/edit_diary.html', context)
@@ -180,6 +185,11 @@ def custom_photo(request, frame_type):
 @login_required
 def create_diary(request, related_frame_id):
     related_frame = Frame.objects.get(id=related_frame_id)
+    # 로그인한 유저의 이웃 관계 필터링
+    neighbors = User.objects.filter(
+        Q(neighbors1__user2=request.user) | Q(neighbors2__user1=request.user)
+    ).exclude(login_id=request.user.login_id).distinct()
+
     if request.method == 'POST':
         four_cut_photo = related_frame
         
@@ -212,7 +222,7 @@ def create_diary(request, related_frame_id):
             form.save_m2m()
             
 
-            return redirect('/')    # 페이지 리다이렉션 디테일페이지 미구현
+            return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))    
         else:
             print("error: form is not valid")
             return redirect('diaries:create_diary')
@@ -223,6 +233,7 @@ def create_diary(request, related_frame_id):
         'related_frame_id' : related_frame_id,
         'related_frame_img' : related_frame.image_file,
         'KAKAO_MAP_APPKEY_JS' : KAKAO_APPKEY_JS,
+        'neighbors':neighbors,
     }
     return render(request, 'diaries/create_diary.html', context)
 
