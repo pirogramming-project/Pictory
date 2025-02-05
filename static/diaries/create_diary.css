@@ -1,28 +1,185 @@
 .create_diary_container_ksy {
     display: flex;
+    padding: 40px;
+    gap: 25px;
+    background-color: var(--background);
+    height: calc(95vh - 150px);
+    overflow-y: auto;
 }
-.create_diary_left_container_ksy {
-    flex: 1;
+
+.create_diary_left_container_psy {
+    flex: 3;
+    padding: 40px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
 }
-.create_diary_right_container_ksy {
+
+.create_diary_left_container_psy img {
+    width: 100%;
+    height: auto;
+}
+
+.create_diary_right_container_psy {
+    flex: 7;
+    background-color: var(--background);
+    min-width: 0;
+}
+
+.create_diary_form_psy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.first_right_container_psy {
+    background-color: var(--background);
+    padding: 20px;
+    border: 3px solid #5c6552;
+    border-radius: 5px;
+}
+
+.first_line_psy, .second_line_psy {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.diary_title_psy, .diary_emotion_psy,
+.diary_date_psy, .diary_weather_psy {
     flex: 1;
 }
 
-/* 이 파일 제가 테스트하려고 추가한 거라 나중에 프론트에 맞게 싹 다 지우셔도 무방합니다 */
-.create_diary_letter_ksy {
-    color: black;
+.diary_letter_psy {
+    font-size: 14px;
+    color: #5c6552;
+    margin-bottom: 8px;
+    font-family: 'Gravitas One';
 }
 
-/* 이 밑에 세 개는 '친구 태그' 기능에서 태그 가능한 유저 목록 띄워주는 거 관련한 클래스들임다 */
+.third_line_psy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.diary_tag_psy {
+    flex: 1;
+}
+
+.diary_content_tag_psy {
+    margin-bottom: 20px;
+    pointer-events: none;
+}
+
+.content_tag_psy {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    pointer-events: auto; 
+}
+
+.friend_tag_item_psy label {
+    display: inline-flex;
+    align-items: center;
+    background-color: #888d724d;
+    padding: 2px 5px;
+    margin: 2px;
+    border-radius: 5px;
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.friend_tag_item_psy label label.selected{
+    background-color: #888D72;
+    opacity: 0.7;
+}
+
+.diary_friend_psy{
+    border: 2px solid #5c6552;
+    padding: 10px;
+    height: calc(22vh - -5px);
+    overflow-y: auto;
+    flex: 1 1 48%; /* 최소 너비를 48%로 설정하여 한 줄에 2개 배치 가능 */
+    min-width: 300px; /* 너무 작아지지 않도록 최소 너비 설정 */
+}
+
+.diary_map_psy {
+
+    flex: 1 1 48%; /* 최소 너비를 48%로 설정 */
+    min-width: 300px;
+}
+
+.real_location_psy {
+    margin-top: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+}
+
+.fourth_line_psy textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 16px;
+    border: 3px solid #5c6552;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
+}
+
+.diary_save_psy {
+    align-self: flex-end;
+    padding: 12px 24px;
+    color: #5c6552;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.diary_save_psy svg {
+   width: 32px;
+   height: 32px;
+}
+
+.diary_save_psy svg path {
+    stroke-width: 3; 
+}
+
+
+input[type="text"], 
+input[type="date"], 
+select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+}
+
 .create_diary_usertag_item_kes {
-    color: black;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
 }
-.create_diary_usertag_item_kes > input {
-    width: 10px;
-    height: 10px;
-    border: 1px solid black;
-    border-radius: 1px;
-}
-.create_diary_usertag_item_kes > input:checked {
-    background-color: aqua;
+
+
+@media (max-width: 75vw) {
+    .third_line_psy {
+        flex-direction: column; /* 강제 세로 정렬 */
+    }
+
+    .diary_map_psy {
+        order: 2; /* Friend Tag 아래로 이동 */
+    }
+
+    .diary_friend_psy {
+        order: 1; /* Friend Tag 먼저 배치 */
+    }
 }
