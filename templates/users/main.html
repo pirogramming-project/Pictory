@@ -31,7 +31,6 @@
 
         <div class="today_diary_psy">
             <div class="today_diary_list_psy">
-                <h2 id="selectedDateTitle">선택한 날짜의 일기 목록</h2>
             </div>
             <div class="today_diary_content_psy">
                 <ul id="diaryListContainer"></ul>
@@ -103,7 +102,7 @@
             function renderCalendar() {
                 const year = currentDate.getFullYear();
                 const month = currentDate.getMonth();
-                currentMonthElement.textContent = new Date(year, month).toLocaleString("ko-KR", { year: "numeric", month: "long" });
+                currentMonthElement.textContent = new Date(year, month).toLocaleString("en-US", { year: "numeric", month: "short" }).replace(" ", ". ");;
     
                 const firstDayIndex = new Date(year, month, 1).getDay();
                 const lastDate = new Date(year, month + 1, 0).getDate();
