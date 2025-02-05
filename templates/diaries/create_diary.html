@@ -8,77 +8,83 @@
 
 {% block content %}
     <div class="create_diary_container_ksy">
-        <div class="create_diary_left_container_ksy">
+
+        <div class="create_diary_left_container_psy">
             <img src="{{related_frame_img.url}}">
         </div>
-        <div class="create_diary_right_container_ksy">
-            <form class="create_diary_form_ksy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
+
+        <div class="create_diary_right_container_psy">
+            <form class="create_diary_form_psy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
                 {% csrf_token %}
-                <div class="create_diary_first_ksy">
-                    <div class="create_diary_first_title_ksy">
-                        <h1 class="create_diary_letter_ksy">Title</h1>
-                        {{ form.title }}
+                <div class="first_right_container_psy">
+                    <div class="first_line_psy">
+                        <div class="diary_title_psy">
+                            <h1 class="diary_letter_psy">o Title</h1>
+                            {{ form.title }}
+                        </div>
+                        <div class="diary_emotion_psy">
+                            <h1 class="diary_letter_psy">o Emotion</h1>
+                            {{ form.emotion }}
+                        </div>
                     </div>
-                    <div class="create_diary_first_title_ksy">
-                        <h1 class="create_diary_letter_ksy">날짜</h1>
-                        {{ form.date }}
+    
+                    <div class="second_line_psy">
+                        <div class="diary_date_psy">
+                            <h1 class="diary_letter_psy">o Date</h1>
+                            {{ form.date }}
+                        </div>
+                        <div class="diary_weather_psy">
+                            <h1 class="diary_letter_psy">o Weather</h1>
+                            {{ form.weather }}
+                        </div>
+                    </div>
+    
+                    <div class="third_line_psy">
+    
+                        <div class="diary_tag_psy">
+                            <div class="diary_content_tag_psy">
+                                <h1 class="diary_letter_psy">o Tag</h1>
+                                <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" required>
+                            </div>
+                            <div class="diary_friend_psy">
+                                <h1 class="diary_letter_psy">o Friend Tag</h1>
+                                    {% for checkbox in form.user_tags %}
+                                        <div class="friend_tag_item_psy">
+                                            {{ checkbox.tag }}
+                                            <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                        </div>
+                                    {% endfor %}
+                            </div>
+                        </div>
+    
+                        <div class="diary_map_psy">
+                            <h1 class="diary_letter_psy">o Location</h1>
+                            {{ form.place }}
+                            <div class="real_location_psy" style="height: 180px; width: 200px;"></div>
+                        </div>
+    
                     </div>
                 </div>
-            
-                <div class="create_diary_second_ksy">
-                    <div class="create_diary_second_title_ksy">
-                        <h1 class="create_diary_letter_ksy">날씨</h1>
-                        {{ form.weather }}
-                    </div>
-                    <div class="create_diary_second_title_ksy">
-                        <h1 class="create_diary_letter_ksy">감정</h1>
-                        {{ form.emotion }}
-                    </div>
-                </div>
-            
-                <div class="create_diary_third_ksy">
-                    <div class="create_diary_third_title_ksy">
-                        <h1 class="create_diary_letter_ksy">게시물 태그</h1>
-                        <input type="text" name="create_diary_post" placeholder="#으로 구분해서 태그를 추가하세요" class="create_diary_content_ksy" required>
-                    </div>
-                    <div class="create_diary_third_title_ksy">
-                        <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                            {% for checkbox in form.user_tags %}
-                                <div class="create_diary_usertag_item_kes">
-                                    {{ checkbox.tag }}
-                                    <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
-                                </div>
-                            {% endfor %}
-                    </div>
-                </div>
-            
-                <div class="create_diary_fourth_ksy">
-                    <div class="create_diary_fourth_title_ksy">
-                        <h1 class="create_diary_letter_ksy">장소</h1>
-                        {{ form.place }}
-                        <div class="create_diary_map_ksy" style="height: 150px; width: 200px;"></div>
-                    </div>
-                </div>
-            
-                <div class="create_diary_fifth_ksy">
+                
+                <div class="fourth_line_psy">
+                    <h1 class="diary_letter_psy">o Content</h1>
                     {{ form.content }}
                 </div>
-            
-                <button type="submit" class="create_button_save_ksy">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16">
-                        <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+
+                <button type="submit" class="diary_save_psy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
                     </svg>
-                    저장
                 </button>
             </form>
             
         </div>
-
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            let inputField = document.querySelector(".create_diary_content_ksy#id_place");
+            let inputField = document.querySelector(".content_tag_psy#id_place");
             
             if (inputField) {
                 inputField.addEventListener("change", function() {
@@ -91,7 +97,7 @@
 
 
         // 1. 지도 초기화
-        const mapContainer = document.querySelector('.create_diary_map_ksy');
+        const mapContainer = document.querySelector('.real_location_psy');
         const map = new kakao.maps.Map(mapContainer, {
           center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
           level: 6, // 지도 확대 레벨
@@ -152,5 +158,6 @@
             }
           });
         }
+
       </script>
 {% endblock %}

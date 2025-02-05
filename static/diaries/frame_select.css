@@ -6,17 +6,17 @@
 }
 .frame-container_psy {
     width: 100%;
-    height: 100vh;
     padding: 20px;
+    height: calc(95vh - 150px);
     overflow-y: auto;
 }
 
 .frame-select-text_psy {
     text-align: center;
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
-    color: var(--font_color);
-    font-family: 'GangwonEduSaeeum';
+    font-size: 2.5rem;
+    margin: 2rem;
+    color: var(--title_color);
+    font-family: 'Gravitas One';
 
 }
 
@@ -48,6 +48,10 @@
 
 .frame-btn_psy button:hover {
     transform: scale(1.05);
+}
+
+.frame-btn4_psy img {
+    transform: scale(0.7);
 }
 
 /* 반응형 디자인 */
