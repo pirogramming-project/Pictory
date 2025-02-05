@@ -316,27 +316,27 @@ def mydiariesTagSearchAjax(request):
         data = json.loads(request.body)
         query = data.get("query")  # 검색어
         
-        if(query):
-            queries = set([])
-            for item in query.split('#'):
-                if item:
-                    queries.add(item.strip())
-            queries = list(queries)
-            diaries = Diary.objects.filter(writer=request.user, tags__name__icontains=queries[0])
-            for q in queries[1:]:
-                diaries = diaries.filter(tags__name__icontains=q)
-            diaries = diaries.distinct()
-            result = [{"id": diary.id, "thumbnail": diary.four_cut_photo.image_file.url} for diary in diaries]
-            
-            return JsonResponse(result, safe=False)
+        
+        if query:
+            queries = list(set([item.strip() for item in query.split('#') if item]))
+            # 내 전체 일기 가져오기
+            myAllDiaryList = Diary.objects.filter(writer=request.user)
 
+            # 태그 필터링 적용
+            if queries:
+                myAllDiaryList = myAllDiaryList.filter(
+                    tags__name__icontains=queries[0]
+                )
+                for q in queries[1:]:
+                    myAllDiaryList = myAllDiaryList.filter(tags__name__icontains=q).distinct()
 
-
-
-
-
-
-
+                # JSON 응답 반환
+                result = [{
+                    "id": diary.id,
+                    "thumbnail": diary.four_cut_photo.image_file.url
+                    } for diary in myAllDiaryList]
+                return JsonResponse(result, safe=False)
+        
 
 @login_required
 def upload_photo(request):
