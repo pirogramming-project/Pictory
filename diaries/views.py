@@ -22,7 +22,7 @@ def diary_detail(request, diary_id):
     photo = diary.four_cut_photo.image_file
 
     if diary.writer != request.user:
-        raise Http404("존재하지 않는 페이지입니다.")  
+        raise Http404("페이지 접근 권한이 없습니다.")  
     
     context = {
         'diary': diary,
@@ -247,6 +247,48 @@ def community(request):
     
     return render(request, 'diaries/community.html', context)
 
+
+def communityTagSearchAjax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        query = data.get("query")  # 검색어
+        
+        if query:
+            queries = list(set([item.strip() for item in query.split('#') if item]))
+
+            # 현재 사용자의 이웃 목록 가져오기
+            myNeighbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+
+            # 이웃들의 ID 가져오기 (현재 사용자를 제외한 친구들)
+            neighbor_login_ids = set()
+            for neighbor in myNeighbors:
+                if neighbor.user1 != request.user:
+                    neighbor_login_ids.add(neighbor.user1.login_id)
+                if neighbor.user2 != request.user:
+                    neighbor_login_ids.add(neighbor.user2.login_id)
+
+            # 이웃들이 작성한 일기 가져오기
+            friendAllDiaryList = Diary.objects.filter(writer__login_id__in=neighbor_login_ids)
+
+            # 태그 필터링 적용
+            if queries:
+                query_filter = Q(tags__name__icontains=queries[0])
+                for q in queries[1:]:
+                    query_filter &= Q(tags__name__icontains=q)
+
+                friendAllDiaryList = friendAllDiaryList.filter(query_filter).distinct()
+
+            # JSON 응답 반환
+            result = [{
+                "id": diary.id,
+                "title": diary.title,
+                "tags": list(diary.tags.values_list("name", flat=True)),
+                "thumbnail": diary.four_cut_photo.image_file.url
+                } for diary in friendAllDiaryList]
+            return JsonResponse(result, safe=False)
+
+
+
 def friend_request(request):
     return render(request, 'diaries/friend_request.html')
 
@@ -279,7 +321,7 @@ def mydiariesTagSearchAjax(request):
                 if item:
                     queries.add(item.strip())
             queries = list(queries)
-            diaries = Diary.objects.filter(tags__name__icontains=queries[0])
+            diaries = Diary.objects.filter(writer=request.user, tags__name__icontains=queries[0])
             for q in queries[1:]:
                 diaries = diaries.filter(tags__name__icontains=q)
             diaries = diaries.distinct()
