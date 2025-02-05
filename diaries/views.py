@@ -8,8 +8,9 @@ from datetime import date, datetime
 from django.urls import reverse
 from django.core.files.base import ContentFile
 import base64
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.db.models import Q
+import json
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
@@ -21,7 +22,7 @@ def diary_detail(request, diary_id):
     photo = diary.four_cut_photo.image_file
 
     if diary.writer != request.user:
-        raise Http404("존재하지 않는 페이지입니다.")  
+        raise Http404("페이지 접근 권한이 없습니다.")  
     
     context = {
         'diary': diary,
@@ -53,6 +54,10 @@ def edit_diary(request, diary_id):
 
     if diary.writer != request.user:
         raise Http404("존재하지 않는 페이지입니다.")  
+    
+    neighbors = User.objects.filter(
+        Q(neighbors1__user2=request.user) | Q(neighbors2__user1=request.user)
+    ).exclude(login_id=request.user.login_id).distinct()
 
     if request.method == 'POST':
         form = DiaryForm(request.POST, instance=diary)
@@ -90,15 +95,16 @@ def edit_diary(request, diary_id):
     else:
         form = DiaryForm(instance=diary)
 
-    all_users = User.objects.all()
+    #all_users = User.objects.all()
     user_tags = diary.user_tags.all()
     diary_tags = diary.tags.all()
 
     context = {
         'form': form,
         'diary': diary,
-        'all_users': all_users,
-        'user_tags': user_tags,
+        # 'all_users': all_users,
+        'neighbors':neighbors, #이웃들만
+        'user_tags': user_tags, #create에서 태그했던 이웃들들
         'diary_tags': diary_tags,
     }
     return render(request, 'diaries/edit_diary.html', context)
@@ -133,7 +139,7 @@ def custom_photo(request, frame_type):
         if frame_css and logo_text and saved_photo:
             format, imgstr = saved_photo.split(";base64,")  # Base64 데이터(saved_photo) 분리
             ext = format.split("/")[-1]  # 확장자 추출 (png, jpg 등)
-            img_file = ContentFile(base64.b64decode(imgstr), name=f"frame_{request.user.login_id}.{ext}")   # Base64 디코딩하여 파일로 변환
+            img_file = ContentFile(base64.b64decode(imgstr), name=f"frame.{ext}")   # Base64 디코딩하여 파일로 변환
             created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text, image_file=img_file)
             if not created_frame:
                 print("[프레임]저장실패.. 다시시도")
@@ -179,6 +185,11 @@ def custom_photo(request, frame_type):
 @login_required
 def create_diary(request, related_frame_id):
     related_frame = Frame.objects.get(id=related_frame_id)
+    # 로그인한 유저의 이웃 관계 필터링
+    neighbors = User.objects.filter(
+        Q(neighbors1__user2=request.user) | Q(neighbors2__user1=request.user)
+    ).exclude(login_id=request.user.login_id).distinct()
+
     if request.method == 'POST':
         four_cut_photo = related_frame
         
@@ -211,7 +222,7 @@ def create_diary(request, related_frame_id):
             form.save_m2m()
             
 
-            return redirect('/')    # 페이지 리다이렉션 디테일페이지 미구현
+            return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))    
         else:
             print("error: form is not valid")
             return redirect('diaries:create_diary')
@@ -222,6 +233,7 @@ def create_diary(request, related_frame_id):
         'related_frame_id' : related_frame_id,
         'related_frame_img' : related_frame.image_file,
         'KAKAO_MAP_APPKEY_JS' : KAKAO_APPKEY_JS,
+        'neighbors':neighbors,
     }
     return render(request, 'diaries/create_diary.html', context)
 
@@ -246,6 +258,49 @@ def community(request):
     
     return render(request, 'diaries/community.html', context)
 
+
+def communityTagSearchAjax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        query = data.get("query")  # 검색어
+        
+        if query:
+            queries = list(set([item.strip() for item in query.split('#') if item]))
+
+            # 현재 사용자의 이웃 목록 가져오기
+            myNeighbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+
+            # 이웃들의 ID 가져오기 (현재 사용자를 제외한 친구들)
+            neighbor_login_ids = set()
+            for neighbor in myNeighbors:
+                if neighbor.user1 != request.user:
+                    neighbor_login_ids.add(neighbor.user1.login_id)
+                if neighbor.user2 != request.user:
+                    neighbor_login_ids.add(neighbor.user2.login_id)
+
+            # 이웃들이 작성한 일기 가져오기
+            friendAllDiaryList = Diary.objects.filter(writer__login_id__in=neighbor_login_ids)
+
+            # 태그 필터링 적용
+            if queries:
+                friendAllDiaryList = friendAllDiaryList.filter(
+                    tags__name__icontains=queries[0]
+                )
+                
+                for q in queries[1:]:
+                    friendAllDiaryList = friendAllDiaryList.filter(tags__name__icontains=q).distinct()
+
+            # JSON 응답 반환
+            result = [{
+                "id": diary.id,
+                "title": diary.title,
+                "tags": list(diary.tags.values_list("name", flat=True)),
+                "thumbnail": diary.four_cut_photo.image_file.url
+                } for diary in friendAllDiaryList]
+            return JsonResponse(result, safe=False)
+
+
+
 def friend_request(request):
     return render(request, 'diaries/friend_request.html')
 
@@ -266,6 +321,33 @@ def mydiaries(request):
     }
     
     return render(request, 'diaries/mydiaries.html', context)
+
+def mydiariesTagSearchAjax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        query = data.get("query")  # 검색어
+        
+        
+        if query:
+            queries = list(set([item.strip() for item in query.split('#') if item]))
+            # 내 전체 일기 가져오기
+            myAllDiaryList = Diary.objects.filter(writer=request.user)
+
+            # 태그 필터링 적용
+            if queries:
+                myAllDiaryList = myAllDiaryList.filter(
+                    tags__name__icontains=queries[0]
+                )
+                for q in queries[1:]:
+                    myAllDiaryList = myAllDiaryList.filter(tags__name__icontains=q).distinct()
+
+                # JSON 응답 반환
+                result = [{
+                    "id": diary.id,
+                    "thumbnail": diary.four_cut_photo.image_file.url
+                    } for diary in myAllDiaryList]
+                return JsonResponse(result, safe=False)
+        
 
 @login_required
 def upload_photo(request):

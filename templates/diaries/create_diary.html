@@ -37,6 +37,7 @@
                             <h1 class="diary_letter_psy">o Weather</h1>
                             {{ form.weather }}
                         </div>
+
                     </div>
     
                     <div class="third_line_psy">
@@ -48,11 +49,13 @@
                             </div>
                             <div class="diary_friend_psy">
                                 <h1 class="diary_letter_psy">o Friend Tag</h1>
-                                    {% for checkbox in form.user_tags %}
+                                    {% for neighbor in neighbors %}
                                         <div class="friend_tag_item_psy">
-                                            {{ checkbox.tag }}
-                                            <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                            <input type="checkbox" name="user_tags" value="{{ neighbor.login_id }}" id="neighbor_{{ neighbor.login_id }}">
+                                            <label for="neighbor_{{ neighbor.login_id }}">{{ neighbor.nickname }}</label>
                                         </div>
+                                    {% empty %}
+                                    <p>이웃이 없습니다.</p>
                                     {% endfor %}
                             </div>
                         </div>

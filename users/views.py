@@ -290,13 +290,17 @@ def generate_emotion_graph():
 
 def user_search_ajax(request):
     query = request.GET.get("query", "")  # 검색어를 GET 파라미터로 받음
+    results = []
+    
+    if not query:
+        return JsonResponse({"result": results})
+        
     if query[0] == '@':
         # 유저검색
         users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query[1:])
     else:
         users = User.objects.exclude(login_id=request.user.login_id).filter(nickname__icontains=query)
         
-    results = []
     for user in users:
         friend_status = "신청가능"  # 기본 상태
 
