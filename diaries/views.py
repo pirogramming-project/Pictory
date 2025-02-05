@@ -272,11 +272,12 @@ def communityTagSearchAjax(request):
 
             # 태그 필터링 적용
             if queries:
-                query_filter = Q(tags__name__icontains=queries[0])
+                friendAllDiaryList = friendAllDiaryList.filter(
+                    tags__name__icontains=queries[0]
+                )
+                
                 for q in queries[1:]:
-                    query_filter &= Q(tags__name__icontains=q)
-
-                friendAllDiaryList = friendAllDiaryList.filter(query_filter).distinct()
+                    friendAllDiaryList = friendAllDiaryList.filter(tags__name__icontains=q).distinct()
 
             # JSON 응답 반환
             result = [{
