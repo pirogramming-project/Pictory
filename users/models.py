@@ -74,7 +74,7 @@ class NeighborRequest(models.Model):
         unique_together = ('sender', 'receiver')  # 같은 유저에게 중복 신청 방지
                 
     def __str__(self):
-        return f"{self.sender} → {self.receiver} ({self.get_status_display()})"
+        return f"{self.sender} → {self.receiver}"
 
 
 class Neighbor(models.Model):

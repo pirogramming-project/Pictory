@@ -326,11 +326,15 @@ def are_neighbors(user_a, user_b):
     user1, user2 = sorted([user_a, user_b], key=lambda u: u.login_id)
     return Neighbor.objects.filter(user1=user1, user2=user2).exists()
 def addUsersToFriend(user1, user2):
-    ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 '''
+    ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 기존의 이웃 요청은 삭제함 '''
     Neighbor.objects.get_or_create(
         user1=user1,
         user2=user2
     )
+    
+    # 친구 요청을 삭제
+    NeighborRequest.objects.filter(Q(sender=user1, receiver=user2) | Q(sender=user2, receiver=user1)).delete()
+    
     return user1, user2
 ##### 끝. 친구 신청 관련 Util함수들 끝. #####
 
@@ -393,6 +397,7 @@ def send_friend_request_ajax(request):
         if my_all_received_requests.filter(sender=toUser).exists():
             ## (1-2) 이미 신청을 받았다면 친구 수락으로 처리.
             addUsersToFriend(fromUser, toUser)
+            
             return JsonResponse({
                 "success": False,
                 "message": f"상대방의 친구 요청을 수락했습니다. @{toUser.nickname}과 친구가 되었습니다."
