@@ -28,12 +28,16 @@
                 <a href="{% url 'diaries:diary_map' %}" class="base_desktop-nav-item_ksy">지도</a>
                 <a href="{% url 'diaries:community' %}" class="base_desktop-nav-item_ksy">커뮤니티</a>
                 <a href="{% url 'diaries:friend_request' %}" class="base_desktop-nav-item_ksy">이웃 요청</a>
-                <li>
+                <li class="base_li_ksy">
                     <!--사용자 아이디-->
                     <strong class="base_name_nav_ksy">
                         {{ request.user.nickname }}
                     </strong>
-                    <a href="{% url 'users:profile' %}" class="base_desktop-nav-item_logout_ksy">로그아웃</a>
+                    <form action="{% url 'users:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="base_desktop-nav-item_logout_ksy">로그아웃</button>
+                    </form>
+                    
                 </li>
             </nav>
             <button class="base_button_alarm_ksy"  onclick="location.href='{% url 'users:alarm' %}'">
