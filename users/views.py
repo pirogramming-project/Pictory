@@ -364,6 +364,7 @@ def send_friend_request_ajax(request):
     # ajax 포스트 요청일 때:
     if request.method == "POST":
         data = json.loads(request.body)
+        print(data)
         fromUser = request.user
         try:
             toUser = User.objects.exclude(login_id=fromUser.login_id).get(login_id=data.get('to_user_loginid'))
