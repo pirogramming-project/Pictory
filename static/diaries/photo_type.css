@@ -4,6 +4,7 @@
     align-items: center;
     position: relative;
     top: 25%;
+    padding-top: 50px;
 }
 
 .photo-type_psy {
@@ -20,7 +21,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 50px;
     width: 100%;
 }
 
@@ -38,7 +39,7 @@
 .select-btn1_psy img, .select-btn2_psy img {
     position: absolute;
     width: 110%;
-    height: 145%;
+    height: 180%;
 }
 
 .select-text {
