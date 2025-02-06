@@ -65,6 +65,13 @@
     height: auto;
 
 }
+/* 알람이 없을 때 */
+.alarm_no_alarm {
+    display: flex;
+    font-size: 22px;
+    color: black;
+    justify-content: center;
+}
 
 .alarm_btn_ksy:hover {
     background-color: #A4CEF7;

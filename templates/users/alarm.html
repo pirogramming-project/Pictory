@@ -35,6 +35,10 @@
             {% endwith %}
         {% endif %}
     </div>
+    {% empty %}
+    <div class="alarm_no_alarm"> 
+        <p>알림이 없어요..</p>
+    </div>
     {% endfor %}
     <button class="alarm_btn_ksy">
         <div class="alarm_icon_wrapper_ksy">
