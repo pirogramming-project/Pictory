@@ -116,7 +116,7 @@
 .base_logo_title_desktop_ksy {
     color: var(--title_color);
     font-family: "Gravitas One", serif;
-    font-size: 5rem;
+    font-size: 4rem;
 }
 .base_menu-button_ksy {
     display: none;
