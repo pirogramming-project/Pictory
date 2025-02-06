@@ -121,6 +121,7 @@
 }
 .base_desktop-nav-item_logout_ksy {
     text-decoration: underline;
+    padding-bottom: 2px; 
     font-family: var(--main_font);
     color: var(--title_color);
     font-size: 1.5rem;
