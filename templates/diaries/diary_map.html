@@ -23,6 +23,9 @@
             </form>
         </div>
     </div>
+    <div class="map_diary-list_ljs">
+      <ul id="diaryListContainer"></ul>
+    </div>
 
 </div>
 
@@ -130,6 +133,11 @@
               map: map,
             });
 
+            // 마커 클릭 이벤트 추가
+            kakao.maps.event.addListener(marker, 'click', function () {
+              fetchDiariesByPlace(address); // 다이어리 목록 가져오기
+            });
+
             const label = new kakao.maps.CustomOverlay({
               position: coords,
               content: `<span class="marker-label">1</span>`,
@@ -153,5 +161,44 @@
         }
       });
     }
+
+    function fetchDiariesByPlace(placeName) {
+      console.log("Fetching diaries for place:", placeName); // 요청 전에 로그 출력
+      const url = `/diaries/by_place/${encodeURIComponent(placeName)}/`; // URL 인코딩
+
+      fetch(url)
+          .then(response => response.json())
+          .then(data => {
+              displayDiaryList(data);
+          })
+          .catch(error => {
+              console.error("Error fetching diaries:", error);
+          });
+  }
+
+  function displayDiaryList(diaries) {
+    const diaryListContainer = document.getElementById("diaryListContainer");
+
+    diaryListContainer.innerHTML = ""; // 기존 리스트 초기화
+
+    if (diaries.length === 0) {
+        diaryListContainer.innerHTML = "<li>📌 관련된 다이어리가 없습니다.</li>";
+    } else {
+        diaries.forEach(diary => {
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+
+            link.href = `/diary/detail/${diary.id}/`;
+            link.textContent = diary.title;
+
+            listItem.appendChild(link);
+            diaryListContainer.appendChild(listItem);
+        });
+    }
+  }
+
+
+
+    
 </script>
 {% endblock %}
