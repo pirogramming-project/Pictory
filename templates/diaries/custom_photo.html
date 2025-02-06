@@ -19,6 +19,18 @@
             <!-- AJAX로 불러올 내용을 표시할 영역 -->
             <div id="customization-area_psy">
                 <div id="customization-save_kes">
+                    <div class="custom-buttons_psy">
+                        <button class="cloud-btn_psy" data-page_psy="color">
+                            <p>색깔</P>
+                        </button>
+                        <button class="cloud-btn_psy" data-page_psy="logo">
+                            <p>로고</P></button>
+                        <button class="cloud-btn_psy" data-page_psy="thickness">
+                            <p>두께</P></button>
+                        <button class="cloud-btn_psy" data-page_psy="sticker">
+                            <p>스티커</P>
+                        </button>
+                    </div>
                     <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
                         {% csrf_token %}
                         <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
@@ -41,18 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="custom-buttons_psy">
-            <button class="cloud-btn_psy" data-page_psy="color">
-                <p>색깔</P>
-            </button>
-            <button class="cloud-btn_psy" data-page_psy="logo">
-                <p>로고</P></button>
-            <button class="cloud-btn_psy" data-page_psy="thickness">
-                <p>두께</P></button>
-            <button class="cloud-btn_psy" data-page_psy="sticker">
-                <p>스티커</P>
-            </button>
-        </div>
+
     </div>
 
     
