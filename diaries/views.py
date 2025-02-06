@@ -364,3 +364,12 @@ def upload_photo(request):
         return redirect('diaries:create_diary', related_frame_id=new_frame.id)
 
     return redirect('diaries:select_photo_type')  # 실패하면 다시 선택 페이지로    
+
+def diaries_by_place(request, place_name):
+    if request.method == 'GET':
+        diaries = Diary.objects.filter(place=place_name).values('id','title')
+        if not diaries.exists():
+            print(f"No diaries found for place: {place_name}")  # 디버깅 로그
+            return JsonResponse([], safe=False)  # 빈 리스트 반환
+        diary_list = list(diaries)
+        return JsonResponse(diary_list, safe=False)

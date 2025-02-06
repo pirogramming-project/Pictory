@@ -19,4 +19,5 @@ urlpatterns = [
     path('upload_photo/', upload_photo, name='upload_photo'),
     path('mydiaries_tag_search_ajax/', mydiariesTagSearchAjax, name='mydiaries_tag_search_ajax'),
     path('community_tag_search_ajax/', communityTagSearchAjax, name='community_tag_search_ajax'),
+    path('diaries/by_place/<str:place_name>/', diaries_by_place, name='diaries_by_place'),
 ]
