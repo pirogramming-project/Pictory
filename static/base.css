@@ -207,5 +207,5 @@
 
 /* 사이드바가 열렸을 때 배경 투명도 적용 */
 .base_content-area_ksy.base_active_opacity::before {
-    opacity: 0.5;
+    opacity: 0.8;
 }
