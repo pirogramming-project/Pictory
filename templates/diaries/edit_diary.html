@@ -86,16 +86,17 @@
     
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener("change", function () {
-                const label = this.closest("label");
-    
+                const tagItem = this.closest(".friend_tag_item_psy");  // 부모 컨테이너를 찾음
+                
                 if (this.checked) {
-                    label.classList.add("selected"); // 선택된 경우 스타일 변경
+                    tagItem.classList.add("selected");  // 선택 시 클래스 추가
                 } else {
-                    label.classList.remove("selected"); // 선택 해제 시 원래 스타일 복구
+                    tagItem.classList.remove("selected");  // 취소 시 클래스 제거
                 }
             });
         });
     });
+    
 
     
     

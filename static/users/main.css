@@ -172,3 +172,8 @@
 .main-container_psy::-webkit-scrollbar-thumb:hover {
     background: #515738 !important;;
 }
+
+
+#selectedDateTitle {
+    color: black;
+}

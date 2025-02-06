@@ -26,9 +26,19 @@
 </div>
 
 <script>
+    const eventHandlerMap = new Map();  // 이벤트 핸들러 참조 저장
+    function requestBtnClickCB(toUser_id, event) {
+        FriendRequestOnClick(toUser_id, event.target);
+    }
+    function requestCancelBtnClickCB(toUser_id, event) {
+        FriendRequestCancelOnClick(toUser_id, event.target);
+    }
+
+    
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector(".friend_search-input_ksy");
         const resultsContainer = document.querySelector(".friend_search-result_kes");
+        const searchForm = document.querySelector(".friend_search-form_ksy");
 
         const searchResultItemClassName = "user_search_result_item_kes";    // 모든 검색된 아이템 컨테이너div 클래스명
         const profileImageClassName = "user_search_result_item_profileimage_kes";   // 검색결과 프사 이미지 클래스명
@@ -37,13 +47,17 @@
         const friendRequestCancelButtonClassName = "user_search_request_cancel_button_kes"; // '친구 추가' 버튼 클래스명
         const noResultTextClassName = "user_search_no_result_text_kes"; // 검색결과 없을 때 뜨는 텍스트 클래스명
 
-        searchInput.addEventListener("input", function () {
+        searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+        });
+
+        searchInput.addEventListener("change", function () {
             const query = searchInput.value.trim();
             if (query === "") {
                 resultsContainer.innerHTML = "";  // 검색어 없으면 결과 초기화
                 return;
             }
-
+            
             fetch(`/search_ajax/?query=${encodeURIComponent(query)}`)
                 .then(response => {
                     if (!response.ok) {
@@ -57,13 +71,27 @@
                         data.result.forEach(user => {
                             friend_status = user.friend_status // "신청가능" or "현재 친구" or "신청 중"
 
-                            let lastField = '';
+                            let lastFieldDOM;
+                            
                             if (friend_status === "신청가능") {
-                                lastField = `<button class="${friendRequestButtonClassName}">친구 추가</button>`
+                                lastFieldDOM = document.createElement("button");
+                                lastFieldDOM.className = friendRequestButtonClassName;
+                                lastFieldDOM.textContent = "친구 추가";
+
+                                const boundHandleClick = requestBtnClickCB.bind(null, user.login_id);
+                                eventHandlerMap.set(lastFieldDOM, boundHandleClick);  // 버튼 요소를 key로 함수 저장
+                                lastFieldDOM.addEventListener("click", boundHandleClick);
                             } else if (friend_status === "현재 친구") {
-                                lastField = `<p>소중한 친구입니다..</p>`;
+                                lastFieldDOM = document.createElement("p");
+                                lastFieldDOM.textContent = "소중한 친구입니다..";
                             } else {
-                                lastField = `<button class="${friendRequestCancelButtonClassName}">요청 취소</button>`;
+                                lastFieldDOM = document.createElement("button");
+                                lastFieldDOM.className = friendRequestCancelButtonClassName;
+                                lastFieldDOM.textContent = "요청 취소";
+
+                                const boundHandleClick = requestCancelBtnClickCB.bind(null, user.login_id);
+                                eventHandlerMap.set(lastFieldDOM, boundHandleClick);  // 버튼 요소를 key로 함수 저장
+                                lastFieldDOM.addEventListener("click", boundHandleClick);
                             }
 
                             const userElement = document.createElement("div");
@@ -71,18 +99,10 @@
                             userElement.innerHTML = `
                                 <img class="${profileImageClassName}" src='/media/${user.profile_photo}' alt="프로필 사진"/>
                                 <p class="${userNicknameClassName}">${user.nickname}</p>
-                                ${lastField}
                             `;
+                            userElement.appendChild(lastFieldDOM);
                             resultsContainer.appendChild(userElement);
-                            
-                            document.querySelectorAll(`.${friendRequestCancelButtonClassName}`).forEach(btn => {
-                                btn.addEventListener('click', () => FriendRequestCancelOnClick(user.login_id, this));
-                            })
-                            document.querySelectorAll(`.${friendRequestButtonClassName}`).forEach(btn => {
-                                btn.addEventListener('click', () => FriendRequestOnClick(user.login_id, this));
-                            })
                         });
-
 
                     } else {
                         resultsContainer.innerHTML = `<p class="${noResultTextClassName}">검색 결과가 없습니다.</p>`;
@@ -155,24 +175,32 @@
     }
 
     function changeButtonState(btnDOM, targetloginId) {
+        const boundHandleClick = eventHandlerMap.get(btnDOM);  // 저장된 핸들러 가져오기
+        console.log(btnDOM);
+        console.log(boundHandleClick);
+
         if (btnDOM.className === "user_search_request_cancel_button_kes") {
             // 요청취소버튼 -> 친구추가버튼
             btnDOM.className = "user_search_request_button_kes";
             btnDOM.textContent = "친구 추가";
             btnDOM.onclick=null;
-            btnDOM.removeAttribute("onclick");
-            btnDOM.addEventListener('click', () => 
-            FriendRequestOnClick(targetloginId, btnDOM)
-            );
+            
+            btnDOM.removeEventListener('click', boundHandleClick);
+
+            const newBoundHandleClick = requestBtnClickCB.bind(null, targetloginId);
+            eventHandlerMap.set(btnDOM, newBoundHandleClick);  // 버튼 요소를 key로 함수 저장
+            btnDOM.addEventListener("click", newBoundHandleClick);
         } else if (btnDOM.className === "user_search_request_button_kes") {
             // 친구추가버튼 -> 요청취소버튼
             btnDOM.className = "user_search_request_cancel_button_kes";
             btnDOM.textContent = "요청 취소";
             btnDOM.onclick=null;
-            btnDOM.removeAttribute("onclick");
-            btnDOM.addEventListener('click', () => 
-                FriendRequestCancelOnClick(targetloginId, btnDOM)
-            );
+
+            btnDOM.removeEventListener('click', boundHandleClick);
+
+            const newBoundHandleClick = requestCancelBtnClickCB.bind(null, targetloginId);
+            eventHandlerMap.set(btnDOM, newBoundHandleClick);  // 버튼 요소를 key로 함수 저장
+            btnDOM.addEventListener("click", newBoundHandleClick);
         }
     }
 </script>

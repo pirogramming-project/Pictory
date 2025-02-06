@@ -33,6 +33,7 @@
             <div class="today_diary_list_psy">
             </div>
             <div class="today_diary_content_psy">
+                <h3 id="selectedDateTitle"></h3>
                 <ul id="diaryListContainer"></ul>
             </div>
         </div>
@@ -65,10 +66,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("📌 서버 응답 데이터:", data);
                     updateDiaryList(data, year, month, day);
                 })
                 .catch(error => {
-
+                    console.error("❌ AJAX 요청 오류:", error);
                 });
             }
     
