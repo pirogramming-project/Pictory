@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+    <meta name="csrf_token" content="{{ csrf_token }}">    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{KAKAO_MAP_APPKEY_JS}}&libraries=services"></script>
     <link rel="stylesheet" href="{% static 'diaries/diary_map.css' %}">
 {% endblock %}
@@ -23,20 +24,21 @@
             </form>
         </div>
     </div>
-    <div class="map_diary-list_ljs">
-      <ul id="diaryListContainer"></ul>
-    </div>
+  </div>
 
+  <!-- 해당 장소와 관련된 일기 리스트 영역 -->
+<div class="map_diary-list_ljs">
+  <ul id="diaryListContainer"></ul>
 </div>
-
+  
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const placeDataText = "{{ my_places|escapejs }}";
-        const myPlaces = JSON.parse(placeDataText.replace(/'/g, '"'));
+        const placeDataText = "{{ my_places_address|escapejs }}";
+        const myPlacesAddress = JSON.parse(placeDataText.replace(/'/g, '"'));
 
-        for (let i=0; i<myPlaces.length; i++) {
-            placeSearchAndAddMarkers(myPlaces[i]);
+        for (let i=0; i<myPlacesAddress.length; i++) {
+            placeSearchAndAddMarkers(myPlacesAddress[i]);
         }
 
         const searchForm = document.querySelector('.map_search-form_ksy');
@@ -60,9 +62,8 @@
     // 장소 검색 객체를 생성합니다
     var ps = new kakao.maps.services.Places(); 
 
-    function placeSearchAndAddMarkers(keyword) {
-      // 키워드 검색
-      ps.keywordSearch(keyword, addMarkerCB); 
+    function placeSearchAndAddMarkers(place_address) {
+      addLocation(place_address); 
     }
 
     function placeSearchAndJustMoveMapCenter(keyword) {
@@ -135,7 +136,7 @@
 
             // 마커 클릭 이벤트 추가
             kakao.maps.event.addListener(marker, 'click', function () {
-              fetchDiariesByPlace(address); // 다이어리 목록 가져오기
+              fetchDiariesByPlace(input); // 다이어리 목록 가져오기
             });
 
             const label = new kakao.maps.CustomOverlay({
@@ -162,11 +163,20 @@
       });
     }
 
-    function fetchDiariesByPlace(placeName) {
-      console.log("Fetching diaries for place:", placeName); // 요청 전에 로그 출력
-      const url = `/diaries/by_place/${encodeURIComponent(placeName)}/`; // URL 인코딩
-
-      fetch(url)
+    function fetchDiariesByPlace(address) {
+      const url = `/diary/diaries_by_place_ajax/`;
+      var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+      console.log("add:" + address)
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: address,
+        }),
+      })
           .then(response => response.json())
           .then(data => {
               displayDiaryList(data);
@@ -189,7 +199,7 @@
             const link = document.createElement("a");
 
             link.href = `/diary/detail/${diary.id}/`;
-            link.textContent = diary.title;
+            link.textContent = `${diary.place} - ${diary.title}`;
 
             listItem.appendChild(link);
             diaryListContainer.appendChild(listItem);
