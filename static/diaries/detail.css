@@ -1,188 +1,161 @@
 .create_diary_container_ksy {
     display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: relative;
-    padding: 20px;
-    width: 90%;
-    height: calc(100vh - 150px);
+    padding: 40px;
+    gap: 25px;
+    background-color: var(--background);
+    height: calc(95vh - 150px);
     overflow-y: auto;
 }
 
-.create_diary_left_container_ksy {
-    flex: 1;
-    padding: 20px;
+.create_diary_left_container_psy {
+    flex: 3;
+    padding: 40px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 100px;
+    gap: 20px;
+    min-width: 0;
 }
 
-.create_diary_left_container_ksy img {
+.create_diary_left_container_psy img {
     width: 100%;
-    max-width: 400px;
     height: auto;
-    object-fit: contain;
 }
 
-.create_diary_right_container_ksy {
-    flex: 1.5;
-    padding: 30px;
+.create_diary_right_container_psy {
+    flex: 7;
+    background-color: var(--background);
+    min-width: 0;
 }
 
-.create_diary_button_ksy {
+.create_diary_form_psy {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.create_button_save_ksy {
-    position: relative;
-    background: transparent;
+.first_right_container_psy {
+    background-color: var(--background);
+    padding: 20px;
+    border: 3px solid #5c6552;
+    border-radius: 5px;
+}
+
+.first_line_psy, .second_line_psy {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.diary_title_psy, .diary_emotion_psy,
+.diary_date_psy, .diary_weather_psy {
+    flex: 1;
+}
+
+.diary_letter_psy {
+    font-size: 14px;
+    color: #5c6552;
+    margin-bottom: 8px;
+    font-family: 'Gravitas One';
+}
+
+.third_line_psy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.diary_tag_psy {
+    flex: 1;
+}
+
+.diary_content_tag_psy {
+    margin-bottom: 20px;
+    pointer-events: none;
+}
+
+.content_tag_psy {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    pointer-events: auto; 
+
+}
+
+.friend_tag_item_psy label {
+    display: inline-flex;
+    align-items: center;
+    background-color: #888d724d;
+    padding: 2px 5px;
+    margin: 2px;
+    border-radius: 5px;
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.friend_tag_item_psy label.selected{
+    background-color: #888D72;
+}
+
+.diary_friend_psy{
+    border: 2px solid #5c6552;
+    padding: 10px;
+    height: calc(22vh - -5px);
+    overflow-y: auto;
+
+}
+
+.diary_map_psy {
+    flex: 1;
+}
+
+.real_location_psy {
+    margin-top: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    height: 200px; 
+    width: 100%;
+}
+
+.fourth_line_psy textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 16px;
+    border: 3px solid #5c6552;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
+}
+
+.diary_save_psy {
+    align-self: flex-end;
+    padding: 12px 24px;
+    color: #5c6552;
     border: none;
     cursor: pointer;
-    padding: 8px 20px;
-    min-width: 100px;
-    height: 45px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: 'GangwonEduSaeeum';
-    transition: transform 0.2s ease;
+    gap: 8px;
 }
 
-.create_button_save_ksy svg {
-    position: absolute;
-    top: 0;
-    left: 0;
+
+input[type="text"], 
+input[type="date"], 
+select {
     width: 100%;
-    height: 100%;
-    fill: #d0e8ff;
-    z-index: 1;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
 }
 
-.create_button_save_ksy {
-    color: #1E3269;
-    font-size: 14px;
-}
-
-.create_button_save_ksy svg + span {
-    position: relative;
-    z-index: 2;
-}
-
-.create_button_save_ksy:hover {
-    transform: translateY(-2px);
-}
-
-.create_diary_first_ksy,
-.create_diary_second_ksy,
-.create_diary_third_ksy,
-.create_diary_fourth_ksy,
-.create_diary_fifth_ksy {
-    margin-bottom: 30px;
-}
-
-.create_diary_letter_ksy {
-    font-size: 20px;
-    color: #1E3269;
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-family: 'GangwonEduSaeeum';
-}
-
-.create_diary_date_ksy{
-    font-size: 14px;
-    color: #1E3269;
-    margin: 10px;
-    font-weight: bold;
-    font-family: 'GangwonEduSaeeum';
+.create_diary_usertag_item_kes {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
 }
-
-.create_diary_first_title_ksy {
-    margin-bottom: 15px;
-}
-
-.create_diary_second_ksy {
-    display: flex;
-    gap: 30px;
-    font-family: 'GangwonEduSaeeum';
-}
-
-.create_diary_second_title_ksy {
-    flex: 1;
-    font-family: 'GangwonEduSaeeum';
-}
-
-.create_diary_second_title_ksy span {
-    display: block;
-    color: #1E3269;
-    margin-top: 5px;
-    font-family: 'GangwonEduSaeeum';
-    font-size: 14px;
-}
-
-.create_diary_third_ksy {
-    display: flex;
-    gap: 85px;
-    font-family: 'GangwonEduSaeeum';
-    font-size: 14px;
-}
-.create_diary_content_ksy span,
-.create_diary_usertag_item_kes span {
-    display: inline-block;
-    color: #1E3269;
-    margin-right: 10px;
-    font-family: 'GangwonEduSaeeum';
-    font-size: 14px;
-}
-
-.create_diary_map_ksy {
-    color: #1E3269;
-    margin-top: 5px;
-    font-family: 'GangwonEduSaeeum';
-    font-size: 14px;
-}
-
-.create_diary_fifth_ksy {
-    background: white;
-    font-family: 'GangwonEduSaeeum';
-    font-size: 14px;
-}
-
-.create_diary_fifth_ksy p {
-    color: #1E3269;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    background: #DDE9FE;
-    border-radius: 5px;
-    margin-top: 10px;
-    padding: 10px;
-}
-
-@media (max-width: 768px) {
-    .create_diary_container_ksy {
-        flex-direction: column;
-        margin: 10px;
-    }
-
-    .create_diary_second_ksy {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .create_diary_button_ksy {
-        flex-wrap: wrap;
-    }
-
-    .create_button_save_ksy {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
