@@ -7,75 +7,82 @@
 
 {% block content %}
 <div class="create_diary_container_ksy">
-    <div class="create_diary_left_container_ksy">
-        <img src="{% static 'images/pictory-frame2.png' %}" alt="프레임 2">
+
+    <div class="create_diary_left_container_psy">
+        <img src="{% static 'images/pictory-frame2.png' %}" alt="인생네컷 사진">
     </div>
-    <div class="create_diary_right_container_ksy">
-        <form method="post" action="{% url 'diaries:edit_diary' diary.id %}">
+
+    <div class="create_diary_right_container_psy">
+        <form class="create_diary_form_psy" method="post" action="{% url 'diaries:edit_diary' diary.id %}">
             {% csrf_token %}
+            <div class="first_right_container_psy">
+                <div class="first_line_psy">
+                    <div class="diary_title_psy">
+                        <h1 class="diary_letter_psy">o Title</h1>
+                        {{ form.title }}
+                    </div>
+                    <div class="diary_emotion_psy">
+                        <h1 class="diary_letter_psy">o Emotion</h1>
+                        {{ form.emotion }}
+                    </div>
+                </div>
 
-            <!-- 제목 -->
-            <div class="create_diary_first_ksy">
-                <h1 class="create_diary_letter_ksy">제목</h1>
-                {{ form.title }}
-            </div>
+                <div class="second_line_psy">
+                    <div class="diary_date_psy">
+                        <h1 class="diary_letter_psy">o Date</h1>
+                        {{ form.date }}
+                    </div>
+                    <div class="diary_weather_psy">
+                        <h1 class="diary_letter_psy">o Weather</h1>
+                        {{ form.weather }}
+                    </div>
+                </div>
 
-            <!-- 날짜 -->
-            <div class="create_diary_first_ksy">
-                <h1 class="create_diary_letter_ksy">날짜</h1>
-                {{ form.date }}
-            </div>
+                <div class="third_line_psy">
 
-            <!-- 날씨 및 감정 -->
-            <div class="create_diary_second_ksy">
-                <h1 class="create_diary_letter_ksy">날씨</h1>
-                {{ form.weather }}
-                <h1 class="create_diary_letter_ksy">감정</h1>
-                {{ form.emotion }}
-            </div>
+                    <div class="diary_tag_psy">
+                        <div class="diary_content_tag_psy">
+                            <h1 class="diary_letter_psy">o Tag</h1>
+                            <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" required>
+                        </div>
+                        <div class="diary_friend_psy">
+                            <h1 class="diary_letter_psy">o Friend Tag</h1>
+                                {% for checkbox in form.user_tags %}
+                                    <div class="friend_tag_item_psy">
+                                        {{ checkbox.tag }}
+                                        <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                        </div>
+                    </div>
 
-            <!-- 게시물 태그 -->
-            <div class="create_diary_third_ksy">
-                <h1 class="create_diary_letter_ksy">게시물 태그</h1>
-                <input type="text" name="create_diary_post"
-                       value="{% for tag in diary_tags %}#{{ tag.name }} {% endfor %}">
-            </div>
+                    <div class="diary_map_psy">
+                        <h1 class="diary_letter_psy">o Location</h1>
+                        {{ form.place }}
+                        <div class="real_location_psy"></div>
+                    </div>
 
-            <!-- 친구 태그 -->
-            <div class="create_diary_third_ksy">
-                <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                <div class="create_diary_usertag_item_kes">
-                    {% for neighbor in neighbors %}
-                    <label>
-                        <input type="checkbox" name="user_tags" value="{{ neighbor.login_id }}"
-                            {% if neighbor in user_tags %}checked{% endif %}>
-                        @{{ neighbor.nickname }}
-                    </label>
-                    {% empty %}
-                        <p>이웃이 없습니다.</p>
-                    {% endfor %}
                 </div>
             </div>
-
-            <!-- 장소 -->
-            <div class="create_diary_first_ksy">
-                <h1 class="create_diary_letter_ksy">장소</h1>
-                {{ form.place }}
-            </div>
-
-            <!-- 일기 내용 -->
-            <div class="create_diary_fifth_ksy">
-                <h1 class="create_diary_letter_ksy">일기 내용</h1>
+            
+            <div class="fourth_line_psy">
+                <h1 class="diary_letter_psy">o Content</h1>
                 {{ form.content }}
             </div>
 
-            <button type="submit" class="create_button_save_ksy">저장</button>
+            <button type="submit" class="diary_save_psy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                </svg>
+            </button>
         </form>
+        
     </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const checkboxes = document.querySelectorAll(".create_diary_usertag_item_kes input[type='checkbox']");
+        const checkboxes = document.querySelectorAll(".friend_tag_item_psy input[type='checkbox']");
     
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener("change", function () {
@@ -89,6 +96,8 @@
             });
         });
     });
+
+    
     
 </script>
 
