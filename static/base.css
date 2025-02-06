@@ -40,9 +40,14 @@
     flex-grow: 1;
 }
 .base_name_nav_ksy {
+    margin-top: 3px;
+    margin-right: 2px;
     font-weight: bold;
     color: var(--title_color);
     font-size: 1.5rem;
+}
+.base_li_ksy {
+    display: flex;
 }
 
 .base_desktop-nav-item_ksy {
@@ -125,7 +130,6 @@
     font-family: var(--main_font);
     color: var(--title_color);
     font-size: 1.5rem;
-    padding: 5px;
     cursor: pointer;
     border: none;
     background: none;
