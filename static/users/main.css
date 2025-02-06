@@ -145,13 +145,13 @@
     color: #96A48B;
  }
  
+
+
  /* 날짜 선택했을 때 스타일 */
  .selected {
     background-color: #515738 !important;
     color: white !important;
  }
-
- 
 
  * {
     scrollbar-width: auto !important;  /* Firefox 기본값 유지 */
