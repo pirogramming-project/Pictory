@@ -119,6 +119,16 @@
 .base_logo_ksy {
     display: none;
 }
+.base_desktop-nav-item_logout_ksy {
+    text-decoration: underline;
+    font-family: var(--main_font);
+    color: var(--title_color);
+    font-size: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
 
 /* 모바일용 햄버거바 */
 @media screen and (max-width: 768px) {

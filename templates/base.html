@@ -24,17 +24,17 @@
 
         <div class="base_button_icon_ksy">
             <nav class="base_desktop-nav_ksy">
+                <a href="{% url 'diaries:select_photo_type' %}" class="base_desktop-nav-item_ksy">인생네컷 만들기</a>
+                <a href="{% url 'diaries:diary_map' %}" class="base_desktop-nav-item_ksy">지도</a>
+                <a href="{% url 'diaries:community' %}" class="base_desktop-nav-item_ksy">커뮤니티</a>
+                <a href="{% url 'diaries:friend_request' %}" class="base_desktop-nav-item_ksy">이웃 요청</a>
                 <li>
                     <!--사용자 아이디-->
                     <strong class="base_name_nav_ksy">
                         {{ request.user.nickname }}
                     </strong>
-                    <a href="{% url 'users:profile' %}" class="base_desktop-nav-item_ksy">로그아웃</a>
+                    <a href="{% url 'users:profile' %}" class="base_desktop-nav-item_logout_ksy">로그아웃</a>
                 </li>
-                <a href="{% url 'diaries:diary_map' %}" class="base_desktop-nav-item_ksy">인생네컷 만들기</a>
-                <a href="{% url 'diaries:select_photo_type' %}" class="base_desktop-nav-item_ksy">지도</a>
-                <a href="{% url 'diaries:community' %}" class="base_desktop-nav-item_ksy">커뮤니티</a>
-                <a href="{% url 'diaries:friend_request' %}" class="base_desktop-nav-item_ksy">이웃 요청</a>
             </nav>
             <button class="base_button_alarm_ksy">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
