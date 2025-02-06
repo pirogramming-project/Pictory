@@ -10,11 +10,11 @@
     align-items: center;
     min-height: 100vh;
     min-width: 50%;
-    background-color: #ffffff;
+    background-color: #fff9ea7d;
 }
 
 .login_wrapper_psy {
-    width: 30%;
+    width: 25%;
     display: flex;
     justify-content: center;
     align-items: center;

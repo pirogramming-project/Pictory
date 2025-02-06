@@ -9,11 +9,11 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color: #fff9ea7d;
 }
 
 .signup_wrapper_psy {
-    width: 30%;
+    width: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
