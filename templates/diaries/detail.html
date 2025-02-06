@@ -6,70 +6,77 @@
 {% endblock %}
 
 {% block content %}
-    <div class="diary_detail_psy">
+<div class="create_diary_container_ksy">
 
-        <div class="diary_detail_left_container_psy">
-            <div class="diary_detail_title_psy">
-                <h1 class="create_diary_letter_ksy">Title: {{ diary.title }}</h1>
-            </div>
-            <img src="{{ photo.url }}" alt="네컷사진">
-            <div class="create_diary_first_title_ksy">
-                <h1 class="diary_detail_date_psy">Date: {{ diary.date }}</h1>
-            </div>
-        </div>
-
-        <div class="diary_detail_right_container_psy">        
-            <div class="diary_detail_second_ksy">
-                <div class="create_diary_second_title_ksy">
-                    <h1 class="create_diary_letter_ksy">날씨</h1>
-                    <span>{{ diary.get_weather_display }}</span>
-                </div>
-                <div class="create_diary_second_title_ksy">
-                    <h1 class="create_diary_letter_ksy">감정</h1>
-                    <span>{{ diary.emotion }}점</span>
-                </div>
-            </div>
-        
-            <div class="create_diary_third_ksy">
-                <div class="create_diary_third_title_ksy">
-                    <h1 class="create_diary_letter_ksy">게시물 태그</h1>
-                    <div class="create_diary_content_ksy">
-                        {% for tag in diary.tags.all %}
-                            <span>#{{ tag.name }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="create_diary_third_title_ksy">
-                    <h1 class="create_diary_letter_ksy">친구 태그</h1>
-                    <div class="create_diary_usertag_item_kes">
-                        {% for user_tag in user_tags %}
-                            <span>@{{ user_tag.user.nickname }}</span>
-                        {% empty %}
-                            <span>태그된 친구가 없습니다.</span>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        
-            <div class="create_diary_fourth_ksy">
-                <div class="create_diary_fourth_title_ksy">
-                    <h1 class="create_diary_letter_ksy">장소</h1>
-                    <div class="create_diary_map_ksy">{{ diary.place }}</div>
-                </div>
-            </div>
-        
-            <div class="create_diary_fifth_ksy">
-                <h1 class="create_diary_letter_ksy">일기 내용</h1>
-                <p>{{ diary.content }}</p>
-            </div>
-        </div>
-        <div class="create_diary_button_ksy">
-            <button type="button" class="create_button_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
-                <span>수정</span>
-            </button>
-            <button type="submit" class="create_button_save_ksy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
-                <span>삭제</span>
-            </button>
-        </div>
+    <div class="create_diary_left_container_psy">
+        <img src="{% static 'images/pictory-frame2.png' %}" alt="인생네컷 사진">
     </div>
+
+    <div class="create_diary_right_container_psy">
+        <form class="create_diary_form_psy" method="post" action="{% url 'diaries:edit_diary' diary.id %}">
+            {% csrf_token %}
+            <div class="first_right_container_psy">
+                <div class="first_line_psy">
+                    <div class="diary_title_psy">
+                        <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
+                    </div>
+                    <div class="diary_emotion_psy">
+                        <h1 class="diary_letter_psy">o Emotion</h1>
+                        <span>{{ diary.emotion }}점</span>
+                    </div>
+                </div>
+
+                <div class="second_line_psy">
+                    <div class="diary_date_psy">
+                        <h1 class="diary_letter_psy">o Date: {{ diary.date }}</h1>
+                        {{ form.date }}
+                    </div>
+                    <div class="diary_weather_psy">
+                        <h1 class="diary_letter_psy">o Weather: {{ diary.get_weather_display }}</h1>
+                        {{ form.weather }}
+                    </div>
+                </div>
+
+                <div class="third_line_psy">
+
+                    <div class="diary_tag_psy">
+                        <div class="diary_content_tag_psy">
+                            <h1 class="diary_letter_psy">o Tag</h1>
+                            {% for tag in diary.tags.all %}
+                            <span>#{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="diary_friend_psy">
+                            <h1 class="diary_letter_psy">o Friend Tag</h1>
+                            <div class="friend_tag_item_psy">
+                                {% for user_tag in user_tags %}
+                                    <span>@{{ user_tag.user.nickname }}</span>
+                                {% empty %}
+                                    <span>태그된 친구가 없습니다.</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="diary_map_psy">
+                        <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
+                        {{ form.place }}
+                        <div class="real_location_psy"></div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="fourth_line_psy">
+                <h1 class="diary_letter_psy">o Content
+                    <p>{{ diary.content }}</p>
+                </h1>
+            </div>
+
+            <button type="submit" class="diary_save_psy">수정</button>
+            <button type="submit" class="diary_delete_psy">삭제</button>
+        </form>
+        
+    </div>
+</div>
 {% endblock %}
