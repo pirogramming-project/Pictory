@@ -19,7 +19,6 @@
 /* 화면 중앙 정렬을 위한 그리드 레이아웃 */
 .base_layout_ksy {
     display: grid;
-    grid-template-columns: 1fr 2.5fr 1fr;
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -208,4 +207,7 @@
 /* 사이드바가 열렸을 때 배경 투명도 적용 */
 .base_content-area_ksy.base_active_opacity::before {
     opacity: 0.8;
+}
+.base_background_div_ksy {
+    background-color: var(--background);
 }

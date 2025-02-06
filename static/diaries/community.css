@@ -1,9 +1,10 @@
 .community-container_ksy {
+    height: calc(95vh - 150px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 115px;
+    gap: 50px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -15,7 +16,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 100px;
 }
 
 .community_search-form_ksy {
@@ -141,7 +141,7 @@
     transform: translate(-50%, -50%); /* 화면 정중앙 배치 */
     width: 50vw;
     max-width: 450px;
-    height: 75vh;
+    padding: 10px;
     max-height: 700px;
     background: var(--background);
     border-radius: 10px;
@@ -184,6 +184,7 @@
 /* 모달 콘텐츠 영역 */
 .community_detail-content_ksy {
     flex: 1;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -194,7 +195,6 @@
     height: 100%;
     width: 90%;
     max-height: 80%;
-    aspect-ratio: 1 / 1;
     overflow: hidden;
     display: flex;
     justify-content: center;
