@@ -1,9 +1,9 @@
 .map_container_ksy {
+    flex: 1.5;
     height: calc(93% - 100px);
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px;
 }
 
 .map_search-container_ksy {
@@ -72,8 +72,13 @@
 
 /* 장소 핀 클릭 시 나오는 해당장소관련된 일기 리스트입니다. */
 .map_diary-list_ljs {
-    height: 100px;
+    flex: 0.5;
+    border: 1px solid black;
     color: black;
     font-size: 28px;
-    overflow-y: scroll;
+}
+
+.community-page_ksy .base_content-scroll_ksy {
+    display: flex;
+    gap: 20px;
 }
