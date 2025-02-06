@@ -16,6 +16,7 @@
         <div class="create_diary_right_container_psy">
             <form class="create_diary_form_psy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
                 {% csrf_token %}
+                <input type="hidden" id="create_diary_real_address" name="place_address">
                 <div class="first_right_container_psy">
                     <div class="first_line_psy">
                         <div class="diary_title_psy">
@@ -119,7 +120,7 @@
             if (status === kakao.maps.services.Status.OK) {
               targetPlace = data[0];  // 가장 가능성 높은 장소를 타겟으로 설정
               console.log(targetPlace['address_name'])  // 주소 가져오기
-       
+
                 addLocation(targetPlace['address_name']);
             } else {
               alert("장소를 찾을 수 없습니다.")
@@ -153,6 +154,10 @@
     
               // 지도 중심 이동
               map.panTo(coords);
+                
+              // 폼 제출 준비
+              const placeAddressInput = document.getElementById("create_diary_real_address");
+              placeAddressInput.value = address;
             } else {
               alert('장소를 찾을 수 없습니다.');
             }

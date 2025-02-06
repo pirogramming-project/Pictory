@@ -202,6 +202,7 @@ def create_diary(request, related_frame_id):
             # diary의 다른 필드들 추가하고 diary 먼저 저장.
             diary.writer = request.user
             diary.four_cut_photo = four_cut_photo
+            diary.place_address = request.POST.get('place_address')
             diary.save()
             
             ### 일반 태그 처리 및 저장
@@ -306,10 +307,10 @@ def friend_request(request):
 
 @login_required
 def diary_map(request):
-    myPlaces = list(Diary.objects.filter(writer=request.user).values_list("place", flat=True))
+    myPlacesAddress = list(Diary.objects.filter(writer=request.user).values_list("place_address", flat=True))
     context = {
         "KAKAO_MAP_APPKEY_JS" : KAKAO_APPKEY_JS,
-        "my_places" : myPlaces,
+        "my_places_address" : myPlacesAddress,
     }
     return render(request, 'diaries/diary_map.html', context)
 
@@ -365,11 +366,13 @@ def upload_photo(request):
 
     return redirect('diaries:select_photo_type')  # 실패하면 다시 선택 페이지로    
 
-def diaries_by_place(request, place_name):
-    if request.method == 'GET':
-        diaries = Diary.objects.filter(place=place_name).values('id','title')
+def diaries_by_place_ajax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        place_address = data.get('address')
+        
+        diaries = Diary.objects.filter(place_address=place_address).values('id','title', 'place')
         if not diaries.exists():
-            print(f"No diaries found for place: {place_name}")  # 디버깅 로그
             return JsonResponse([], safe=False)  # 빈 리스트 반환
         diary_list = list(diaries)
         return JsonResponse(diary_list, safe=False)

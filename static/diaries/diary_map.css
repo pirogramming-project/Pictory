@@ -1,5 +1,5 @@
 .map_container_ksy {
-    height: 93%;
+    height: calc(93% - 100px);
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -68,4 +68,12 @@
 /* 지도 들어가는 div입니다. 예쁘게 바꿔주세요o^^o ㅎㅎ */
 .map_map-container_kes {
     height: 100%;
+}
+
+/* 장소 핀 클릭 시 나오는 해당장소관련된 일기 리스트입니다. */
+.map_diary-list_ljs {
+    height: 100px;
+    color: black;
+    font-size: 28px;
+    overflow-y: scroll;
 }

@@ -53,6 +53,7 @@ class Diary(models.Model):
     four_cut_photo = models.OneToOneField(Frame, models.CASCADE)
     weather = models.CharField("날씨", max_length=20, choices=WEATHER_CHOICES, default='sunny')  # 기본값 '맑음'
     place = models.CharField("장소", max_length=40)
+    place_address = models.CharField("실주소", max_length=120)
     emotion = models.IntegerField("감정지수", choices=EmotionRating.choices)
     # 태그들은 역참조 tags 이용
     user_tags = models.ManyToManyField(User, through='User_Tag', related_name="tagged_diaries") # 유저태그는 매니투매니필드 사용함~
