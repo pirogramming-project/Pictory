@@ -40,9 +40,14 @@
     flex-grow: 1;
 }
 .base_name_nav_ksy {
+    margin-top: 3px;
+    margin-right: 2px;
     font-weight: bold;
     color: var(--title_color);
     font-size: 1.5rem;
+}
+.base_li_ksy {
+    display: flex;
 }
 
 .base_desktop-nav-item_ksy {
