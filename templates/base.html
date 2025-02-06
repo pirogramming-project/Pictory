@@ -27,7 +27,7 @@
                 <li>
                     <!--사용자 아이디-->
                     <strong class="base_name_nav_ksy">
-                        김수연
+                        {{ request.user.nickname }}
                     </strong>
                     <a href="{% url 'users:profile' %}" class="base_desktop-nav-item_ksy">로그아웃</a>
                 </li>
