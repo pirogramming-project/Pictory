@@ -1,18 +1,19 @@
 .main-container_psy {
     background-color: #FFF9EA;
-}
-
-.calendar_psy {
-    width: 80%;
-    background: #FFF9EA;
-    padding: 20px;
-    margin: 0 auto;
+    display: flex;
+    height: calc(100vh - 150px);
+    overflow-y: auto;
 }
 
 .calendar-wrapper_psy {
-    width: 100%;
+    width: 60%;
     display: flex;
-    justify-content: center;
+}
+
+.calendar_psy {
+    width: 100%;
+    background: #FFF9EA;
+    padding-top: 50px;
 }
 
 .month_psy {
@@ -43,6 +44,7 @@
     padding: 10px 0;
     margin-bottom: 10px;
     font-family: 'Gravitas One';
+    font-size: 14px;
     width: 80%;
     margin: 0 auto;
  }
@@ -70,7 +72,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Gravitas One';
     cursor: pointer;
     color: #515738;
@@ -93,63 +95,110 @@
     border: none;
 }
 
-
-
-.today_diary_content_psy {
-    margin-top: 20px;
-    width: 75%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
- }
- 
- #diaryListContainer {
-    background-color: #FFF9EA;
-    border: 1px solid #515738;
-    border-radius: 5px;
-    padding: 15px;
-    width: 75%;
-    z-index: 5;
- }
- 
- #diaryListContainer li {
-    list-style-type: none;
-    padding: 10px 0;
-    border-bottom: 1px solid #515738;
-    display: flex;
-    align-items: center;
-    color:#515738;
-    z-index: 6;
- }
- 
- #diaryListContainer li:last-child {
-    border-bottom: none;
- }
- 
- #diaryListContainer li::before {
-    content: "●";
-    color: #515738;
-    margin-right: 10px;
- }
- 
- #diaryListContainer a {
-    text-decoration: none;
-    color: #515738;
-    font-family: 'Gravitas One';
-    font-size: 14px;
- }
- 
- #diaryListContainer a:hover {
-    color: #96A48B;
- }
- 
-
-
  /* 날짜 선택했을 때 스타일 */
  .selected {
     background-color: #515738 !important;
     color: white !important;
  }
+
+
+
+.today_diary_psy {
+    display: flex;
+    width: 40%;
+    padding: 0px 20px;
+    padding-top: 60px;
+    gap: 20px;
+}
+
+.diary_list_left_psy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.diary_list_right_psy {
+    flex: 1;
+}
+
+.today_diary_list_psy,
+.selected_diary_list_psy{
+    border: 3px solid #515738;
+    border-radius: 8px;
+    padding: 13px;
+    background-color: #FFF9EA;
+    height: 48%;
+}
+
+.last_week_diary_list_psy {
+    border: 3px solid #515738;
+    border-radius: 8px;
+    padding: 13px;
+    background-color: #FFF9EA;
+    height: 100%;
+}
+
+.today_diary_list_psy h3,
+.selected_diary_list_psy h3,
+.last_week_diary_list_psy h3 {
+    color: #515738;
+    font-family: 'Gravitas One', serif;
+    font-size: 16px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #515738;
+}
+
+.today_diary_list_psy ul,
+.selected_diary_list_psy ul,
+.last_week_diary_list_psy ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.today_diary_list_psy li,
+.selected_diary_list_psy li,
+.last_week_diary_list_psy li {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #FFF9EA;
+    transition: background-color 0.2s;
+}
+
+.today_diary_list_psy li:hover,
+.selected_diary_list_psy li:hover,
+.last_week_diary_list_psy li:hover {
+    background-color: #96A48B;
+}
+
+.today_diary_list_psy a,
+.selected_diary_list_psy a,
+.last_week_diary_list_psy a {
+    color: #515738;
+    text-decoration: none;
+    display: block;
+    font-size: 10px;
+}
+
+.today_diary_list_psy li:hover a,
+.selected_diary_list_psy li:hover a,
+.last_week_diary_list_psy li:hover a {
+    color: #FFF9EA;
+}
+
+
+
+
+
+
+
+
+
+
+
 
  * {
     scrollbar-width: auto !important;  /* Firefox 기본값 유지 */
