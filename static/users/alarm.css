@@ -17,11 +17,6 @@
     display: flex;
     justify-content: space-between;
 }
-/* 친구 요청이 왔어요 알림 */
-.alarm_item_NFR_kes {
-
-}
-
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
     color: white;

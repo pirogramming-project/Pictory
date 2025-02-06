@@ -246,7 +246,7 @@ def profile(request):
 
 @login_required
 def alarm(request):
-    alarms = Notification.objects.filter(user=request.user).prefetch_related("tag_notification")
+    alarms = Notification.objects.filter(user=request.user).order_by('-created_at').prefetch_related("tag_notification")
     
     context = {
         "alarms" : alarms,

@@ -132,7 +132,7 @@ class Notification(models.Model):
     message = models.CharField("메시지", max_length=255)
     is_read = models.BooleanField("읽음", default=False)
     created_at = models.DateTimeField("생성일시", auto_now_add=True)
-    # 역참조 tag_notifications
+    # 역참조 tag_notification
     
     def __str__(self):
         return f"{self.user} - {self.message}"
