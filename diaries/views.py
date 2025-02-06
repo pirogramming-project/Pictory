@@ -202,6 +202,7 @@ def create_diary(request, related_frame_id):
             # diary의 다른 필드들 추가하고 diary 먼저 저장.
             diary.writer = request.user
             diary.four_cut_photo = four_cut_photo
+            diary.place_address = request.POST.get('place_address')
             diary.save()
             
             ### 일반 태그 처리 및 저장
