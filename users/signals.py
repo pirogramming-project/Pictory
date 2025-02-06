@@ -11,5 +11,5 @@ def create_diary_notification(sender, instance, created, **kwargs):
         Notification.objects.create(
             user=instance.receiver,
             type="NFR",
-            message=f"{instance.sender.nickname}님이 이웃을 요청했습니다."
+            message=f"@{instance.sender.nickname}님이 이웃을 요청했습니다."
         )

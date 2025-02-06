@@ -1,4 +1,7 @@
 .alarm_container_ksy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     max-width: 600px;
     margin: 0 auto;
     padding: 1rem;
@@ -6,19 +9,46 @@
     overflow-y: auto;
 }
 
-.alarm_btn_ksy {
-    position: relative;
+/* 알림 아이템 컨테이너 */
+.alarm_item_container {
+    background-color: var(--title_color);
+    padding: 20px;
     display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    background-color: #B5DAFF;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s ease;
+    justify-content: space-between;
+}
+/* 친구 요청이 왔어요 알림 */
+.alarm_item_NFR_kes {
+
+}
+
+/* 알림 메시지 내용(공통) */
+.alarm_message_kes {
+    color: white;
+    font-size: 20px;
+    padding-inline: 10px;
+}
+/* 읽은 알림(공통) */
+.alarm_read_kes {
+    background-color: gray;
+    opacity: 0.6;
+    pointer-events: none;   /* 클릭 불가 */
+}
+.alarm_read_kes button {
+    display: none;
+}
+
+/* 알림창에서의 예/아니오 버튼 */
+.alarm_btn_yes_kes, .alarm_btn_no_kes {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+}
+.alarm_btn_yes_kes {
+    background-color: blue;
+}
+.alarm_btn_no_kes {
+    background-color: red;
 }
 
 .alarm_btn_ksy:hover {

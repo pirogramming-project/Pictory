@@ -5,7 +5,7 @@ import requests
 import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User, NeighborRequest, Neighbor
+from users.models import User, NeighborRequest, Neighbor, Notification
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -244,8 +244,16 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
+@login_required
 def alarm(request):
-    return render(request, 'users/alarm.html')
+    alarms = Notification.objects.filter(user=request.user)
+    print(alarms)
+    
+    context = {
+        "alarms" : alarms,
+    }
+    
+    return render(request, 'users/alarm.html', context)
 
 
 # 감정 그래프
