@@ -38,6 +38,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector(".friend_search-input_ksy");
         const resultsContainer = document.querySelector(".friend_search-result_kes");
+        const searchForm = document.querySelector(".friend_search-form_ksy");
 
         const searchResultItemClassName = "user_search_result_item_kes";    // 모든 검색된 아이템 컨테이너div 클래스명
         const profileImageClassName = "user_search_result_item_profileimage_kes";   // 검색결과 프사 이미지 클래스명
@@ -45,6 +46,10 @@
         const friendRequestButtonClassName = "user_search_request_button_kes"; // '친구 추가' 버튼 클래스명
         const friendRequestCancelButtonClassName = "user_search_request_cancel_button_kes"; // '친구 추가' 버튼 클래스명
         const noResultTextClassName = "user_search_no_result_text_kes"; // 검색결과 없을 때 뜨는 텍스트 클래스명
+
+        searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+        });
 
         searchInput.addEventListener("change", function () {
             const query = searchInput.value.trim();
