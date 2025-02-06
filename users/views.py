@@ -336,6 +336,8 @@ def are_neighbors(user_a, user_b):
     return Neighbor.objects.filter(user1=user1, user2=user2).exists()
 def addUsersToFriend(user1, user2):
     ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 기존의 이웃 요청은 삭제함 '''
+    user1, user2 = sorted([user1, user2], key=lambda u: u.login_id)
+
     Neighbor.objects.get_or_create(
         user1=user1,
         user2=user2
