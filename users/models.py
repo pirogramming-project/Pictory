@@ -132,9 +132,14 @@ class Notification(models.Model):
     message = models.CharField("메시지", max_length=255)
     is_read = models.BooleanField("읽음", default=False)
     created_at = models.DateTimeField("생성일시", auto_now_add=True)
+    # 역참조 tag_notifications
     
     def __str__(self):
         return f"{self.user} - {self.message}"
+
+class Notification_TAG(models.Model):
+    notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="tag_notification")
+    tagged_diary = models.ForeignKey('diaries.Diary', on_delete=models.CASCADE, related_name="related_notifications")
 
 ###### 사용하게 될 지도 모르는 utility 함수들
 # def are_neighbors(user_a, user_b):

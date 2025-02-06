@@ -11,6 +11,7 @@
 
 /* 알림 아이템 컨테이너 */
 .alarm_item_container {
+    position: relative;
     background-color: var(--title_color);
     padding: 20px;
     display: flex;
@@ -36,8 +37,16 @@
 .alarm_read_kes button {
     display: none;
 }
+/* 알림 온 시각(공통) */
+.alarm_time_kes {
+    color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 3px;
+}
 
-/* 알림창에서의 예/아니오 버튼 */
+/* 알림창에서 친구수락 예/아니오 버튼 */
 .alarm_btn_yes_kes, .alarm_btn_no_kes {
     width: 60px;
     height: 30px;
@@ -49,6 +58,12 @@
 }
 .alarm_btn_no_kes {
     background-color: red;
+}
+/* 알림창에서 태그당했을 때 썸네일 이미지 */
+.alarm_img_thumbnail_kes {
+    width: 60px;
+    height: auto;
+
 }
 
 .alarm_btn_ksy:hover {
