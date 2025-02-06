@@ -1,7 +1,5 @@
 .main-container_psy {
     background-color: #FFF9EA;
-    height: calc(95vh - 150px);
-    overflow-y: auto;
 }
 
 .calendar_psy {
