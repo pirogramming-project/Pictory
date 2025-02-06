@@ -14,6 +14,8 @@ from diaries.models import Diary
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from diaries.models import Diary
+from django.utils.timezone import now, timedelta
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -419,10 +421,40 @@ def send_friend_request_ajax(request):
 
 
 #달력에 해당 날짜의 일기 반환
+@login_required
 def get_diaries_by_date(request, year, month, day):
+    """
+    특정 날짜에 해당하는 로그인한 유저의 다이어리를 반환.
+    """
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # AJAX 요청 확인
-        diaries = Diary.objects.filter(date__year=year, date__month=month, date__day=day)
+        diaries = Diary.objects.filter(
+            writer=request.user,  # 로그인한 유저의 일기만 필터링
+            date__year=year,
+            date__month=month,
+            date__day=day
+        )
         diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        return JsonResponse(diary_list, safe=False)
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+@login_required
+def get_today_diaries(request):
+    """ 오늘 작성한 로그인한 유저의 일기 반환 """
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        today = now().date()
+        diaries = Diary.objects.filter(writer=request.user, date=today)
+        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        return JsonResponse(diary_list, safe=False)
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+@login_required
+def get_last_week_diaries(request):
+    """ 최근 7일간 로그인한 유저가 작성한 일기 반환 """
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        today = now().date()
+        last_week = today - timedelta(days=6)  # 최근 7일(오늘 포함)
+        diaries = Diary.objects.filter(writer=request.user, date__range=[last_week, today])
+        diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
