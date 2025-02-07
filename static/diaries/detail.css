@@ -34,11 +34,14 @@
     gap: 20px;
 }
 
-.first_right_container_psy {
-    background-color: var(--background);
-    padding: 20px;
+.first_line_psy{
+    width: 100%;
+    padding: 16px;
     border: 3px solid #5c6552;
-    border-radius: 5px;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
+    
 }
 
 .first_line_psy, .second_line_psy {
@@ -60,19 +63,47 @@
     font-family: 'Gravitas One';
 }
 
-.third_line_psy {
+.second_third_container_psy {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
+}
+
+.second_line_psy {
+    flex:1;
+    gap: 20px;
+    padding: 16px;
+    border: 3px solid #5c6552;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
+}
+
+.third_line_psy {
+    display: grid;
+    flex:1;
+    gap: 20px;
+    padding: 16px;
+    border: 3px solid #5c6552;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
 }
 
 .diary_tag_psy {
     flex: 1;
+    display: grid;
+    align-content: space-around;
 }
 
 .diary_content_tag_psy {
     margin-bottom: 20px;
     pointer-events: none;
+}
+
+.diary_content_tag_psy span {
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    font-size: 14px;
 }
 
 .content_tag_psy {
@@ -97,51 +128,38 @@
     cursor: pointer;
 }
 
+.friend_tag_item_psy span {
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    font-size: 14px;
+}
+
 .friend_tag_item_psy label.selected{
     background-color: #888D72;
 }
 
-.diary_friend_psy{
-    border: 2px solid #5c6552;
-    padding: 10px;
-    height: calc(22vh - -5px);
-    overflow-y: auto;
-
-}
 
 .diary_map_psy {
     flex: 1;
 }
 
-.real_location_psy {
-    margin-top: 8px;
-    border: 2px solid #5c6552;
-    border-radius: 4px;
-    height: 200px; 
-    width: 100%;
-}
-
-.fourth_line_psy textarea {
+.diary_content_psy {
     width: 100%;
     min-height: 200px;
     padding: 16px;
+    margin-bottom: 20px;
     border: 3px solid #5c6552;
     border-radius: 8px;
     resize: vertical;
     background-color: var(--background);
+    height: calc(22vh - -5px);
+    overflow-y: auto;
 }
 
-.diary_save_psy {
-    align-self: flex-end;
-    padding: 12px 24px;
-    color: #5c6552;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.diary_content_psy h1 {
+    gap: 10px;
+    display: grid;
 }
-
 
 input[type="text"], 
 input[type="date"], 
