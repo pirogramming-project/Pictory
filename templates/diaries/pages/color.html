@@ -1,32 +1,44 @@
-<div class="pagesColor_content_ksy">
-    <h3 class="pagesColor_choice_ksy">색상 선택</h3>
-    <input type="color" value="#ffffff" id="borderColorPicker_psy">
+<div class="Color_psy">
+    <div class="pagesColor_psy">
+        <div class="pagesColor_content1_ksy">
+            <h3 class="pagesColor_choice_ksy">o 색상 선택</h3>
+            <input type="color" value="#888d72" id="borderColorPicker_psy">
+        </div>
+        <div class="pagesColor_content2_ksy">
+            <p class="pagesColor_choice_ksy">o 투명도 조절</p>
+            <input type="range" value="100" min="0" max="100" id="opacitySlider_psy">
+        </div>
+        <div class="pagesColor_content3_ksy">
+            <p class="pagesColor_choice_ksy">o 그라데이션 선택</p>
+            <input type="color" value="#888d72" id="gradientPicker_psy">
+        </div>
+        <div class="pagesColor_content4_ksy">
+            <p class="pagesColor_choice_ksy">o 그라데이션 각도 (0~360°)</p>
+            <input type="range" id="gradientAngle_kes" min="0" max="360" value="90">
+        </div>
+    </div>
+    <button class="pagesColor_button_complete"  onclick="resetCustomizeField_kes()">
+        <span class="pagesColor_text_ksy">Next</span>
+    </button>
 </div>
-<div class="pagesColor_content_ksy">
-    <p class="pagesColor_choice_ksy">투명도 조절</p>
-    <input type="range" value="100" min="0" max="100" id="opacitySlider_psy">
-</div>
-<div class="pagesColor_content1_ksy">
-    <p class="pagesColor_choice_ksy">그라데이션 선택</p>
-    <input type="color" id="gradientPicker_psy">
-</div>
-<button class="pagesColor_button_complete"  onclick="resetCustomizeField_kes()">
-    <span class="pagesColor_text_ksy">완료</span>
-</button>
+
 
 <script>
     const colorPicker_kes = document.getElementById("borderColorPicker_psy");
     const opacitySlider = document.getElementById("opacitySlider_psy");
     const gradPicker_kes = document.getElementById("gradientPicker_psy");
-    colorPicker_kes.addEventListener("input", applyColor_psy)
+    const gradAngle_kes = document.getElementById("gradientAngle_kes");
+    colorPicker_kes.addEventListener("input", applyColor_psy);
     opacitySlider.addEventListener("input", applyOpacity_kes);
     gradPicker_kes.addEventListener("input", applyGradient_kes);
+    gradAngle_kes.addEventListener("input", applyGradient_kes);
 
-    function applyColor_psy() {
+    applyColor_psy();
+
+    function applyColor_psy(event) {
         let color_psy = document.getElementById("borderColorPicker_psy").value;
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
-        pictoryFrame_psy.style.backgroundColor = color_psy;
-
+        applyGradient_kes(event);
         function hexToRgb(hex) {
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
@@ -47,20 +59,15 @@
     }
     
     function applyOpacity_kes(event) {
-        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
-        const bgColorRGB = pictoryFrame_psy.style.backgroundColor.toString();
-        let b = bgColorRGB.split(',');
-        if (b.length === 3) {
-            b[2] = b[2].slice(0,b[2].length-1);
-            b.push(event.target.value / 100 + ')');
-        } else {
-            b[b.length-1] = event.target.value / 100 + ')';
-        }
-        pictoryFrame_psy.style.backgroundColor = b.join(',');
+        applyGradient_kes(event);
     }
 
     function applyGradient_kes(event) {
-        const gradColor = event.target.value;
+        const gradColor1 = colorPicker_kes.value;
+        const gradColor2 = gradPicker_kes.value;
+        const opacity = opacitySlider.value / 100;
+        const gradAngle = gradAngle_kes.value;
+        console.log(opacity)
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
 
         function hexToRgb(hex) {
@@ -69,14 +76,14 @@
             let b = parseInt(hex.slice(5, 7), 16);
             return { r, g, b };
         }
-        const { r: r1, g: g1, b: b1 } = hexToRgb(colorPicker_kes.value);
-        const { r: r2, g: g2, b: b2 } = hexToRgb(gradColor);
+        const { r: r1, g: g1, b: b1 } = hexToRgb(gradColor1);
+        const { r: r2, g: g2, b: b2 } = hexToRgb(gradColor2);
 
 
         pictoryFrame_psy.style.background = `
-        linear-gradient(90deg,
-        rgb(${r1}, ${g1}, ${b1}) 3%,
-        rgb(${r2}, ${g2}, ${b2}) 97%)`;
+        linear-gradient(${gradAngle}deg,
+        rgba(${r1}, ${g1}, ${b1}, ${opacity}) 3%,
+        rgba(${r2}, ${g2}, ${b2}, ${opacity}) 97%)`;
     }
 
 </script>

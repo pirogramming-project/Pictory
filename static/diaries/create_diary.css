@@ -172,3 +172,35 @@ select {
     gap: 8px;
     margin-bottom: 4px;
 }
+
+/* 감정 임시 확인용 css */
+.emotion-choice {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.emotion-choice input[type="radio"] {
+    display: none; /* 기본 라디오 버튼 숨기기 */
+}
+
+.emotion-choice label {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.emotion-choice label svg {
+    width: 32px;
+    height: 32px;
+    fill: #5c6552;
+}
+
+/* 선택된 SVG를 강조 */
+.emotion-choice input[type="radio"]:checked + label {
+    border-color: #5c6552; 
+    background-color: #f0f8ff;
+}

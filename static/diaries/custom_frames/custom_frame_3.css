@@ -2,26 +2,15 @@
 #pictory-frame_psy {
     width: 380px;
     height: 500px;
-    background: white;
-    padding: 20px;
-    display: grid;
+}
+
+.image-slots-container_kes {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    padding-bottom: 45px;
+    width: 340px;
+    height: 450px;
 }
 
 .image-slot_psy {
-    background: white;
-    grid-column: span 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    cursor: pointer;
-    border: 2px dashed #888d72;
-    height: 100%;
-    width: 100%;
+    width: 165px;
+    height: 143.34px;
 }

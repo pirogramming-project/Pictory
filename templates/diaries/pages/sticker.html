@@ -1,25 +1,81 @@
 {% load static %}
-<h3>스티커 선택</h3>
+<h3>o 스티커 선택</h3>
 <div class="stickers_list_kes">
-    <img src="{% static "images/stickers/test_sticker.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
-    <img src="{% static "images/stickers/test_sticker_2.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
+    {% for sticker in sticker_files %}
+    <img src="{% static "images/stickers/" %}{{ sticker }}" class="sticker_psy" onclick="addSticker_psy(this)">
+    {% endfor %}
 </div>
 <button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
-    <span class="pagesThickness_text_ksy">완료</span>
+    <span class="pagesThickness_text_ksy">Next</span>
 </button>
 <script>
     function addSticker_psy(sticker_psy) {
-        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
-        let newSticker_psy = document.createElement("img");
-        newSticker_psy.draggable="true";
+        const pictoryFrame_psy = document.getElementById("pictory-frame_psy");
+        const newStickerContainer = document.createElement('div');
+        newStickerContainer.className = "added_sticker_container_kes";
+        newStickerContainer.draggable="true";
+        newStickerContainer.style.position = "absolute";
+        newStickerContainer.style.left = "20px";
+        newStickerContainer.style.top = "20px";
+        const newSticker_psy = document.createElement("img");
         newSticker_psy.src = sticker_psy.src;
-        newSticker_psy.className = "added_sticker_kes"
-        newSticker_psy.style.position = "absolute";
-        newSticker_psy.style.width = `${sticker_psy.offsetWidth}px`;
-        newSticker_psy.style.left = "20px";
-        newSticker_psy.style.top = "20px";
-        addImageDragEventListeners_kes(newSticker_psy);
-        pictoryFrame_psy.appendChild(newSticker_psy);
+        newSticker_psy.className = "added_sticker_kes";
+        newSticker_psy.style.width = `60px`;
+        addImageDragEventListeners_kes(newStickerContainer);
+
+        // 여기부터 스티커 제거, 크기조절 위한 코드
+        const stickerTool_Container = document.createElement('div');
+        stickerTool_Container.className = "sticker_tools_container";
+        // 1. 스티커 제거
+        const closeButton = document.createElement('button');
+        closeButton.className = "sticker_remove_btn_kes";
+        closeButton.textContent = "X";
+        closeButton.addEventListener("click", () => {
+            newStickerContainer.remove();
+        });
+        // 2. 크기조절
+        const resizeHandle = document.createElement('div');
+        resizeHandle.className = "sticker_resize_handle_kes";
+        resizeHandle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"/>
+        </svg>`;
+        let isResizing = false;
+        let aspectRatio = newSticker_psy.naturalWidth / newSticker_psy.naturalHeight;
+        let startX, startY, startWidth, startHeight;
+        resizeHandle.addEventListener("mousedown", (event) => {
+            isResizing = true;
+            startX = event.clientX;
+            startY = event.clientY;
+            startWidth = newSticker_psy.offsetWidth;
+            startHeight = newSticker_psy.offsetHeight;
+            event.preventDefault();
+        });
+        document.addEventListener("mousemove", (event) => {
+            if (!isResizing) return;
+            let dx = event.clientX - startX;
+            let dy = event.clientY - startY;
+            let newSize = Math.max(startWidth + dx, startHeight + dy * aspectRatio); // 비율 유지
+            newSticker_psy.style.width = `${Math.max(newSize, 40)}px`;
+            newSticker_psy.style.height = `${Math.max(newSize / aspectRatio, 40)}px`;
+        });
+        document.addEventListener("mouseup", () => {
+            isResizing = false;
+        });
+
+
+        // DOM요소 추가
+        newStickerContainer.addEventListener('click', (event) => {
+            event.stopPropagation();
+            stickerTool_Container.style.display = 'flex';
+        });
+        document.addEventListener('click', (event) => {
+            stickerTool_Container.style.display = 'none';
+        });
+        stickerTool_Container.appendChild(closeButton);
+        stickerTool_Container.appendChild(resizeHandle);
+        newStickerContainer.appendChild(newSticker_psy);
+        newStickerContainer.appendChild(stickerTool_Container);
+        pictoryFrame_psy.appendChild(newStickerContainer);
     }
 
     function addImageDragEventListeners_kes(draggableImg) {
@@ -36,8 +92,8 @@
             if (e.clientX === 0 && e.clientY === 0) return; // 드래그 종료 시 무시
 
             const parentRect = container.getBoundingClientRect();
-            const imgWidth = draggableImg.offsetWidth;
-            const imgHeight = draggableImg.offsetHeight;
+            const imgWidth = draggableImg.offsetWidth - 20;
+            const imgHeight = draggableImg.offsetHeight - 20;
 
             let newX = e.clientX - parentRect.left - offsetX;
             let newY = e.clientY - parentRect.top - offsetY;

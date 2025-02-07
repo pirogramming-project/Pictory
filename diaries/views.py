@@ -12,6 +12,7 @@ from django.http import Http404, JsonResponse
 from django.db.models import Q
 import json
 from django.http import HttpResponseForbidden
+import os
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
@@ -22,6 +23,10 @@ def diary_detail(request, diary_id):
     user_tags = User_Tag.objects.filter(diary=diary)  
     photo = diary.four_cut_photo.image_file
 
+    # 감정 점수와 SVG 매핑 가져오기
+    from .forms import EMOTION_CHOICES
+    emotion_svg = dict(EMOTION_CHOICES).get(diary.emotion, '')
+
     if diary.writer != request.user:
         raise Http404("페이지 접근 권한이 없습니다.")  
     
@@ -29,6 +34,7 @@ def diary_detail(request, diary_id):
         'diary': diary,
         'user_tags': user_tags,
         'photo' : photo,
+        'emotion_svg': emotion_svg,
     }
     return render(request, 'diaries/detail.html', context)
 
@@ -179,8 +185,17 @@ def custom_photo(request, frame_type):
         
         print("저장실패.. 다시시도?")
     
+    
+    """static 폴더에서 stickers 이미지 목록을 가져와 템플릿에 전달"""
+    sticker_path = os.path.join(settings.STATICFILES_DIRS[0], "images/stickers")
+    # 스티커 폴더 내의 파일 목록 가져오기
+    try:
+        sticker_files = [f for f in os.listdir(sticker_path) if f.endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+    except FileNotFoundError:
+        sticker_files = []
     context = {
-        'frame_option' : str(frame_type)
+        'frame_option' : str(frame_type),
+        'sticker_files' : sticker_files,
     }
     return render(request, 'diaries/custom_photo.html', context)
 
