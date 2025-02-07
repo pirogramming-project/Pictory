@@ -2,7 +2,7 @@
 #pictory-frame_psy {
     width: 380px;
     height: 500px;
-    background: white;
+    background-color: var(--content_color);
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -19,9 +19,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     font-size: 25px;
     cursor: pointer;
-    border: 2px dashed #888D72;
-    height: 100%;
-    width: 100%;
+    width: 165px;
+    height: 212.5px;
+    position: relative;
 }

@@ -157,7 +157,26 @@
                     let imageSlots_psy = document.querySelectorAll(".image-slot_psy");
                     const newImg = document.createElement('img');
                     newImg.src = e_psy.target.result;
-                    newImg.style.width = '100%';
+                    const divWidth = Number(getComputedStyle(imageSlots_psy[selectedSlot_psy]).width.replace('px',''));
+                    const divHeight= Number(getComputedStyle(imageSlots_psy[selectedSlot_psy]).height.replace('px',''));
+                    
+                    newImg.onload = function () {
+                        const imgWidth = newImg.naturalWidth;
+                        const imgHeight = newImg.naturalHeight;
+
+                        const scale = Math.max(divWidth / imgWidth, divHeight / imgHeight);
+
+                        const newWidth = imgWidth * scale;
+                        const newHeight = imgHeight * scale;
+
+                        // 이미지 스타일 적용
+                        newImg.style.width = `${newWidth}px`;
+                        newImg.style.height = `${newHeight}px`;
+                        // 중앙 정렬
+                        newImg.style.position = "absolute";
+                        newImg.style.left = `${(divWidth - newWidth) / 2}px`;
+                        newImg.style.top = `${(divHeight - newHeight) / 2}px`;
+                    }
         
                     imageSlots_psy[selectedSlot_psy].innerHTML = '';
                     imageSlots_psy[selectedSlot_psy].appendChild(newImg);

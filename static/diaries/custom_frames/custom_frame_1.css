@@ -24,4 +24,5 @@
     cursor: pointer;
     width: 210px;
     height: 101.25px;
+    position: relative;
 }
