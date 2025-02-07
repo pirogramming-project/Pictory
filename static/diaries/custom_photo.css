@@ -16,6 +16,43 @@
     align-items: flex-start;
 }
 
+/* 프레임 공통 속성들 */
+#pictory-frame_psy {
+    /* width: 250px; */
+    /* height: 500px; */
+    background-color: var(--content_color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding-bottom: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.image-slots-container_kes {
+    display: grid;
+    /* grid-template-columns: repeat(1, 1fr); */
+    gap: 10px;
+    /* width: 210px; */
+    /* height: 450px; */
+}
+
+.image-slot_psy {
+    background: white;
+    grid-column: span 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 25px;
+    cursor: pointer;
+    /* width: 210px; */
+    /* height: 105px; */
+    position: relative;
+}
+
 /* 프레임 스타일은 기존 유지 */
 .image-slot_psy span {
     color: #999;
