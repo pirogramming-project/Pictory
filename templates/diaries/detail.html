@@ -21,7 +21,7 @@
                         <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
                     </div>
                     <div class="diary_date_psy">
-                        <h1 class="diary_letter_psy">o Date: {{ diary.date }}</h1>
+                        <h1 class="diary_letter_date_psy">o Date: {{ diary.date }}</h1>
                         {{ form.date }}
                     </div>
                 </div>
@@ -53,8 +53,7 @@
                             {{ form.weather }}
                         </div>
                         <div class="diary_emotion_psy">
-                            <h1 class="diary_letter_psy">o Emotion</h1>
-                            <span>{{ diary.emotion }}점</span>
+                            <h1 class="diary_letter_psy">o Emotion: {{ diary.emotion }}</h1>
                         </div>
                         <div class="diary_map_psy">
                             <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
@@ -73,11 +72,11 @@
                 </div>
             </div>
             <div class="detail_btn_psy">
-                <button type="button" class="diary_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
-                    <span>수정</span>
+                <button type="button" class="diary_save_psy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
+                    <span>Edit</span>
                 </button>
-                <button type="submit" class="diary_delete_ksy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
-                    <span>삭제</span>
+                <button type="submit" class="diary_delete_psy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
+                    <span>Delete</span>
                 </button>
             </div>
         </form>
