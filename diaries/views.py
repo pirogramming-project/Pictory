@@ -106,6 +106,7 @@ def edit_diary(request, diary_id):
         'neighbors':neighbors, #이웃들만
         'user_tags': user_tags, #create에서 태그했던 이웃들들
         'diary_tags': diary_tags,
+        "KAKAO_MAP_APPKEY_JS":KAKAO_APPKEY_JS
     }
     return render(request, 'diaries/edit_diary.html', context)
 
