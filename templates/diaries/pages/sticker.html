@@ -35,7 +35,9 @@
         // 2. 크기조절
         const resizeHandle = document.createElement('div');
         resizeHandle.className = "sticker_resize_handle_kes";
-        resizeHandle.textContent = "D";
+        resizeHandle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"/>
+        </svg>`;
         let isResizing = false;
         let aspectRatio = newSticker_psy.naturalWidth / newSticker_psy.naturalHeight;
         let startX, startY, startWidth, startHeight;
@@ -61,9 +63,12 @@
 
 
         // DOM요소 추가
-        newStickerContainer.addEventListener('click', () => {
-            closeButton.style.display = 'block';
-            resizeHandle.style.display = 'block';
+        newStickerContainer.addEventListener('click', (event) => {
+            event.stopPropagation();
+            stickerTool_Container.style.display = 'flex';
+        });
+        document.addEventListener('click', (event) => {
+            stickerTool_Container.style.display = 'none';
         });
         stickerTool_Container.appendChild(closeButton);
         stickerTool_Container.appendChild(resizeHandle);
@@ -86,8 +91,8 @@
             if (e.clientX === 0 && e.clientY === 0) return; // 드래그 종료 시 무시
 
             const parentRect = container.getBoundingClientRect();
-            const imgWidth = draggableImg.offsetWidth;
-            const imgHeight = draggableImg.offsetHeight;
+            const imgWidth = draggableImg.offsetWidth - 20;
+            const imgHeight = draggableImg.offsetHeight - 20;
 
             let newX = e.clientX - parentRect.left - offsetX;
             let newY = e.clientY - parentRect.top - offsetY;
