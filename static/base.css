@@ -90,7 +90,6 @@
 }
 
 
-/* 파란색 중앙 컨텐츠 영역 */
 .base_content-area_ksy {
     padding-top: 100px;
     width: 100%;
@@ -130,7 +129,7 @@
 .base_logo_title_desktop_ksy {
     color: var(--title_color);
     font-family: "Gravitas One", serif;
-    font-size: 5rem;
+    font-size: 4rem;
 }
 .base_menu-button_ksy {
     display: none;
