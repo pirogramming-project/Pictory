@@ -95,7 +95,7 @@
             // 프레임 이미지 자체 저장
             const captureArea = document.getElementById("pictory-frame_psy");
 
-            html2canvas(captureArea).then(canvas => {
+            html2canvas(captureArea, { scale: 4 }).then(canvas => {
                 let imgData = canvas.toDataURL("image/png");  // Base64 인코딩된 이미지 데이터
                 document.getElementById("saved_photo_image_kes").value = imgData;
                 form.submit();  // form 제출
@@ -103,7 +103,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("pictory-frame_psy").style.backgroundColor = "rgb(255,255,255)";
             document.querySelectorAll(".cloud-btn_psy").forEach(button_psy => {
                 button_psy.addEventListener("click", function () {
                     let page_psy = this.getAttribute("data-page_psy");
@@ -154,9 +153,14 @@
             let files_psy = event.target.files;
             if (files_psy.length > 0 && selectedSlot_psy !== null) {
                 let reader_psy = new FileReader();
-                reader_psy.onload = function(e_psy) {
+                reader_psy.onload = function (e_psy) {
                     let imageSlots_psy = document.querySelectorAll(".image-slot_psy");
-                    imageSlots_psy[selectedSlot_psy].innerHTML = `<img src="${e_psy.target.result}" style="width:100%; height:100%; border-radius: 5px;">`;
+                    const newImg = document.createElement('img');
+                    newImg.src = e_psy.target.result;
+                    newImg.style.width = '100%';
+        
+                    imageSlots_psy[selectedSlot_psy].innerHTML = '';
+                    imageSlots_psy[selectedSlot_psy].appendChild(newImg);
                 };
                 reader_psy.readAsDataURL(files_psy[0]);
             }
