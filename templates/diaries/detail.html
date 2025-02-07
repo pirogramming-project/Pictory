@@ -20,65 +20,66 @@
                     <div class="diary_title_psy">
                         <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
                     </div>
-                    <div class="diary_emotion_psy">
-                        <h1 class="diary_letter_psy">o Emotion</h1>
-                        <span>{{ diary.emotion }}점</span>
-                    </div>
-                </div>
-
-                <div class="second_line_psy">
                     <div class="diary_date_psy">
                         <h1 class="diary_letter_psy">o Date: {{ diary.date }}</h1>
                         {{ form.date }}
                     </div>
-                    <div class="diary_weather_psy">
-                        <h1 class="diary_letter_psy">o Weather: {{ diary.get_weather_display }}</h1>
-                        {{ form.weather }}
-                    </div>
                 </div>
-
-                <div class="third_line_psy">
-
-                    <div class="diary_tag_psy">
-                        <div class="diary_content_tag_psy">
-                            <h1 class="diary_letter_psy">o Tag</h1>
-                            {% for tag in diary.tags.all %}
-                            <span>#{{ tag.name }}</span>
-                            {% endfor %}
-                        </div>
-                        <div class="diary_friend_psy">
-                            <h1 class="diary_letter_psy">o Friend Tag</h1>
-                            <div class="friend_tag_item_psy">
-                                {% for user_tag in user_tags %}
-                                    <span>@{{ user_tag.user.nickname }}</span>
-                                {% empty %}
-                                    <span>태그된 친구가 없습니다.</span>
+                <div class="second_third_container_psy">
+                    <div class="second_line_psy">
+                        <div class="diary_tag_psy">
+                            <div class="diary_content_tag_psy">
+                                <h1 class="diary_letter_psy">o Tag</h1>
+                                {% for tag in diary.tags.all %}
+                                <span>#{{ tag.name }}</span>
                                 {% endfor %}
+                            </div>
+                            <div class="diary_friend_psy">
+                                <h1 class="diary_letter_psy">o Friend Tag</h1>
+                                <div class="friend_tag_item_psy">
+                                    {% for user_tag in user_tags %}
+                                        <span>@{{ user_tag.user.nickname }}</span>
+                                    {% empty %}
+                                        <span>태그된 친구가 없습니다.</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="diary_map_psy">
-                        <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
-                        {{ form.place }}
-                        <div class="real_location_psy"></div>
+    
+                    <div class="third_line_psy">
+                        <div class="diary_weather_psy">
+                            <h1 class="diary_letter_psy">o Weather: {{ diary.get_weather_display }}</h1>
+                            {{ form.weather }}
+                        </div>
+                        <div class="diary_emotion_psy">
+                            <h1 class="diary_letter_psy">o Emotion</h1>
+                            <span>{{ diary.emotion }}점</span>
+                        </div>
+                        <div class="diary_map_psy">
+                            <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
+                            {{ form.place }}
+                            <div class="real_location_psy"></div>
+                        </div>
                     </div>
-
                 </div>
             </div>
             
-            <div class="fourth_line_psy">
-                <h1 class="diary_letter_psy">o Content
-                    <p>{{ diary.content }}</p>
-                </h1>
+            <div class="second_right_container_psy">
+                <div class="diary_content_psy">
+                    <h1 class="diary_letter_psy">o Content
+                        <p>{{ diary.content }}</p>
+                    </h1>
+                </div>
             </div>
-
-            <button type="button" class="diary_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
-                <span>수정</span>
-            </button>
-            <button type="submit" class="diary_delete_ksy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
-                <span>삭제</span>
-            </button>
+            <div class="detail_btn_psy">
+                <button type="button" class="diary_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
+                    <span>수정</span>
+                </button>
+                <button type="submit" class="diary_delete_ksy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
+                    <span>삭제</span>
+                </button>
+            </div>
         </form>
     </div>
 </div>

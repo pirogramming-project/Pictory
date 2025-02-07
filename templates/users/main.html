@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("📌 서버 응답 데이터:", data);
+                console.log("o 서버 응답 데이터:", data);
                 updateDiaryList(data, container);
             })
             .catch(error => {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         container.innerHTML = ""; // 기존 리스트 초기화
 
         if (diaries.length === 0) {
-            container.innerHTML = "<li>📌 작성된 일기가 없습니다.</li>";
+            container.innerHTML = "<li>o 작성된 일기가 없습니다.</li>";
         } else {
             diaries.forEach(diary => {
                 const listItem = document.createElement("li");
@@ -85,9 +85,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // `innerHTML`을 사용해 링크와 작성일을 포함
                 listItem.innerHTML = `
                     <a href="/diary/detail/${diary.id}/" style="text-decoration: none;">
-                        <strong>${diary.title}</strong>
+                        <strong>o Title: ${diary.title}</strong><br>
                     </a>
-                    <span> - 작성일: ${diary.date || '오늘'}</span>
+                    <span> - Date: ${diary.date || '오늘'}</span>
                 `;
 
                 container.appendChild(listItem);
@@ -106,9 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("📌 선택한 날짜의 일기 데이터:", data);
+                console.log("🍂 선택한 날짜의 일기 데이터:", data);
                 updateDiaryList(data, selectedDiaryListContainer);
-                selectedDateTitle.textContent = `${year}년 ${month + 1}월 ${day}일에 쓴 일기`;
+                selectedDateTitle.textContent = `${year}/ ${month + 1}/ ${day}에 쓴 일기`;
             })
             .catch(error => {
                 console.error("❌ AJAX 요청 오류:", error);

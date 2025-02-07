@@ -136,7 +136,8 @@
     border-radius: 8px;
     padding: 13px;
     background-color: #FFF9EA;
-    height: 100%;
+    display: inline-block;
+    height: auto;
 }
 
 .today_diary_list_psy h3,
@@ -148,6 +149,7 @@
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #515738;
+    font-weight: bold;
 }
 
 .today_diary_list_psy ul,
@@ -166,12 +168,16 @@
     border-radius: 4px;
     background-color: #FFF9EA;
     transition: background-color 0.2s;
+    color: #515738;
+    font-size: 12px;
+    font-family: 'Gravitas One';
 }
 
 .today_diary_list_psy li:hover,
 .selected_diary_list_psy li:hover,
 .last_week_diary_list_psy li:hover {
-    background-color: #96A48B;
+    background-color: #888D72;
+    color: var(--background);
 }
 
 .today_diary_list_psy a,
@@ -180,13 +186,14 @@
     color: #515738;
     text-decoration: none;
     display: block;
-    font-size: 10px;
+    font-size: 13px;
+    padding-bottom: 2px;
 }
 
 .today_diary_list_psy li:hover a,
 .selected_diary_list_psy li:hover a,
 .last_week_diary_list_psy li:hover a {
-    color: #FFF9EA;
+    color: var(--background);
 }
 
 
