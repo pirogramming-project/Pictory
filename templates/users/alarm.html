@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block extra_css %}
+<meta name="csrf_token" content="{{ csrf_token }}">
 <link rel="stylesheet" href="{% static 'users/alarm.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="alarm_container_ksy">
     {% for alarm in alarms %}
-    <div class="alarm_item_container alarm_item_{{ alarm.type }}_kes {% if alarm.is_read %}alarm_read_kes{% endif %}">
+    <div id="alarm_item_container_{{alarm.id}}" class="alarm_item_container alarm_item_{{ alarm.type }}_kes {% if alarm.is_read %}alarm_read_kes{% endif %}">
         <span class="alarm_time_kes">{{ alarm.created_at }}</span>
         <div class="alarm_icon_wrapper_ksy">
             <div class="alarm_dot_container_ksy">
@@ -23,8 +24,8 @@
         <!-- 알림 타입이 "친구 요청"인 경우 -->
         {% if alarm.type == "NFR" %}
         <div class="alarm_buttons_kes">
-            <button class="alarm_btn_yes_kes">수락</button>
-            <button class="alarm_btn_no_kes">거절</button>
+            <button class="alarm_btn_yes_kes" onclick="NFR_Yes_Onclick('{{alarm.nfr_notification.from_user.login_id}}', {{alarm.id}})">수락</button>
+            <button class="alarm_btn_no_kes" onclick="NFR_No_Onclick('{{alarm.nfr_notification.from_user.login_id}}', {{alarm.id}})">거절</button>
         </div>
         {% endif %}
         <!-- 알림 타입이 "TAG"인 경우 -->
@@ -53,6 +54,106 @@
         </div>
         <span class="alarm_text_ksy">100번째 일기 작성으로 "당신은 일기장 마스터" 뱃지를 달성했어요</span>
     </button>
-
 </div>
+
+<script>
+    function NFR_No_Onclick(targetloginId, alarmId) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/reject_friend_request_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                from_user_loginid: targetloginId,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success) {
+                    alert("성공: " + "이웃요청 거절함");
+                    
+                    send_alarm_read_ajax(alarmId);
+                    
+                } else {
+                    alert(data.message);
+                    send_alarm_read_ajax(alarmId);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+    }
+    function NFR_Yes_Onclick(targetloginId, alarmId) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/send_friend_request_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              to_user_loginid: targetloginId,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success) {
+                    alert("성공: " + "이웃요청 수락함");
+                    
+                    send_alarm_read_ajax(alarmId);
+                    
+                } else {
+                    alert(data.message);
+                    send_alarm_read_ajax(alarmId);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+    }
+
+
+    function send_alarm_read_ajax(alarmId) {
+        var csrftoken = document.querySelector("meta[name=csrf_token]").content;
+        fetch(`/alarm_read_ajax/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                alarm_id: alarmId,
+            }),
+        })            
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if(data.success) {                
+                // 알람 읽기 성공!
+                document.getElementById(`alarm_item_container_${alarmId}`).classList.add('alarm_read_kes');
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching posts:", error);
+        });
+    }
+</script>
 {% endblock %}

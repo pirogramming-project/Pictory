@@ -255,6 +255,22 @@ def alarm(request):
     }
     
     return render(request, 'users/alarm.html', context)
+def alarm_read_ajax(request):
+    # 알림 읽음으로 처리
+    if request.method == "POST":
+        data = json.loads(request.body)
+        notification_id = int(data.get("alarm_id"))
+        try:
+            Notification.objects.filter(id=notification_id, user=request.user).update(is_read=True)
+            return JsonResponse({
+                    "success": True,
+                    "message": "알림을 읽었습니다."
+                })
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "존재하지 않는 알림입니다."
+            })
 
 
 # 감정 그래프
@@ -418,7 +434,7 @@ def send_friend_request_ajax(request):
             addUsersToFriend(fromUser, toUser)
             
             return JsonResponse({
-                "success": False,
+                "success": True,
                 "message": f"상대방의 친구 요청을 수락했습니다. @{toUser.nickname}과 친구가 되었습니다."
                 })  
                       
@@ -436,6 +452,30 @@ def send_friend_request_ajax(request):
     
     # get요청일때: pass
 
+def reject_friend_request_ajax(request):
+    ''' 이웃 신청 거절 '''
+    if request.method == "POST":
+        data = json.loads(request.body)
+        toUser = request.user
+        try:
+            fromUser = User.objects.get(login_id=data.get('from_user_loginid'))
+        except:
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })
+        
+        if not NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).exists():
+            return JsonResponse({
+                "success": False,
+                "message": "올바르지 않은 상대입니다."
+            })       
+        
+        NeighborRequest.objects.filter(sender=fromUser, receiver=toUser).delete()
+        return JsonResponse({
+                "success": True,
+                "message": "이웃 요청을 거절했습니다."
+            })
 
 #달력에 해당 날짜의 일기 반환
 @login_required
