@@ -30,6 +30,7 @@
     padding-bottom: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    overflow: hidden;
 }
 .image-slots-container_kes {
     display: grid;
@@ -158,10 +159,35 @@ input[type="range"]::-webkit-slider-thumb {
     gap: 10px;
 }
 
+.added_sticker_container_kes {
+    display: flex;
+}
 .sticker_psy {
     width: 100%;
     aspect-ratio: 1;
     cursor: pointer;
+}
+.sticker_tools_container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: -5px;
+}
+.sticker_remove_btn_kes {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid gray;
+}
+.sticker_resize_handle_kes {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid gray;
 }
 
 /* 로고 입력 필드 */
