@@ -205,26 +205,67 @@
   }
 
   function displayDiaryList(diaries) {
-    const diaryListContainer = document.getElementById("diaryListContainer");
+    const contentLetter = document.querySelector('.diary_map_content_letter_ksy');
+    contentLetter.style.display = 'none';
 
-    diaryListContainer.innerHTML = ""; // 기존 리스트 초기화
+    const diaryListContainer = document.getElementById("diaryListContainer");
+    diaryListContainer.className = "map_diary-list_container_ljs";
+    diaryListContainer.innerHTML = ""; 
+
+    // SVG 닫기 버튼 추가
+    const closeButton = document.createElement("button");
+    closeButton.className = "map_diary-list_close-btn_ljs";
+    closeButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+        </svg>
+    `;
+    closeButton.onclick = () => {
+        const diaryList = document.querySelector('.map_diary-list_ljs');
+        diaryList.style.display = 'none';
+        contentLetter.style.display = 'flex';
+    };
+    diaryListContainer.parentElement.appendChild(closeButton);
 
     if (diaries.length === 0) {
-        diaryListContainer.innerHTML = "<li>📌 관련된 다이어리가 없습니다.</li>";
+        const emptyItem = document.createElement("li");
+        emptyItem.className = "map_diary-list_item_ljs";
+        emptyItem.textContent = "📌 관련된 다이어리가 없습니다.";
+        diaryListContainer.appendChild(emptyItem);
     } else {
         diaries.forEach(diary => {
             const listItem = document.createElement("li");
+            listItem.className = "map_diary-list_item_ljs";
+            
             const link = document.createElement("a");
-
+            link.className = "map_diary-list_link_ljs";
             link.href = `/diary/detail/${diary.id}/`;
-            link.textContent = `${diary.place} - ${diary.title}`;
 
+            const locationContainer = document.createElement("div");
+            locationContainer.className = "map_diary-list_location_item_ljs";
+
+            // 위치 아이콘 추가
+            locationContainer.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="diary_map_location_icon_ksy" viewBox="0 0 16 16">
+                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                </svg>
+                <span class="diary_map_location_map_ksy">${diary.place}</span>
+            `;
+
+            const titleSpan = document.createElement("span");
+            titleSpan.className = "map_diary-list_title_ljs";
+            titleSpan.textContent = `${diary.title}`;
+            
+            link.appendChild(locationContainer);
+            link.appendChild(titleSpan);
             listItem.appendChild(link);
             diaryListContainer.appendChild(listItem);
         });
     }
-  }
 
+    const diaryList = document.querySelector('.map_diary-list_ljs');
+    diaryList.style.display = 'block';
+  }
 
 
     

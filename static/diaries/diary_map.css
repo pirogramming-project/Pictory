@@ -70,13 +70,6 @@
     height: 100%;
 }
 
-/* 장소 핀 클릭 시 나오는 해당장소관련된 일기 리스트입니다. */
-.map_diary-list_ljs {
-    display: flex;
-    color: black;
-    font-size: 28px;
-}
-
 .diary_map_introduce_ksy {
     color: black;
     font-family: "Gravitas One", serif;
@@ -115,4 +108,85 @@
 .diary_map_second_content_ksy {
     padding: 15px;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.map_diary-list_ljs {
+    flex: 1;
+    height: calc(100% - 100px);
+    background-color: #888d72b1;
+    padding: 20px;
+    overflow-y: auto;
+    display: none;
+    position: relative;
+}
+
+.map_diary-list_container_ljs {
+    list-style: none;
+    padding: 25px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.map_diary-list_item_ljs {
+    padding: 10px;
+}
+
+.map_diary-list_location_item_ljs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.393); 
+    padding-bottom: 8px;  
+    padding: 1px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.map_diary-list_location_icon_ljs {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.map_diary-list_link_ljs {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.map_diary-list_title_ljs {
+    display: block;
+    color: rgba(0, 0, 0, 0.611);
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+/* 닫기 버튼 스타일 수정 */
+.map_diary-list_close-btn_ljs {
+    position: absolute;
+    top: 10px;         
+    right: 10px;       
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;      
+    width: 30px;       
+    height: 30px;      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;     
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.diary_map_location_icon_ksy {
+    fill: black;
+    width: 20px;
+    height: 20px;
+}
+
+.diary_map_location_map_ksy {
+    color: black;
+    font-size: 1.5rem;
 }
