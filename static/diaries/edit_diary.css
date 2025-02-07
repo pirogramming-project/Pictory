@@ -97,8 +97,9 @@
     cursor: pointer;
 }
 
-.friend_tag_item_psy label.selected{
-    background-color: #888D72;
+.friend_tag_item_psy.selected label{
+    background-color: #5c6552;
+    color: var(--background);
 }
 
 .diary_friend_psy{

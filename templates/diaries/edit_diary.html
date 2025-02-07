@@ -81,23 +81,30 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const checkboxes = document.querySelectorAll(".friend_tag_item_psy input[type='checkbox']");
-    
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener("change", function () {
-                const tagItem = this.closest(".friend_tag_item_psy");  // 부모 컨테이너를 찾음
-                
-                if (this.checked) {
-                    tagItem.classList.add("selected");  // 선택 시 클래스 추가
+    document.addEventListener("DOMContentLoaded", function() {
+        // 모든 친구 태그 요소를 가져옴
+        let friendTags = document.querySelectorAll(".friend_tag_item_psy");
+
+        friendTags.forEach(function(tagItem) {
+            let checkbox = tagItem.querySelector("input[type='checkbox']");
+            
+            // 초기 상태 설정 (체크되었을 경우 색상 변경)
+            if (checkbox.checked) {
+                tagItem.classList.add("selected");
+            }
+
+            // 클릭 이벤트 추가
+            tagItem.addEventListener("click", function() {
+                checkbox.checked = !checkbox.checked; // 체크 상태 토글
+
+                if (checkbox.checked) {
+                    tagItem.classList.add("selected"); // 선택 시 색상 변경
                 } else {
-                    tagItem.classList.remove("selected");  // 취소 시 클래스 제거
+                    tagItem.classList.remove("selected"); // 선택 취소 시 원래 색으로 변경
                 }
             });
         });
     });
-    
-
     
     
 </script>
