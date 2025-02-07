@@ -60,6 +60,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         function prepareAndSubmitForm_kes() {
+            document.querySelectorAll('.sticker_tools_container').forEach(item => {
+                item.style.display = 'none';
+            });
+
             // 프레임 색상, 두께 - css text 형태로 저장
             const frame = document.getElementById("pictory-frame_psy");  // 대상 요소
             const computedStyle = window.getComputedStyle(frame);  // 요소의 CSS 속성값 가져오기

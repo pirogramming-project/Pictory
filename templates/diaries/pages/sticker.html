@@ -1,8 +1,9 @@
 {% load static %}
 <h3>스티커 선택</h3>
 <div class="stickers_list_kes">
-    <img src="{% static "images/stickers/test_sticker.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
-    <img src="{% static "images/stickers/test_sticker_2.png" %}" class="sticker_psy" onclick="addSticker_psy(this)">
+    {% for sticker in sticker_files %}
+    <img src="{% static "images/stickers/" %}{{ sticker }}" class="sticker_psy" onclick="addSticker_psy(this)">
+    {% endfor %}
 </div>
 <button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
     <span class="pagesThickness_text_ksy">완료</span>
@@ -19,7 +20,7 @@
         const newSticker_psy = document.createElement("img");
         newSticker_psy.src = sticker_psy.src;
         newSticker_psy.className = "added_sticker_kes";
-        newSticker_psy.style.width = `${sticker_psy.offsetWidth}px`;
+        newSticker_psy.style.width = `60px`;
         addImageDragEventListeners_kes(newStickerContainer);
 
         // 여기부터 스티커 제거, 크기조절 위한 코드
