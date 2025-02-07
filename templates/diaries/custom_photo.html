@@ -21,14 +21,14 @@
                 <div id="customization-save_kes">
                     <div class="custom-buttons_psy">
                         <button class="cloud-btn_psy" data-page_psy="color">
-                            <p>색깔</P>
+                            <p>Color</P>
                         </button>
                         <button class="cloud-btn_psy" data-page_psy="logo">
-                            <p>로고</P></button>
+                            <p>Logo</P></button>
                         <button class="cloud-btn_psy" data-page_psy="thickness">
-                            <p>두께</P></button>
+                            <p>Thickness</P></button>
                         <button class="cloud-btn_psy" data-page_psy="sticker">
-                            <p>스티커</P>
+                            <p>Sticker</P>
                         </button>
                     </div>
                     <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
@@ -36,7 +36,7 @@
                         <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
                         <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
                         <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
-                        <button type="button" onclick="prepareAndSubmitForm_kes()">저장하고 다음으로</button>
+                        <button type="button" onclick="prepareAndSubmitForm_kes()" class="custom_save_btn_psy">Next</button>
                     </form>
                 </div>
                 <div id="customization-color_kes">

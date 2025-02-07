@@ -74,6 +74,20 @@
     cursor: pointer;
     padding: 5px;
 }
+.base_button_alarm_ksy {
+    position: relative;
+}
+.base_alarm_count_kes {
+    color: white;
+    font-size: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: -3px;
+    top: -3px;
+}
 
 
 /* 파란색 중앙 컨텐츠 영역 */

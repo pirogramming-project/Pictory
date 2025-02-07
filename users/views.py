@@ -5,7 +5,7 @@ import requests
 import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User, NeighborRequest, Neighbor
+from users.models import User, NeighborRequest, Neighbor, Notification
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -244,8 +244,15 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
+@login_required
 def alarm(request):
-    return render(request, 'users/alarm.html')
+    alarms = Notification.objects.filter(user=request.user).order_by('-created_at').prefetch_related("tag_notification")
+    
+    context = {
+        "alarms" : alarms,
+    }
+    
+    return render(request, 'users/alarm.html', context)
 
 
 # 감정 그래프
@@ -329,6 +336,8 @@ def are_neighbors(user_a, user_b):
     return Neighbor.objects.filter(user1=user1, user2=user2).exists()
 def addUsersToFriend(user1, user2):
     ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 기존의 이웃 요청은 삭제함 '''
+    user1, user2 = sorted([user1, user2], key=lambda u: u.login_id)
+
     Neighbor.objects.get_or_create(
         user1=user1,
         user2=user2
