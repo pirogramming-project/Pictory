@@ -1,4 +1,8 @@
 <input type="text" id="logoText_psy" value="pictory" placeholder="로고를 작성해주세요">
+<div class="pagesLogo_content_ksy">
+    <h3 class="pagesLogo_choice_ksy">색상 선택</h3>
+    <input type="color" value="#ffffff" id="logoColorPicker_kes">
+</div>
 <button class="pagesLogo_button_complete_ksy" onclick="resetCustomizeField_kes()">
     <span class="pagesLogo_text_ksy">완료</span>
 </button>
@@ -8,6 +12,7 @@
 <script>
     const logoText_kes = document.getElementById("logoText_psy");
     const pictoryFrame_kes = document.getElementById("pictory-frame_psy");
+    document.getElementById("logoColorPicker_kes").addEventListener("input", applyLogoColor_kes)
     logoText_kes.addEventListener("input", () => {
         if (!logoText_kes.value) {
             const logoP = document.querySelector(".custom-logo_psy");
@@ -28,5 +33,10 @@
         let logoText_psy = document.getElementById("logoText_psy").value;
         let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
         pictoryFrame_psy.innerHTML += `<p class="custom-logo_psy">${logoText_psy}</p>`;
+    }
+    function applyLogoColor_kes() {
+        let logoTextColor_psy = document.getElementById("logoColorPicker_kes").value;
+        let logoP = document.querySelector(".custom-logo_psy");
+        logoP.style.color = logoTextColor_psy;
     }
 </script>
