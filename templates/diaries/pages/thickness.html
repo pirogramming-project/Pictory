@@ -1,7 +1,7 @@
 <h3 class="pagesthickness_letter_ksy">두께 조정</h3>
 <div class="pagesThicknesss_content_ksy">
     <span>0</span>
-    <input type="range" id="thicknessSlider_psy" min="0" max="100" value="10">
+    <input type="range" id="thicknessSlider_psy" min="0" max="100" value="100">
     <span>100</span>
 </div>
 <button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
@@ -10,13 +10,17 @@
 
 <script defer>
     const thicknessSlider_kes = document.getElementById("thicknessSlider_psy");
-    thicknessSlider_kes.addEventListener("input", () => {
 
-        pictoryFrame_kes.style.gap = (thicknessSlider_kes.value / 10) + "px";
+    const imgSlotsContainer = document.querySelector('.image-slots-container_kes');
+    const imgSlots = document.querySelectorAll(".image-slot_psy");
+    const ImageSlotsContainerHeight = Number(getComputedStyle(imgSlotsContainer).height.replace('px', ''));
+    const initialSlotHeight = Number(getComputedStyle(imgSlots[0]).height.replace('px', ''));
+
+    thicknessSlider_kes.addEventListener("input", () => {
+        const thicknessSliderValue = thicknessSlider_kes.value / 10;
+        imgSlotsContainer.style.gap = `${thicknessSliderValue}px`;
+        imgSlots.forEach(slot => {
+            slot.style.height = `${(ImageSlotsContainerHeight - 3 * thicknessSliderValue) / 4}px`;
+        })
     });
-    function applyThickness_psy() {
-        let thickness_psy = document.getElementById("thicknessSlider_psy").value;
-        let pictoryFrame_psy = document.getElementById("pictory-frame_psy");
-        pictoryFrame_psy.style.borderWidth = thickness_psy + "px";
-    }
 </script>
