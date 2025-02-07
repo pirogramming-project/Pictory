@@ -3,25 +3,31 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .friend_search-container_ksy {
     width: 100%;
     display: flex;
-    justify-content: center;
     margin-top: 100px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .friend_search-form_ksy {
-    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10) inset, -2px -2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    width: 100%;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 2px solid var(--content_color);
+    width: 80%;
     max-width: 600px;
     position: relative;
     display: flex;
     align-items: center;
-    background: #fff;
-    border-radius: 20px;
-    padding: 8px 16px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 3px 10px;
 }
 
 .friend_search-input_ksy {
@@ -29,11 +35,11 @@
     width: 100%;
     border: none;
     outline: none;
-    padding: 8px;
-    font-size: 23px;
+    padding: 12px;
 }
+
 .friend_search-input_ksy::placeholder{
-    color: rgba(30, 50, 105, 0.73);
+    color: var(--content_color);
 }
 
 .friend_search-button-container_ksy {
@@ -47,7 +53,8 @@
 
 .friend_search-button_ksy {
     cursor: pointer;
-    color: rgba(30, 50, 105, 0.73);
+    color:#515738;
+    margin: 10px;
 }
 
 .friend_search-button-container_ksy:hover .friend_search-button_ksy {
@@ -57,32 +64,39 @@
 /* 검색결과로 나오는 요소들입니다~~ 예쁘게 해주세요 */
 /* 순서대로 컨테이너, 프사이미지, 닉네임, 친추버튼, 친추취소버튼 */
 .user_search_result_item_kes {
+    width: 100%;
+    margin: 20px;
     display: flex;
     gap: 10px;
-    color: black;
+    color: #515738;
     align-items: center;
 }
 .user_search_result_item_profileimage_kes {
     width: 50px;
     border-radius: 50%;
     aspect-ratio: 1/1;
+    margin-right: 20px;
 }
 .user_search_result_item_nickname_kes {
     flex: 1;
     font-size: 18px;
+    margin-right: 200px;
 }
 .user_search_request_button_kes {
-    background-color: blue;
-    color: white;
+    background-color: #515738;
+    color: #fff9ea;
     border-radius: 5px;
+    padding: 5px;
 }
 .user_search_request_cancel_button_kes {
-    background-color: red;
-    color: white;
+    background-color: #888d72ad;
+    color: #515738;
     border-radius: 5px;
+    padding: 5px;
 }
 /* 이건 검색결과 없을 때 뜨는 텍스트 */
 .user_search_no_result_text_kes {
-    font-size: 28px;
-    color: red;
+    font-size: 15px;
+    color: #515738;
+    padding: 50px;
 }

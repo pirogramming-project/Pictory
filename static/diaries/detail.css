@@ -15,6 +15,10 @@
     min-width: 0;
 }
 
+.first_right_container_psy{
+    padding-top: 30px;
+}
+
 .create_diary_left_container_psy img {
     width: 100%;
     height: auto;
@@ -97,6 +101,7 @@
     flex: 1;
     display: grid;
     align-content: space-around;
+    gap: 20px;
 }
 
 .diary_content_tag_psy {
