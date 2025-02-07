@@ -22,6 +22,10 @@ def diary_detail(request, diary_id):
     user_tags = User_Tag.objects.filter(diary=diary)  
     photo = diary.four_cut_photo.image_file
 
+    # 감정 점수와 SVG 매핑 가져오기
+    from .forms import EMOTION_CHOICES
+    emotion_svg = dict(EMOTION_CHOICES).get(diary.emotion, '')
+
     if diary.writer != request.user:
         raise Http404("페이지 접근 권한이 없습니다.")  
     
@@ -29,6 +33,7 @@ def diary_detail(request, diary_id):
         'diary': diary,
         'user_tags': user_tags,
         'photo' : photo,
+        'emotion_svg': emotion_svg,
     }
     return render(request, 'diaries/detail.html', context)
 

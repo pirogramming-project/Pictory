@@ -39,7 +39,7 @@
                         </svg>
                     </button>
                     <button class="action-btn_psy" onclick="location.href='{% url 'diaries:mydiaries' %}'">일기 보러가기</button>
-                    <button class="action-btn_psy" onclick="location.href=''">총 일기 4개</button>
+                    <button class="action-btn_psy" onclick="location.href=''">총 일기 {{ diary_count }}개</button>
                 </div>
             </div>
         </div>

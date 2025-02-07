@@ -237,9 +237,11 @@ def main(request):
 def profile(request):
     my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
     graph = generate_emotion_graph()  # 감정 그래프 생성
+    my_diary_count = Diary.objects.filter(writer=request.user).count()
     context = {
         "friend_count" : my_friends_count,
         "graph": graph,
+        "diary_count": my_diary_count,
     }
     return render(request, 'users/profile.html', context)
 
