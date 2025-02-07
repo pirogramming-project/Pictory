@@ -17,6 +17,7 @@ from django.db.models import Q
 from diaries.models import Diary
 from django.utils.timezone import now, timedelta
 
+
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
 
@@ -489,7 +490,7 @@ def get_diaries_by_date(request, year, month, day):
             date__year=year,
             date__month=month,
             date__day=day
-        )
+        ).order_by('-created_at')
         diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
@@ -499,7 +500,7 @@ def get_today_diaries(request):
     """ 오늘 작성한 로그인한 유저의 일기 반환 """
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         today = now().date()
-        diaries = Diary.objects.filter(writer=request.user, date=today)
+        diaries = Diary.objects.filter(writer=request.user, date=today).order_by('-created_at')
         diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
@@ -510,7 +511,7 @@ def get_last_week_diaries(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         today = now().date()
         last_week = today - timedelta(days=6)  # 최근 7일(오늘 포함)
-        diaries = Diary.objects.filter(writer=request.user, date__range=[last_week, today])
+        diaries = Diary.objects.filter(writer=request.user, date__range=[last_week, today]).order_by('-date')
         diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
