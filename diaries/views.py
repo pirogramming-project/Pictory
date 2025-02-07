@@ -11,6 +11,7 @@ import base64
 from django.http import Http404, JsonResponse
 from django.db.models import Q
 import json
+from django.http import HttpResponseForbidden
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
 
@@ -115,8 +116,10 @@ def edit_diary(request, diary_id):
 @login_required
 def delete_diary(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)
-    diary.delete()
-    return redirect('users:main')
+    if request.method == "POST":
+        diary.delete()
+        return redirect('diaries:mydiaries')  
+    return redirect('diaries:diary_detail', diary_id=diary_id)
 
 # 인생네컷 추가 페이지1
 def select_photo_type(request):
