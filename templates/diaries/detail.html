@@ -54,7 +54,7 @@
                             {{ form.weather }}
                         </div>
                         <div class="diary_emotion_psy">
-                            <h1 class="diary_letter_psy">o Emotion: {{ diary.emotion }}</h1>
+                            <h1 class="diary_letter_psy">o Emotion: {{ emotion_svg|safe }}</h1>
                         </div>
                         <div class="diary_map_psy">
                             <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>

@@ -236,10 +236,12 @@ def main(request):
 @login_required
 def profile(request):
     my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
-    graph = generate_emotion_graph()  # 감정 그래프 생성
+    graph = generate_emotion_graph(request.user)  # 감정 그래프 생성
+    my_diary_count = Diary.objects.filter(writer=request.user).count()
     context = {
         "friend_count" : my_friends_count,
         "graph": graph,
+        "diary_count": my_diary_count,
     }
     return render(request, 'users/profile.html', context)
 
@@ -261,40 +263,46 @@ from io import BytesIO
 import base64
 from django.shortcuts import render
 
-def generate_emotion_graph():
-    """ 최근 7일 감정 그래프를 생성하고 Base64로 변환하는 함수 """
-    # 최근 7개의 감정 점수를 DB에서 가져오는 예제 (ORM을 사용하는 것이 일반적)
-    recent_emotion_scores = [2, 4, 6, 3, 7, 6, 5]
-    dates = ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31"]
+def generate_emotion_graph(user):
+    # 1. 같은 날짜 내에서 가장 최근에 작성된 게시물만 가져오기
+    recent_diaries = (
+        Diary.objects.filter(writer=user)
+        .order_by('date', '-id')  # 같은 날짜 중 최신 게시물을 우선
+        .distinct('date')         # 중복 날짜 제거
+        .order_by('-date')        
+    )[:7]
+
+    # 2. 오래된 순으로 정렬
+    recent_diaries = sorted(recent_diaries, key=lambda x: x.date)
+
+    # 3. 감정 점수(y축)
+    recent_emotion_scores = [diary.emotion for diary in recent_diaries]
+
+    # 4. X축 라벨(날짜)
+    x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
 
     # 그래프 생성
-    plt.rcParams["font.family"] = "GangwonEduSaeeum"
+    plt.rcParams["font.family"] = "GangwonEduSaeeum"  
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(dates, recent_emotion_scores, marker="p", color="#1E3269", linewidth=4, markeredgewidth=2,)
-    ax.set_xlabel("날짜", fontsize=20, color="#1E3269", labelpad=15 )
+    ax.plot(x_labels, recent_emotion_scores, marker="p", color="#1E3269", linewidth=4, markeredgewidth=2)
+    ax.set_xlabel("날짜", fontsize=20, color="#1E3269", labelpad=15)
     ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#1E3269", labelpad=15)
-    ax.set_ylim(0, 8)  # 감정 점수 범위 설정
+    ax.set_ylim(0, 8)  
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.tick_params(axis="x", labelsize=18, colors="#1E3269")
+    ax.tick_params(axis="x", labelsize=18, colors="#1E3269")  
     ax.tick_params(axis="y", labelsize=18, colors="#1E3269")
-    ax.set_xticklabels(dates, fontsize=18, fontweight='bold', color='#1E3269')
-    ax.set_yticklabels(range(9), fontsize=18, fontweight='bold', color='#1E3269')
     fig.tight_layout()
 
-    # 이미지를 Base64로 변환
+    # 이미지로 변환
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
     buffer.seek(0)
-    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     buffer.close()
     
     return image_base64
-
-
-
-
 
 
 def user_search_ajax(request):
