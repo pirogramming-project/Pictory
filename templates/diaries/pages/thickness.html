@@ -13,14 +13,35 @@
 
     const imgSlotsContainer = document.querySelector('.image-slots-container_kes');
     const imgSlots = document.querySelectorAll(".image-slot_psy");
+    const ImageSlotsContainerWidth = Number(getComputedStyle(imgSlotsContainer).width.replace('px', ''));
     const ImageSlotsContainerHeight = Number(getComputedStyle(imgSlotsContainer).height.replace('px', ''));
+
+    const gridRowNumber = getGridRowNumber(imgSlotsContainer)
+    const gridColumnNumber = getGridColumnNumber(imgSlotsContainer)
+    
     const initialSlotHeight = Number(getComputedStyle(imgSlots[0]).height.replace('px', ''));
 
     thicknessSlider_kes.addEventListener("input", () => {
         const thicknessSliderValue = thicknessSlider_kes.value / 10;
         imgSlotsContainer.style.gap = `${thicknessSliderValue}px`;
         imgSlots.forEach(slot => {
-            slot.style.height = `${(ImageSlotsContainerHeight - 3 * thicknessSliderValue) / 4}px`;
+            slot.style.width = `${(ImageSlotsContainerWidth - (gridColumnNumber-1) * thicknessSliderValue) / gridColumnNumber}px`;
+            slot.style.height = `${(ImageSlotsContainerHeight - (gridRowNumber-1) * thicknessSliderValue) / gridRowNumber}px`;
         })
     });
+
+    function getGridRowNumber(gridDOM) {
+        const ImageSlotsContainerGrid = getComputedStyle(gridDOM).grid.split('/');
+        let ImageSlotsContainerGrid_Row = ImageSlotsContainerGrid[0].replaceAll(' ','').split('px');
+        ImageSlotsContainerGrid_Row.pop();
+
+        return ImageSlotsContainerGrid_Row.length;
+    }
+    function getGridColumnNumber(gridDOM) {
+        const ImageSlotsContainerGrid = getComputedStyle(gridDOM).grid.split('/');
+        let ImageSlotsContainerGrid_Column = ImageSlotsContainerGrid[1].replaceAll(' ','').split('px');
+        ImageSlotsContainerGrid_Column.pop();
+
+        return ImageSlotsContainerGrid_Column.length;
+    }
 </script>
