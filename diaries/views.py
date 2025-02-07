@@ -390,7 +390,7 @@ def diaries_by_place_ajax(request):
         data = json.loads(request.body)
         place_address = data.get('address')
         
-        diaries = Diary.objects.filter(place_address=place_address).values('id','title', 'place')
+        diaries = Diary.objects.filter(writer=request.user, place_address=place_address).values('id','title', 'place')
         if not diaries.exists():
             return JsonResponse([], safe=False)  # 빈 리스트 반환
         diary_list = list(diaries)
