@@ -176,7 +176,7 @@ select {
     gap: 20px;
 }
 
-.diary_save_psy, .diary_delete_psy {
+.diary_save_ksy, .diary_delete_psy {
     font-size: 14px;
     border: 3px solid #5c6552;
     border-radius: 4px;

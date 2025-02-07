@@ -72,15 +72,18 @@
                     </h1>
                 </div>
             </div>
-            <div class="detail_btn_psy">
-                <button type="button" class="diary_save_psy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
-                    <span>Edit</span>
-                </button>
-                <button type="submit" class="diary_delete_psy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
+        </form>
+        <div class="detail_btn_psy">
+            <button type="button" class="diary_save_ksy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
+                <span>Edit</span>
+            </button>
+            <form method="POST" action="{% url 'diaries:delete_diary' diary.id %}" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                {% csrf_token %}
+                <button type="submit" class="diary_delete_psy">
                     <span>Delete</span>
                 </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

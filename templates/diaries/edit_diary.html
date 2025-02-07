@@ -44,7 +44,7 @@
                     <div class="diary_tag_psy">
                         <div class="diary_content_tag_psy">
                             <h1 class="diary_letter_psy">o Tag</h1>
-                            <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" required>
+                            <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" value="{% for tag in diary.tags.all %}#{{ tag.name }} {% endfor %}" required>
                         </div>
                         <div class="diary_friend_psy">
                             <h1 class="diary_letter_psy">o Friend Tag</h1>
