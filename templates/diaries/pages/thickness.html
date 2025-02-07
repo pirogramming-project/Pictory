@@ -1,12 +1,17 @@
-<h3 class="pagesthickness_letter_ksy">두께 조정</h3>
-<div class="pagesThicknesss_content_ksy">
-    <span>0</span>
-    <input type="range" id="thicknessSlider_psy" min="0" max="100" value="100">
-    <span>100</span>
+<div class="Thickness_psy">
+    <div class="pagesthickness_psy">
+        <h3 class="pagesthickness_letter_ksy">o 두께 조정 (0~100)</h3>
+        <div class="pagesThicknesss_content_ksy">
+            <input type="range" id="thicknessSlider_psy" min="0" max="100" value="100">
+        </div>
+    </div>
+    
+    <button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
+        <span class="pagesThickness_text_ksy">Next</span>
+    </button>
+    
 </div>
-<button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
-    <span class="pagesThickness_text_ksy">완료</span>
-</button>
+
 
 <script defer>
     const thicknessSlider_kes = document.getElementById("thicknessSlider_psy");

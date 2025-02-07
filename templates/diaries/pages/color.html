@@ -1,22 +1,27 @@
-<div class="pagesColor_content_ksy">
-    <h3 class="pagesColor_choice_ksy">색상 선택</h3>
-    <input type="color" value="#888d72" id="borderColorPicker_psy">
+<div class="Color_psy">
+    <div class="pagesColor_psy">
+        <div class="pagesColor_content1_ksy">
+            <h3 class="pagesColor_choice_ksy">o 색상 선택</h3>
+            <input type="color" value="#888d72" id="borderColorPicker_psy">
+        </div>
+        <div class="pagesColor_content2_ksy">
+            <p class="pagesColor_choice_ksy">o 투명도 조절</p>
+            <input type="range" value="100" min="0" max="100" id="opacitySlider_psy">
+        </div>
+        <div class="pagesColor_content3_ksy">
+            <p class="pagesColor_choice_ksy">o 그라데이션 선택</p>
+            <input type="color" value="#888d72" id="gradientPicker_psy">
+        </div>
+        <div class="pagesColor_content4_ksy">
+            <p class="pagesColor_choice_ksy">o 그라데이션 각도 (0~360°)</p>
+            <input type="range" id="gradientAngle_kes" min="0" max="360" value="90">
+        </div>
+    </div>
+    <button class="pagesColor_button_complete"  onclick="resetCustomizeField_kes()">
+        <span class="pagesColor_text_ksy">Next</span>
+    </button>
 </div>
-<div class="pagesColor_content_ksy">
-    <p class="pagesColor_choice_ksy">투명도 조절</p>
-    <input type="range" value="100" min="0" max="100" id="opacitySlider_psy">
-</div>
-<div class="pagesColor_content1_ksy">
-    <p class="pagesColor_choice_ksy">그라데이션 선택</p>
-    <input type="color" value="#888d72" id="gradientPicker_psy">
-</div>
-<div class="pagesColor_content1_ksy">
-    <p class="pagesColor_choice_ksy">그라데이션 각도 (0~360°)</p>
-    <input type="range" id="gradientAngle_kes" min="0" max="360" value="90">
-</div>
-<button class="pagesColor_button_complete"  onclick="resetCustomizeField_kes()">
-    <span class="pagesColor_text_ksy">완료</span>
-</button>
+
 
 <script>
     const colorPicker_kes = document.getElementById("borderColorPicker_psy");

@@ -1,13 +1,18 @@
-<input type="text" id="logoText_psy" value="pictory" placeholder="로고를 작성해주세요">
-<div class="pagesLogo_content_ksy">
-    <h3 class="pagesLogo_choice_ksy">색상 선택</h3>
-    <input type="color" value="#ffffff" id="logoColorPicker_kes">
+<div class="Logo_psy">
+    <div class="pagesLogo_psy">
+        <div class="pagesLogo_content1_ksy">
+            <h3 class="pagesLogo_text_ksy">o 로고 변경하기</h3>
+            <input type="text" id="logoText_psy" value="pictory" placeholder="로고를 작성해주세요">
+        </div>
+        <div class="pagesLogo_content2_ksy">
+            <h3 class="pagesLogo_choice_ksy">o 색상 선택</h3>
+            <input type="color" value="#ffffff" id="logoColorPicker_kes">
+        </div>
+    </div>
+    <button class="pagesLogo_button_complete_ksy" onclick="resetCustomizeField_kes()">
+        <span class="pagesLogo_text_ksy">Next</span>
+    </button>
 </div>
-<button class="pagesLogo_button_complete_ksy" onclick="resetCustomizeField_kes()">
-    <span class="pagesLogo_text_ksy">완료</span>
-</button>
-
-
 
 <script>
     const logoText_kes = document.getElementById("logoText_psy");

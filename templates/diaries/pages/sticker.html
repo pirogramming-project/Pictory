@@ -1,12 +1,12 @@
 {% load static %}
-<h3>스티커 선택</h3>
+<h3>o 스티커 선택</h3>
 <div class="stickers_list_kes">
     {% for sticker in sticker_files %}
     <img src="{% static "images/stickers/" %}{{ sticker }}" class="sticker_psy" onclick="addSticker_psy(this)">
     {% endfor %}
 </div>
 <button class="pagesThickness_button_complete" onclick="resetCustomizeField_kes()">
-    <span class="pagesThickness_text_ksy">완료</span>
+    <span class="pagesThickness_text_ksy">Next</span>
 </button>
 <script>
     function addSticker_psy(sticker_psy) {

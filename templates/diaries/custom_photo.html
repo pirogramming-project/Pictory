@@ -17,43 +17,49 @@
             {% endwith %}
 
             <!-- AJAX로 불러올 내용을 표시할 영역 -->
-            <div id="customization-area_psy">
-                <div id="customization-save_kes">
-                    <div class="custom-buttons_psy">
-                        <button class="cloud-btn_psy" data-page_psy="color">
-                            <p>Color</P>
-                        </button>
-                        <button class="cloud-btn_psy" data-page_psy="logo">
-                            <p>Logo</P></button>
-                        <button class="cloud-btn_psy" data-page_psy="thickness">
-                            <p>Thickness</P></button>
-                        <button class="cloud-btn_psy" data-page_psy="sticker">
-                            <p>Sticker</P>
-                        </button>
+             <div class="right_container_psy">
+                <div id="customization-area_psy">
+                    <div id="customization-save_kes">
+                        <div class="custom-buttons_psy">
+                            <button class="cloud-btn_psy" data-page_psy="color">
+                                <p>Color</P>
+                            </button>
+                            <button class="cloud-btn_psy" data-page_psy="logo">
+                                <p>Logo</P></button>
+                            <button class="cloud-btn_psy" data-page_psy="thickness">
+                                <p>Thickness</P></button>
+                            <button class="cloud-btn_psy" data-page_psy="sticker">
+                                <p>Sticker</P>
+                            </button>
+                        </div>
+                        <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
+                            <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
+                            <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
+                        </form>
                     </div>
-                    <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
-                        {% csrf_token %}
-                        <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
-                        <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
-                        <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
-                        <button type="button" onclick="prepareAndSubmitForm_kes()" class="custom_save_btn_psy">Next</button>
-                    </form>
+                    <div id="customization-color_kes">
+                        {% include "diaries/pages/color.html" %}
+                    </div>
+                    <div id="customization-logo_kes">
+                        {% include "diaries/pages/logo.html" %}
+                    </div>
+                    <div id="customization-sticker_kes">
+                        {% include "diaries/pages/sticker.html" %}
+                    </div>
+                    <div id="customization-thickness_kes">
+                        {% include "diaries/pages/thickness.html" %}
+                    </div>
                 </div>
-                <div id="customization-color_kes">
-                    {% include "diaries/pages/color.html" %}
-                </div>
-                <div id="customization-logo_kes">
-                    {% include "diaries/pages/logo.html" %}
-                </div>
-                <div id="customization-sticker_kes">
-                    {% include "diaries/pages/sticker.html" %}
-                </div>
-                <div id="customization-thickness_kes">
-                    {% include "diaries/pages/thickness.html" %}
-                </div>
-            </div>
+                <button type="button" onclick="prepareAndSubmitForm_kes()" class="custom_save_btn_psy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                    </svg>
+                </button>
+             </div>
         </div>
-
     </div>
 
     
