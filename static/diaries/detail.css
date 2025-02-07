@@ -3,8 +3,6 @@
     padding: 40px;
     gap: 25px;
     background-color: var(--background);
-    height: calc(95vh - 150px);
-    overflow-y: auto;
 }
 
 .create_diary_left_container_psy {
@@ -15,6 +13,10 @@
     flex-direction: column;
     gap: 20px;
     min-width: 0;
+}
+
+.first_right_container_psy{
+    padding-top: 30px;
 }
 
 .create_diary_left_container_psy img {
@@ -63,6 +65,12 @@
     font-family: 'Gravitas One';
 }
 
+.diary_letter_date_psy{
+    font-size: 14px;
+    color: #5c6552;
+    font-family: 'Gravitas One'
+}
+
 .second_third_container_psy {
     display: flex;
     gap: 20px;
@@ -93,6 +101,7 @@
     flex: 1;
     display: grid;
     align-content: space-around;
+    gap: 20px;
 }
 
 .diary_content_tag_psy {
@@ -115,29 +124,12 @@
 
 }
 
-.friend_tag_item_psy label {
-    display: inline-flex;
-    align-items: center;
-    background-color: #888d724d;
-    padding: 2px 5px;
-    margin: 2px;
-    border-radius: 5px;
-    font-family: 'Gravitas One';
-    color: #5c6552;
-    font-size: 10px;
-    cursor: pointer;
-}
-
 .friend_tag_item_psy span {
     font-family: 'Gravitas One';
     color: #5c6552;
     font-size: 14px;
+    margin-right: 5px;
 }
-
-.friend_tag_item_psy label.selected{
-    background-color: #888D72;
-}
-
 
 .diary_map_psy {
     flex: 1;
@@ -176,4 +168,20 @@ select {
     align-items: center;
     gap: 8px;
     margin-bottom: 4px;
+}
+
+.detail_btn_psy{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.diary_save_ksy, .diary_delete_psy {
+    font-size: 14px;
+    border: 3px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+    padding: 10px;
+    font-family: 'Gravitas One';
+    color: #5c6552;
 }

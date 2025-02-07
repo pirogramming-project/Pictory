@@ -21,7 +21,7 @@
                         <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
                     </div>
                     <div class="diary_date_psy">
-                        <h1 class="diary_letter_psy">o Date: {{ diary.date }}</h1>
+                        <h1 class="diary_letter_date_psy">o Date: {{ diary.date }}</h1>
                         {{ form.date }}
                     </div>
                 </div>
@@ -44,6 +44,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                            <div></div>
                         </div>
                     </div>
     
@@ -53,8 +54,7 @@
                             {{ form.weather }}
                         </div>
                         <div class="diary_emotion_psy">
-                            <h1 class="diary_letter_psy">o Emotion</h1>
-                            <span>{{ diary.emotion }}점</span>
+                            <h1 class="diary_letter_psy">o Emotion: {{ diary.emotion }}</h1>
                         </div>
                         <div class="diary_map_psy">
                             <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
