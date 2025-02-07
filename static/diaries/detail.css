@@ -43,6 +43,7 @@
     border-radius: 8px;
     resize: vertical;
     background-color: var(--background);
+    vertical-align: middle;
     
 }
 
@@ -97,6 +98,15 @@
     background-color: var(--background);
 }
 
+.diary_weather_psy svg,
+.diary_emotion_psy svg {
+    width: 25px; 
+    height: 25px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+
 .diary_tag_psy {
     flex: 1;
     display: grid;
@@ -125,7 +135,6 @@
 }
 
 .friend_tag_item_psy span {
-    font-family: 'Gravitas One';
     color: #5c6552;
     font-size: 14px;
     margin-right: 5px;
