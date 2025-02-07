@@ -50,8 +50,7 @@
     
                     <div class="third_line_psy">
                         <div class="diary_weather_psy">
-                            <h1 class="diary_letter_psy">o Weather: {{ diary.get_weather_display }}</h1>
-                            {{ form.weather }}
+                            <h1 class="diary_letter_psy">o Weather: {{ weather_svg|safe }}</h1>
                         </div>
                         <div class="diary_emotion_psy">
                             <h1 class="diary_letter_psy">o Emotion: {{ emotion_svg|safe }}</h1>
