@@ -1,6 +1,6 @@
 .map_container_ksy {
     flex: 1.5;
-    height: calc(100% - 100px);
+    height: 75vh;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -80,9 +80,10 @@
 .community-page_ksy .base_content-scroll_ksy {
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-top: 30px;
 }
 .diary_map_content_letter_ksy {
+    height: 75vh;
     padding: 20px;
     box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.25);
     gap: 35px;
@@ -90,7 +91,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: calc(100% - 100px);
     background-color: var(--content_color);
     flex: 1;
 }
@@ -113,8 +113,8 @@
 
 .map_diary-list_ljs {
     flex: 1;
-    height: calc(100% - 100px);
     background-color: #888d72b1;
+    height: 75vh;
     padding: 20px;
     overflow-y: auto;
     display: none;

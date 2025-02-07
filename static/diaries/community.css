@@ -1,5 +1,4 @@
 .community-container_ksy {
-    height: calc(95vh - 150px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,9 +64,7 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    height: calc(50vh - 150px);
-    overflow-y: auto; 
+    padding: 20px; 
 }
 
 .community_photo-grid_ksy {

@@ -3,8 +3,6 @@
     padding: 40px;
     gap: 25px;
     background-color: var(--background);
-    height: calc(95vh - 150px);
-    overflow-y: auto;
 }
 
 .create_diary_left_container_psy {

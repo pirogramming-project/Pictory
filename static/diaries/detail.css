@@ -1,4 +1,7 @@
 .create_diary_container_ksy {
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
     display: flex;
     padding: 40px;
     gap: 25px;

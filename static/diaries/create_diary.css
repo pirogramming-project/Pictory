@@ -1,11 +1,10 @@
 .create_diary_container_ksy {
+    height: 100vh;
     display: flex;
     padding: 40px;
     padding-left: 0;
     gap: 25px;
     background-color: var(--background);
-    height: calc(95vh - 150px);
-    overflow-y: auto;
 }
 
 .create_diary_left_container_psy {
