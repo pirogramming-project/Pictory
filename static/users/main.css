@@ -1,8 +1,8 @@
 .main-container_psy {
+    height: 80vh;
+    overflow-y: auto;
     background-color: #FFF9EA;
     display: flex;
-    height: calc(100vh - 150px);
-    overflow-y: auto;
 }
 
 .calendar-wrapper_psy {

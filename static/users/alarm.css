@@ -1,12 +1,12 @@
 .alarm_container_ksy {
+    min-height: calc(110vh - 160px);
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 80%;
     margin: 55px auto;
     padding: 1rem;
-    height: calc(100% - 20px);
-    overflow-y: auto;
+
 }
 
 /* 알림 아이템 컨테이너 */

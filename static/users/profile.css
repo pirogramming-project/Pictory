@@ -2,8 +2,6 @@
     width: 90%;
     margin: 0 auto;
     padding: 30px;
-    height: calc(100vh - 160px);
-    overflow-y: auto;
     background-color: #fdf8ec;
 }
 

@@ -1,10 +1,10 @@
 .photo-type-container_psy {
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     top: 25%;
-    padding-top: 50px;
 }
 
 .photo-type_psy {
