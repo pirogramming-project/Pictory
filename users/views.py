@@ -122,7 +122,7 @@ def kakao_callback(request):
 
     # 5. 로그인 처리
     auth_login(request, user)
-    return redirect("/")  # 로그인 후 이동할 페이지
+    return redirect("users:main")  # 로그인 후 이동할 페이지
 
 
 # 네이버 로그인 페이지로 리디렉션하는 함수
@@ -206,7 +206,7 @@ def handle_naver_user(request, user_info):
     #로그인 처리
     auth_login(request, user)
     #main페이지 생기면 거기로 주소 바뀔 예정
-    return redirect('/')
+    return redirect('users:main')
 
 
 
@@ -228,9 +228,9 @@ def logout_view(request):
     if request.method == "POST":
         logout(request)
 
-    return redirect('/')
+    return redirect('users:main')
 
-  
+@login_required
 def main(request):
     return render(request, 'users/main.html')
 

@@ -4,7 +4,7 @@ from .views import *
 app_name = 'users'
 
 urlpatterns = [
-    path('', login_view , name='login'),
+    path('login/', login_view , name='login'),
     path('signup/', signup , name='signup'),
     path('naver/login/', naver_login, name='naver_login'),
     path('naver/login/', naver_login, name='naver_login'),  
@@ -12,6 +12,7 @@ urlpatterns = [
     path('login_kakao/', kakao_login, name='login_kakao'),
     path('accounts/kakao/callback/', kakao_callback, name='login_kakao_callback'),
     path('logout/', logout_view, name='logout'),
+    path('', main , name='main'),
     path('main/', main , name='main'),
     path('profile/', profile, name='profile'),  
     path('alarm/', alarm, name='alarm'), 
