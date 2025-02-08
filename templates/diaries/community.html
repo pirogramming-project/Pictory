@@ -67,13 +67,15 @@
             modalTitle.textContent = title;             
             modalTags.textContent = tags;                          
             
-            modal.style.display = 'flex';         
+            modal.style.display = 'flex';   
+            document.body.style.overflow = 'hidden';      
         }          
 
 
     function hideDetail_ksy() {             
         document.body.classList.remove('community_detail-page_ksy');             
-        document.getElementById('community_detailModal_ksy').style.display = 'none';         
+        document.getElementById('community_detailModal_ksy').style.display = 'none';  
+        document.body.style.overflow = 'auto';       
     }     
 
     var InitialResultContainerHTML;

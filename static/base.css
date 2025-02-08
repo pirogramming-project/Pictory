@@ -91,10 +91,11 @@
 
 
 .base_content-area_ksy {
+    min-height: calc(115vh - 160px);
+    height: auto;
     padding-top: 100px;
     width: 100%;
     background-color: var(--background);
-    height: 100vh;
     border-left: 1px solid #e0e0e0;
     border-right: 1px solid #e0e0e0;
     display: flex;
@@ -102,7 +103,7 @@
     z-index: 5;
     margin: auto;
     position: relative;
-    overflow: hidden;
+    padding-bottom: 60px;
 }
 
 /* 헤더 영역 */
@@ -123,7 +124,7 @@
 .base_content-scroll_ksy {
     margin: 0 200px;
     flex: 1;
-    height: calc(100vh - 100px);
+    
 }
 
 .base_logo_title_desktop_ksy {
@@ -309,7 +310,7 @@
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    bottom: 0;
+    margin-top: auto;
 }
 
 .base_content-area_ksy::before {
