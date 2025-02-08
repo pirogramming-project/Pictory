@@ -87,3 +87,10 @@
     margin-left: 5px;
     text-decoration: underline;
 }
+
+@media (max-width: 414px) {
+    .signup_wrapper_psy {
+        width: 80%;
+    }
+  }
+  

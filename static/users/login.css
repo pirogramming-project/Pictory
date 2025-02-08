@@ -114,3 +114,10 @@
     height: 40px;
 }
 
+
+@media (max-width: 414px) {
+    .login_wrapper_psy {
+        width: 80%;
+    }
+  }
+  
