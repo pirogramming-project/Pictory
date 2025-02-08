@@ -1,0 +1,192 @@
+.map_container_ksy {
+    flex: 1.5;
+    height: 75vh;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.map_search-container_ksy {
+    margin-top: 20px;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.map_search-form_ksy {
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 2px solid var(--content_color);
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 3px 10px;
+}
+
+.map_search-input_ksy {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 8px;
+}
+.map_search-input_ksy::placeholder{
+    color: var(--content_color);
+}
+
+.map_search-button-container_ksy {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.map_search-button_ksy {
+    cursor: pointer;
+    color: var(--content_color);
+}
+
+.map_search-button-container_ksy:hover .map_search-button_ksy {
+    color: var(--title_color)
+}
+
+.map_user_ksy {
+    width: 100%;
+    height: 500px; 
+    border-radius: 10px;
+    background-color: #B9E2FA;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), inset -2px 0px 10px rgba(121, 201, 246, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* 지도 들어가는 div입니다. 예쁘게 바꿔주세요o^^o ㅎㅎ */
+.map_map-container_kes {
+    height: 100%;
+}
+
+.diary_map_introduce_ksy {
+    color: black;
+    font-family: "Gravitas One", serif;
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+.community-page_ksy .base_content-scroll_ksy {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.diary_map_content_letter_ksy {
+    height: 75vh;
+    padding: 20px;
+    box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    gap: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--content_color);
+    flex: 1;
+}
+.diary_map_description_ksy {
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.719);
+    font-size: 1.5rem;
+}
+.diary_map_left_title_ksy {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.diary_map_second_content_ksy {
+    padding: 15px;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.map_diary-list_ljs {
+    flex: 1;
+    background-color: #888d72b1;
+    height: 75vh;
+    padding: 20px;
+    overflow-y: auto;
+    display: none;
+    position: relative;
+}
+
+.map_diary-list_container_ljs {
+    list-style: none;
+    padding: 25px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.map_diary-list_item_ljs {
+    padding: 10px;
+}
+
+.map_diary-list_location_item_ljs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.393); 
+    padding-bottom: 8px;  
+    padding: 1px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.map_diary-list_location_icon_ljs {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.map_diary-list_link_ljs {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.map_diary-list_title_ljs {
+    display: block;
+    color: rgba(0, 0, 0, 0.611);
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+/* 닫기 버튼 스타일 수정 */
+.map_diary-list_close-btn_ljs {
+    position: absolute;
+    top: 10px;         
+    right: 10px;       
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;      
+    width: 30px;       
+    height: 30px;      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;     
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.diary_map_location_icon_ksy {
+    fill: black;
+    width: 20px;
+    height: 20px;
+}
+
+.diary_map_location_map_ksy {
+    color: black;
+    font-size: 1.5rem;
+}

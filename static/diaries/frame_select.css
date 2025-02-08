@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.frame-container_psy {
+    height: 80vh;
+    width: 100%;
+    padding: 30px;
+    
+}
+
+.frame-select-text_psy {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2rem;
+    color: var(--title_color);
+    font-family: 'Gravitas One';
+
+}
+
+.frame-btn_psy {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 🟢 4개씩 가로 배치 */
+    gap: 20px;
+    max-width: 100%;
+}
+
+.frame-btn_psy button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.frame-btn_psy button img {
+    width: 100%;
+    height: auto;
+    max-height: 430px;
+    object-fit: contain;
+}
+
+.frame-btn_psy button:hover {
+    transform: scale(1.05);
+}
+
+.frame-btn4_psy img {
+    transform: scale(0.7);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .frame-btn_psy {
+        grid-template-columns: 1fr; 
+        max-width: 400px;
+    }
+    
+    .frame-select-text_psy {
+        font-size: 1.2rem;
+    }
+}

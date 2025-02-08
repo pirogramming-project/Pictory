@@ -1,0 +1,55 @@
+.photo-type-container_psy {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 25%;
+}
+
+.photo-type_psy {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: 8%; 
+    width: 80%; 
+}
+
+.select-btn_psy {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+.select-btn1_psy, .select-btn2_psy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%; 
+    height: 18%;
+    min-width: 200px;
+    min-height: 140px;
+}
+
+.select-btn1_psy img, .select-btn2_psy img {
+    position: absolute;
+    width: 110%;
+    height: 180%;
+}
+
+.select-text {
+    position: absolute;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--title_color);
+    text-align: center;
+    line-height: 1.4;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: 'Gravitas One';
+}

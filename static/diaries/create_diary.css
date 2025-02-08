@@ -1,0 +1,237 @@
+.create_diary_container_ksy {
+    min-height: calc(115vh - 160px);
+    display: flex;
+    padding: 40px;
+    padding-left: 0;
+    gap: 25px;
+    background-color: var(--background);
+}
+
+.create_diary_left_container_psy {
+    flex: 3;
+    padding: 40px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.create_diary_left_container_psy img {
+    width: 100%;
+    height: auto;
+}
+
+.create_diary_right_container_psy {
+    flex: 7;
+    background-color: var(--background);
+    min-width: 0;
+}
+
+.create_diary_form_psy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.first_right_container_psy {
+    background-color: var(--background);
+    padding: 20px;
+    border: 3px solid #5c6552;
+    border-radius: 5px;
+    margin-top: 35px;
+}
+
+.first_line_psy, .second_line_psy {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.diary_title_psy, .diary_emotion_psy,
+.diary_date_psy, .diary_weather_psy {
+    flex: 1;
+}
+
+.diary_letter_psy {
+    font-size: 14px;
+    color: #5c6552;
+    margin-bottom: 8px;
+    font-family: 'Gravitas One';
+}
+
+.third_line_psy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.diary_tag_psy {
+    flex: 1;
+}
+
+.diary_content_tag_psy {
+    margin-bottom: 20px;
+    pointer-events: none;
+}
+
+.content_tag_psy {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    pointer-events: auto; 
+
+}
+
+.friend_tag_item_psy label {
+    display: inline-flex;
+    align-items: center;
+    background-color: #888d724d;
+    padding: 2px 5px;
+    margin: 2px;
+    border-radius: 5px;
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.friend_tag_item_psy.selected label{
+    background-color: #5c6552;
+    color: var(--background);
+}
+
+
+.diary_friend_psy{
+    border: 2px solid #5c6552;
+    padding: 10px;
+    height: calc(22vh - -5px);
+    overflow-y: auto;
+
+}
+
+.diary_map_psy {
+    flex: 1;
+}
+
+.real_location_psy {
+    margin-top: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    height: 200px; 
+    width: 100%;
+}
+
+.fourth_line_psy textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 16px;
+    border: 3px solid #5c6552;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: var(--background);
+}
+
+.diary_save_psy {
+    align-self: flex-end;
+    padding: 12px 24px;
+    color: #5c6552;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.diary_save_psy svg {
+   width: 32px;
+   height: 32px;
+}
+
+.diary_save_psy svg path {
+    stroke-width: 3; 
+}
+
+
+input[type="text"], 
+input[type="date"], 
+select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+}
+
+.create_diary_usertag_item_kes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+/* 감정 임시 확인용 css */
+.emotion-choice {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.emotion-choice input[type="radio"] {
+    display: none; /* 기본 라디오 버튼 숨기기 */
+}
+
+.emotion-choice label {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.emotion-choice label svg {
+    width: 32px;
+    height: 32px;
+    fill: #5c6552;
+}
+
+/* 선택된 SVG를 강조 */
+.emotion-choice input[type="radio"]:checked + label {
+    border-color: #5c6552; 
+    background-color: #f0f8ff;
+}
+
+/* 날씨 임시 확인용 */
+.weather-choice {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.weather-choice input[type="radio"] {
+    display: none; /* 기본 라디오 버튼 숨김 */
+}
+
+.weather-choice label {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.weather-choice label svg {
+    width: 32px;
+    height: 32px;
+    fill: #5c6552;  /* 감정과 동일한 색상 */
+}
+
+/* 선택된 날씨 강조 */
+.weather-choice input[type="radio"]:checked + label {
+    border-color: #5c6552;
+    background-color: #f0f8ff;
+}

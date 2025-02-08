@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{KAKAO_MAP_APPKEY_JS}}&libraries=services"></script>
+<link rel="stylesheet" href="{% static 'diaries/create_diary.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="create_diary_container_ksy">
+
+        <div class="create_diary_left_container_psy">
+            <img src="{{related_frame_img.url}}">
+        </div>
+
+        <div class="create_diary_right_container_psy">
+            <form class="create_diary_form_psy" method="post" action="{% url 'diaries:create_diary' related_frame_id %}">
+                {% csrf_token %}
+                <input type="hidden" id="create_diary_real_address" name="place_address">
+                <div class="first_right_container_psy">
+                    <div class="first_line_psy">
+                        <div class="diary_title_psy">
+                            <h1 class="diary_letter_psy">o Title</h1>
+                            {{ form.title }}
+                        </div>
+                        <div class="diary_date_psy">
+                            <h1 class="diary_letter_psy">o Date</h1>
+                            {{ form.date }}
+                        </div>
+                    </div>
+    
+                    <div class="second_line_psy">
+                        
+                        <div class="diary_weather_psy">
+                            <h1 class="diary_letter_psy">o Weather</h1>
+                            {{ form.weather|safe }}
+                        </div>
+                        <div class="diary_emotion_psy">
+                            <h1 class="diary_letter_psy">o Emotion</h1>
+                            {{ form.emotion|safe }}
+                        </div>
+                    </div>
+    
+                    <div class="third_line_psy">
+    
+                        <div class="diary_tag_psy">
+                            <div class="diary_content_tag_psy">
+                                <h1 class="diary_letter_psy">o Tag</h1>
+                                <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" required>
+                            </div>
+                            <div class="diary_friend_psy">
+                                <h1 class="diary_letter_psy">o Friend Tag</h1>
+                                {% comment %} 수정한 부분 {% endcomment %}
+                                {% for user in neighbors %} 
+                                    <div class="friend_tag_item_psy">
+                                        <input type="checkbox" name="user_tags" value="{{ user.login_id }}" id="friend_{{ user.login_id }}">
+                                        <label for="friend_{{ user.login_id }}">{{ user.nickname }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+    
+                        <div class="diary_map_psy">
+                            <h1 class="diary_letter_psy">o Location</h1>
+                            {{ form.place }}
+                            <div class="real_location_psy"></div>
+                        </div>
+    
+                    </div>
+                </div>
+                
+                <div class="fourth_line_psy">
+                    <h1 class="diary_letter_psy">o Content</h1>
+                    {{ form.content }}
+                </div>
+
+                <button type="submit" class="diary_save_psy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                    </svg>
+                </button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 모든 친구 태그 요소를 가져옴
+            let friendTags = document.querySelectorAll(".friend_tag_item_psy");
+    
+            friendTags.forEach(function(tagItem) {
+                let checkbox = tagItem.querySelector("input[type='checkbox']");
+                
+                // 초기 상태 설정 (체크되었을 경우 색상 변경)
+                if (checkbox.checked) {
+                    tagItem.classList.add("selected");
+                }
+    
+                // 클릭 이벤트 추가
+                tagItem.addEventListener("click", function() {
+                    checkbox.checked = !checkbox.checked; // 체크 상태 토글
+    
+                    if (checkbox.checked) {
+                        tagItem.classList.add("selected"); // 선택 시 색상 변경
+                    } else {
+                        tagItem.classList.remove("selected"); // 선택 취소 시 원래 색으로 변경
+                    }
+                });
+            });
+        });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            let inputField = document.querySelector("#id_place");
+            
+            if (inputField) {
+                inputField.addEventListener("change", function() {
+                    if (this.value) {
+                        placeSearch(this.value);
+                    }
+                });
+            }
+        });
+
+
+        // 1. 지도 초기화
+        const mapContainer = document.querySelector('.real_location_psy');
+        const map = new kakao.maps.Map(mapContainer, {
+          center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+          level: 6, // 지도 확대 레벨
+        });
+    
+        const geocoder = new kakao.maps.services.Geocoder(); // 주소 검색 객체
+        const markers = {}; // 마커 저장 객체
+    
+        // 장소 검색 객체를 생성합니다
+        var ps = new kakao.maps.services.Places(); 
+    
+        function placeSearch(keyword) {
+          // 키워드 검색
+          ps.keywordSearch(keyword, placesSearchCB); 
+        }
+    
+        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        function placesSearchCB (data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+              targetPlace = data[0];  // 가장 가능성 높은 장소를 타겟으로 설정
+              console.log(targetPlace['address_name'])  // 주소 가져오기
+
+                addLocation(targetPlace['address_name']);
+            } else {
+              alert("장소를 찾을 수 없습니다.")
+            }
+        }
+
+        var marker;
+        // 2. 마커 추가 함수
+        function addLocation(address) {
+          const input = address;
+    
+          if (!input) {
+            alert('장소를 찾을 수 없습니다.');
+            return;
+          }
+    
+          // 2. addressSearch : 주소 -> 좌표 변환해주는 함수
+          geocoder.addressSearch(input, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+              // 마커를 생성합니다
+              if (marker) {
+                  marker.setMap(null);  // 이전 마커 제거
+              }
+                marker = new kakao.maps.Marker({
+                    position: coords
+                });
+                // 마커가 지도 위에 표시되도록 설정합니다
+                marker.setMap(map);
+    
+              // 지도 중심 이동
+              map.panTo(coords);
+                
+              // 폼 제출 준비
+              const placeAddressInput = document.getElementById("create_diary_real_address");
+              placeAddressInput.value = address;
+            } else {
+              alert('장소를 찾을 수 없습니다.');
+            }
+          });
+        }
+
+      </script>
+{% endblock %}

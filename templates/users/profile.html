@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="profile-wrapper_psy">
+
+        <div class="profile_psy">
+            <div class="profile-img_psy">
+                <img src="{{ user.profile_photo.url }}" alt="프로필 사진" class="profile-image_psy"> 
+
+                 <!-- 숨겨진 파일임임 -->
+                <form id="profileUploadForm" action="{% url 'users:update_profile_photo' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" id="profileInput" name="profile_photo" accept="image/*" style="display: none;">
+                </form>
+
+                <button class="profile_edit_photo_ksy" onclick="document.getElementById('profileInput').click();">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                    </svg>
+                </button> 
+            </div>
+            <div class="profile-section_psy">   
+                <div class="profile-info_psy">
+                    <div class="id-box_psy">@{{ request.user.nickname }}</div>
+                    <div class="visitor-box_psy">이웃 {{ friend_count }}명 &gt; </div>
+                </div>
+    
+                <div class="button-group_psy">
+                    <button class="action-btn_psy" onclick="location.href='{% url 'diaries:select_photo_type' %}'">
+                        일기 쓰기
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                        </svg>
+                    </button>
+                    <button class="action-btn_psy" onclick="location.href='{% url 'diaries:mydiaries' %}'">일기 보러가기</button>
+                    <button class="action-btn_psy" onclick="location.href=''">총 일기 {{ diary_count }}개</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile_second_container_ksy">
+            <div class="profile_badges_content_ksy">
+                <h3 class="badges-title_psy">내가 달성한 배지</h3>
+                <hr class="bages_line_ksy">
+                <div class="badges-section_psy">
+                    <div class="badges-container_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="graph-section_psy">
+                <h3 class="graph-title_psy">
+                    <span>나의 감정 그래프</span>
+                </h3>
+                <hr class="bages_line_ksy">
+                <div class="graph-container_psy">
+                    {% if graph %}
+                        <img src="data:image/png;base64,{{ graph }}" alt="감정 그래프" class="emotion-graph_psy">
+                    {% else %}
+                        <p>최근 감정 데이터가 없습니다.</p>
+                    {% endif %}
+                    <div class="graph-placeholder_psy"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("profileInput").addEventListener("change", function() {
+            document.getElementById("profileUploadForm").submit();
+        });
+    </script>
+{% endblock %}

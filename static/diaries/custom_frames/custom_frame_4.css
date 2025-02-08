@@ -1,0 +1,16 @@
+
+#pictory-frame_psy {
+    width: 250px;
+    height: 300px;
+}
+
+.image-slots-container_kes {
+    grid-template-columns: repeat(1, 1fr);
+    width: 210px;
+    height: 250px;
+}
+
+.image-slot_psy {
+    width: 210px;
+    height: 250px;
+}
