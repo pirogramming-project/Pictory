@@ -232,3 +232,26 @@ select {
     border-color: #5c6552;
     background-color: rgba(0, 0, 0, 0.10);
 }
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+        padding: 0;
+        padding-left: 0;
+        margin: 20px
+    }
+
+    input[type="text"] {
+        font-size: 9px;
+    }
+    
+    .real_location_psy {
+        height: 215px;
+    }
+
+    .emotion-choice label, .weather-choice label {
+        padding: 1px;
+    }
+  }
+  
+

@@ -253,8 +253,9 @@ select {
     }
 
     .emotion-choice label, .weather-choice label {
-        display: inline;
-        padding: 0px;
+        padding: 1px;
+        border-color: unset;
     }
+
   }
   

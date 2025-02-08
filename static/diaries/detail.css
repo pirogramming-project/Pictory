@@ -197,3 +197,27 @@ select {
     font-family: 'Gravitas One';
     color: #5c6552;
 }
+
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+    }
+
+    .second_third_container_psy {
+        display: block;
+    }
+    
+    .first_line_psy {
+        display: block;
+    }
+    
+    .diary_tag_psy,.third_line_psy  {
+        gap: 10px;
+    }
+
+    .diary_content_psy {
+        height: calc(22vh - -5px);
+    }
+  }
+  
