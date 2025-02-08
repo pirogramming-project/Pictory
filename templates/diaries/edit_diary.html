@@ -105,6 +105,10 @@
                 }
             });
         });
+
+        // 페이지 로드 시 지도 핀 찍기
+        const placeName = document.getElementById("id_place").value;
+        placeSearch(placeName);
     });
     
     document.addEventListener("DOMContentLoaded", function() {
