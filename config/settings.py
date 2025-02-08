@@ -122,7 +122,7 @@ USE_TZ = False  # False 로 설정해야 DB에 변경 된 TIME_ZONE 이 반영 �
 import os
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/home/ubuntu/Pictory/staticfiles/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # 전역 정적 파일 디렉토리
 ]
