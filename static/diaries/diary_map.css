@@ -30,7 +30,6 @@
 }
 
 .map_search-input_ksy {
-    font-family: var(--main_font);
     width: 100%;
     border: none;
     outline: none;

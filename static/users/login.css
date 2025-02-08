@@ -91,6 +91,7 @@
 
 .login_social_container_psy {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -105,20 +106,11 @@
 }
 
 .login_kakaoSocial_button_psy {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background-color: #FEE500;
     cursor: pointer;
 }
 
 .login_naverSocial_img_psy {
-    width: 40px;
+    width: 150px;
     height: 40px;
-}
-
-.login_kakaoSocial_button_psy {
-    background-color: #FAE100;
 }
 
