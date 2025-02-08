@@ -1,0 +1,176 @@
+.profile-wrapper_psy {
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fdf8ec;
+}
+
+.profile_psy {
+    background: rgba(136, 141, 114, 0.30);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.profile-img_psy {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-image_psy {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #515738;
+    overflow: hidden;
+}
+
+.profile-image_psy img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile_edit_photo_ksy {
+    position: absolute;
+    bottom: 0;
+    left: 90px;
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-section_psy {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.id-box_psy {
+    margin-bottom: 15px;
+    color: #515738;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.visitor-box_psy {
+    color: #515738;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.button-group_psy {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.action-btn_psy {
+    border: 1px solid var(--title_color);
+    color: var(--title_color);
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn_psy:hover {
+    background-color: #515738;
+    color: #e8e6da;
+}
+
+.badges-section_psy {
+    flex: 1;
+    background: rgba(136, 141, 114, 0.30);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.badges-title_psy {
+    font-family: "Gravitas One", serif;
+    font-weight: bold;
+    color: var(--title_color);
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+.bages_line_ksy {
+    border: 0.5px solid var(--content_color);
+    margin-bottom: 10px;
+}
+.badges-container_psy {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.badge-icon_psy {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #515738;
+}
+
+.graph-section_psy {
+    flex: 2;
+    border-radius: 10px;
+}
+
+.graph-title_psy {
+    font-family: "Gravitas One", serif;
+    font-weight: bold;
+    color: #515738;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.graph-container_psy {
+    background: rgba(136, 141, 114, 0.30);
+    border-radius: 10px;
+    padding: 15px;
+}
+.emotion-graph_psy {
+    width: 100%;
+    height: 100%;
+}
+
+/* 프로필 영역 Flexbox 레이아웃 */
+.profile_psy {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.profile_second_container_ksy {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+
+@media (max-width: 768px) {
+    .profile_psy {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-section_psy {
+        margin-left: 0;
+        align-items: center;
+    }
+
+    .button-group_psy {
+        justify-content: center;
+    }
+}

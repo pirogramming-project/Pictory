@@ -1,0 +1,329 @@
+.gravitas-one-regular {
+    font-family: "Gravitas One", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.base_body_ksy {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* 로고 */
+.base_logo_desktop_ksy {
+    margin-right: 60px;
+}
+
+.base_logo_title_desktop_ksy {
+    color: var(--title_color);
+    font-family: "Gravitas One", serif;
+    font-size: 2.5rem;
+}
+.base_button_icon_ksy {
+    display: flex;
+    gap: 20px;
+}
+/* 데스크톱 네비게이션 */
+.base_desktop-nav_ksy {
+    color: var(--title_color);
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+.base_name_nav_ksy {
+    margin-top: 3px;
+    margin-right: 2px;
+    font-weight: bold;
+    color: var(--title_color);
+    font-size: 1.5rem;
+}
+.base_li_ksy {
+    display: flex;
+}
+
+.base_desktop-nav-item_ksy {
+    font-family: var(--main_font);
+    color: var(--title_color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* 우측 아이콘 영역 */
+.base_header-icons_ksy {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.base_icon-button_ksy {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.base_button_alarm_ksy {
+    position: relative;
+}
+.base_alarm_count_kes {
+    color: white;
+    font-size: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: -3px;
+    top: -3px;
+}
+
+
+.base_content-area_ksy {
+    min-height: calc(115vh - 160px);
+    height: auto;
+    padding-top: 100px;
+    width: 100%;
+    background-color: var(--background);
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+    margin: auto;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+/* 헤더 영역 */
+.base_header_ksy {
+    background-color: var(--background);
+    height: 100px;
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    position: fixed; /* 헤더 고정 */
+    width: 100%;
+    z-index: 100; 
+}
+
+/* 스크롤 가능한 컨텐츠 영역 */
+.base_content-scroll_ksy {
+    margin: 0 200px;
+    flex: 1;
+    
+}
+
+.base_logo_title_desktop_ksy {
+    color: var(--title_color);
+    font-family: "Gravitas One", serif;
+    font-size: 4rem;
+}
+.base_menu-button_ksy {
+    display: none;
+}
+.base_logo_ksy {
+    display: none;
+}
+.base_desktop-nav-item_logout_ksy {
+    text-decoration: underline;
+    padding-bottom: 2px; 
+    font-family: var(--main_font);
+    color: var(--title_color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* 모바일용 햄버거바 */
+@media screen and (max-width: 768px) {
+    .base_button_icon_ksy {
+        display: none;
+    }
+    /* 로고 */
+    .base_logo_title_ksy {
+        color: var(--title_color);
+        font-family: "Gravitas One", serif;
+        font-size: 5rem;
+    }
+    /* 햄버거 메뉴 버튼 */
+    .base_menu-button_ksy {
+        display: none;
+        position: absolute; 
+        left: 20px; 
+        top: 35px; 
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 20;
+    }
+
+    .base_menu-button_ksy span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: var(--title_color);
+        transition: 0.3s;
+    }
+
+    /* X(닫기) 버튼 */
+    .base_close-button_ksy {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: none;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--title_color);
+        z-index: 20;
+    }
+    .base_menu-button_ksy {
+        display: flex;
+    }
+
+    .base_side-nav_ksy {
+        width: 250px;
+        height: 100vh;
+        background-color: var(--background);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10), 0px -1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+        opacity: 0;
+        transform: translateX(-250px);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    /* 사이드바 활성화 상태 */
+    .base_side-nav_ksy.base_active_ksy {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* 프로필 영역 */
+    .base_profile_ksy {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* 프로필 이미지 */
+    .base_profile-image_ksy {
+        background-repeat: no-repeat;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-color: #ccc;
+        border: 2px solid #ddd;
+    }
+
+    /* 로그아웃 버튼 */
+    .base_logout_ksy {
+        font-family: var(--main_font);
+        font-size: 20px;
+        color: var(--content_color);
+        margin-top: 10px;
+    }
+
+    /* 메뉴 아이템 스타일 */
+    .base_menu-item_ksy {
+        font-family: "Gravitas One", serif;
+        position: relative;
+        width: 82%;
+        background-color: var(--background);
+        border: none;
+        font-size: 20px;
+        padding: 15px;
+        margin: 5px 0;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10), 0px -1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--title_color);
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .base_menu-item_ksy svg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    /* 사이드바가 열렸을 때 배경 투명도 적용 */
+    .base_content-area_ksy.base_active_opacity::before {
+        opacity: 0.8;
+    }
+    .base_background_div_ksy {
+        background-color: var(--background);
+    }
+    .base_desktop-nav_ksy {
+        display: none;
+    }
+    
+    .base_header-icons_ksy {
+        display: none;
+    }
+    
+    .base_menu-button_ksy {
+        display: flex;
+    }
+}
+
+/* 사이드바 기본 스타일 */
+.base_side-nav_ksy {
+    display: none;
+}
+
+/*footer*/
+.base_footer_ksy {
+    width: 100%;
+    height: 60px;
+    background-color: var(--title_color);
+    color: #fdf8ec;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+.base_content-area_ksy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+

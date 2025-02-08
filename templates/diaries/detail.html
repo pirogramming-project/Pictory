@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'diaries/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="create_diary_container_ksy">
+
+    <div class="create_diary_left_container_psy">
+        <img src="{{ diary.four_cut_photo.image_file.url }}" alt="사용자 업로드 사진">
+    </div>
+
+    <div class="create_diary_right_container_psy">
+        <form class="create_diary_form_psy" method="post" action="{% url 'diaries:edit_diary' diary.id %}">
+            {% csrf_token %}
+            <div class="first_right_container_psy">
+                <div class="first_line_psy">
+                    <div class="diary_title_psy">
+                        <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
+                    </div>
+                    <div class="diary_date_psy">
+                        <h1 class="diary_letter_date_psy">o Date: {{ diary.date }}</h1>
+                        {{ form.date }}
+                    </div>
+                </div>
+                <div class="second_third_container_psy">
+                    <div class="second_line_psy">
+                        <div class="diary_tag_psy">
+                            <div class="diary_content_tag_psy">
+                                <h1 class="diary_letter_psy">o Tag</h1>
+                                {% for tag in diary.tags.all %}
+                                <span>#{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="diary_friend_psy">
+                                <h1 class="diary_letter_psy">o Friend Tag</h1>
+                                <div class="friend_tag_item_psy">
+                                    {% for user_tag in user_tags %}
+                                        <span>@{{ user_tag.user.nickname }}</span>
+                                    {% empty %}
+                                        <span>태그된 친구가 없습니다.</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="third_line_psy">
+                        <div class="diary_weather_psy">
+                            <h1 class="diary_letter_psy">o Weather: {{ diary.get_weather_display }}</h1>
+                            {{ form.weather }}
+                        </div>
+                        <div class="diary_emotion_psy">
+                            <h1 class="diary_letter_psy">o Emotion: {{ diary.emotion }}</h1>
+                        </div>
+                        <div class="diary_map_psy">
+                            <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
+                            {{ form.place }}
+                            <div class="real_location_psy"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="second_right_container_psy">
+                <div class="diary_content_psy">
+                    <h1 class="diary_letter_psy">o Content
+                        <p>{{ diary.content }}</p>
+                    </h1>
+                </div>
+            </div>
+            <div class="detail_btn_psy">
+                <button type="button" class="diary_save_psy" onclick="location.href='{% url 'diaries:edit_diary' diary.id %}'">
+                    <span>Edit</span>
+                </button>
+                <button type="submit" class="diary_delete_psy" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='{% url 'diaries:delete_diary' diary.id %}'; }">
+                    <span>Delete</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

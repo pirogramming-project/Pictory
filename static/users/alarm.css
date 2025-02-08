@@ -1,0 +1,151 @@
+.alarm_container_ksy {
+    min-height: calc(110vh - 160px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+
+}
+
+/* 알림 아이템 컨테이너 */
+.alarm_item_container {
+    position: relative;
+    background-color: var(--title_color);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+/* 알림 메시지 내용(공통) */
+.alarm_message_kes {
+    color: white;
+    font-size: 20px;
+    padding-inline: 10px;
+}
+/* 읽은 알림(공통) */
+.alarm_read_kes {
+    background-color: gray;
+    opacity: 0.6;
+    pointer-events: none;   /* 클릭 불가 */
+}
+.alarm_read_kes button {
+    display: none;
+}
+/* 알림 온 시각(공통) */
+.alarm_time_kes {
+    color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 3px;
+}
+
+/* 알림창에서 친구수락 예/아니오 버튼 */
+.alarm_btn_yes_kes, .alarm_btn_no_kes {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+}
+.alarm_btn_yes_kes {
+    background-color: blue;
+}
+.alarm_btn_no_kes {
+    background-color: red;
+}
+/* 알림창에서 태그당했을 때 썸네일 이미지 */
+.alarm_img_thumbnail_kes {
+    width: 60px;
+    height: auto;
+
+}
+/* 알람이 없을 때 */
+.alarm_no_alarm {
+    display: flex;
+    font-size: 22px;
+    color: black;
+    justify-content: center;
+}
+
+.alarm_btn_ksy:hover {
+    background-color: #A4CEF7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.alarm_btn_ksy:last-child {
+    margin-bottom: 0;
+}
+
+.alarm_icon_wrapper_ksy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: .6rem;
+}
+
+.alarm_dot_container_ksy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-right: 7px;
+}
+
+.alarm_icon_ksy {
+    font-size: 1.2rem;
+}
+
+.alarm_dot_ksy {
+    width: 4px;
+    height: 4.5px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.alarm_text_ksy {
+    font-family: var(--main_font);
+    color: #333;
+    font-size: 23px;
+    line-height: 1.4;
+    flex: 1;
+    word-break: break-word;
+}
+
+.alarm_writable_item_ksy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #B5DAFF;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.alarm_writable_item_ksy:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.alarm_write_btn_ksy {
+    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10) inset, -2px -2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-family: var(--main_font);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    background-color: white;
+    color: #333;
+    border-radius: 20px;
+    font-size: 23px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.alarm_write_btn_ksy:hover {
+    background-color: #f5f5f5de;
+}

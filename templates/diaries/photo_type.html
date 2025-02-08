@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'diaries/photo_type.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="photo-type-container_psy">
+        <div class="photo-type_psy">
+            <div class="select-btn_psy">
+                <div class="select-btn1_psy" onclick="document.getElementById('photoInput').click();">
+                    <img src="{% static 'images/border.png' %}" alt="테두리 상자">
+                    <span class="select-text">UPLOAD</span>
+                </div>
+                <!--이 아래는 안보임 기능적 요소-->
+                <form id="uploadForm" action="{% url 'diaries:upload_photo' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" id="photoInput" name="photo" accept="image/*" style="display: none;">
+                </form>
+
+                <button class="select-btn2_psy" onclick="location.href='{% url 'diaries:select_frame' %}'">
+                    <img src="{% static 'images/border.png' %}" alt="테두리 상자">
+                    <span class="select-text">CUSTOM</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("photoInput").addEventListener("change", function() {
+            document.getElementById("uploadForm").submit();
+        });
+    </script>
+{% endblock %}
