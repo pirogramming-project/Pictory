@@ -15,60 +15,71 @@
     background-color: #fff9ea;
     border: 2px solid #5c6552;
     color: #515738;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
 }
+
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
     color: #515738;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
-    padding-inline: 10px;
+    padding-top: 10px;
+    padding-inline: 10px;;
 }
 
 .alarm_container_ksy a{
-    border: 1px solid #5c6552;
+    border: 2px solid #5c6552;
+    padding: 5px;
+    font-family: "Gravitas One", serif;
+    border-radius: 5px;
+
 }
 
 /* 읽은 알림(공통) */
 .alarm_read_kes {
-    background-color: gray;
-    opacity: 0.6;
+    position: relative;
+    background-color: #fff9ea;
+    border: 2px solid #5c6552;
+    color: #515738;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
     pointer-events: none;   /* 클릭 불가 */
 }
 
 .alarm_read_kes button {
     display: none;
 }
+
 /* 알림 온 시각(공통) */
 .alarm_time_kes {
-    color: white;
+    color: #5c6552;
     position: absolute;
     left: 0;
     top: 0;
     padding: 3px;
+    font-size: 7px;
 }
 
 /* 알림창에서 친구수락 예/아니오 버튼 */
 .alarm_btn_yes_kes, .alarm_btn_no_kes {
-    width: 60px;
-    height: 30px;
+    padding: 5px;
     border-radius: 5px;
-    color: white;
+    border: 2px solid #5c6552;
+    font-size: 10px;
 }
+
 .alarm_btn_yes_kes {
-    background-color: blue;
+    background-color: #5c6552;
+    color: #fff9ea;
 }
 .alarm_btn_no_kes {
-    background-color: red;
+    background-color: #fff9ea;
+    color: #5c6552;
 }
-/* 알림창에서 태그당했을 때 썸네일 이미지 */
-.alarm_img_thumbnail_kes {
-    width: 60px;
-    height: auto;
 
-}
 /* 알람이 없을 때 */
 .alarm_no_alarm {
     display: flex;
@@ -76,16 +87,15 @@
     color: black;
     justify-content: center;
 }
-
-.alarm_btn_ksy:hover {
-    background-color: #A4CEF7;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transform: translateY(-1px);
-}
-
 .alarm_btn_ksy:last-child {
     margin-bottom: 0;
 }
+
+
+
+
+
+
 
 
 
@@ -102,14 +112,6 @@
     align-items: center;
     margin-right: .6rem;
 }
-
-.alarm_dot_container_ksy {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-right: 7px;
-}
-
 .alarm_icon_ksy {
     font-size: 1.2rem;
 }

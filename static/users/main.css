@@ -101,8 +101,6 @@
     color: white !important;
  }
 
-
-
 .today_diary_psy {
     display: flex;
     width: 40%;
@@ -128,7 +126,8 @@
     border-radius: 8px;
     padding: 13px;
     background-color: #FFF9EA;
-    height: 48%;
+    min-height: 48%; 
+    height: auto;  
 }
 
 .last_week_diary_list_psy {
