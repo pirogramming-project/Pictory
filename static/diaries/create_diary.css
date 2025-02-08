@@ -129,7 +129,7 @@
     min-height: 200px;
     padding: 16px;
     border: 3px solid #5c6552;
-    border-radius: 8px;
+    border-radius: 5px;
     resize: vertical;
     background-color: var(--background);
 }
@@ -235,3 +235,26 @@ select {
     border-color: #5c6552;
     background-color: #f0f8ff;
 }
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+        padding: 0;
+        padding-left: 0;
+        margin: 20px
+    }
+
+    input[type="text"] {
+        font-size: 9px;
+    }
+    
+    .real_location_psy {
+        height: 215px;
+    }
+
+    .emotion-choice label, .weather-choice label {
+        display: inline;
+        padding: 0px;
+    }
+  }
+  
