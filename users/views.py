@@ -301,15 +301,15 @@ def generate_emotion_graph(user):
     # 그래프 생성
     plt.rcParams["font.family"] = "GangwonEduSaeeum"  
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(x_labels, recent_emotion_scores, marker="p", color="#1E3269", linewidth=4, markeredgewidth=2)
-    ax.set_xlabel("날짜", fontsize=20, color="#1E3269", labelpad=15)
-    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#1E3269", labelpad=15)
+    ax.plot(x_labels, recent_emotion_scores, marker="p", color="#5c6552", linewidth=4, markeredgewidth=2)
+    ax.set_xlabel("날짜", fontsize=20, color="#5c6552", labelpad=15)
+    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#5c6552", labelpad=15)
     ax.set_ylim(0, 8)  
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.tick_params(axis="x", labelsize=18, colors="#1E3269")  
-    ax.tick_params(axis="y", labelsize=18, colors="#1E3269")
+    ax.tick_params(axis="x", labelsize=18, colors="#5c6552")  
+    ax.tick_params(axis="y", labelsize=18, colors="#5c6552")
     fig.tight_layout()
 
     # 이미지로 변환
