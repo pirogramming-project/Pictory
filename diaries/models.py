@@ -70,7 +70,7 @@ class Diary(models.Model):
     
 class Tag(models.Model):
     diary = models.ForeignKey(Diary, models.CASCADE,verbose_name="일기", related_name="tags")
-    name = models.CharField("태그명", max_length=10)
+    name = models.CharField("태그명", max_length=50)
     
     def __str__(self):
         return f'{self.name}({self.diary})'
