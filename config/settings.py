@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=i9ndbi2s(($l^3lh^0p74-8o+0bm^h9d#rxxcvs-!c6if!h9i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('SETTING_DEBUGGING', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("SETTING_ALLOWED_HOSTS").split(",")  # 쉼표로 구분하여 리스트로 변환
 
 
 # Application definition
