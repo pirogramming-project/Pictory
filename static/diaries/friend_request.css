@@ -1,5 +1,5 @@
 .friend_container_ksy {
-    height: 100vh;
+    min-height: calc(115vh - 160px);
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
