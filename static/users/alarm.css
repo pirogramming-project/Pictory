@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 600px;
-    margin: 0 auto;
+    width: 80%;
+    margin: 55px auto;
     padding: 1rem;
 
 }
@@ -12,23 +12,32 @@
 /* 알림 아이템 컨테이너 */
 .alarm_item_container {
     position: relative;
-    background-color: var(--title_color);
+    background-color: #fff9ea;
+    border: 2px solid #5c6552;
+    color: #515738;
     padding: 20px;
     display: flex;
     justify-content: space-between;
 }
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
-    color: white;
-    font-size: 20px;
+    color: #515738;
+    font-size: 15px;
+    font-weight: bold;
     padding-inline: 10px;
 }
+
+.alarm_container_ksy a{
+    border: 1px solid #5c6552;
+}
+
 /* 읽은 알림(공통) */
 .alarm_read_kes {
     background-color: gray;
     opacity: 0.6;
     pointer-events: none;   /* 클릭 불가 */
 }
+
 .alarm_read_kes button {
     display: none;
 }
@@ -78,6 +87,15 @@
     margin-bottom: 0;
 }
 
+
+
+
+
+
+
+
+
+
 .alarm_icon_wrapper_ksy {
     position: relative;
     display: flex;
@@ -94,13 +112,6 @@
 
 .alarm_icon_ksy {
     font-size: 1.2rem;
-}
-
-.alarm_dot_ksy {
-    width: 4px;
-    height: 4.5px;
-    background-color: white;
-    border-radius: 50%;
 }
 
 .alarm_text_ksy {
