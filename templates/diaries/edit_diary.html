@@ -48,12 +48,14 @@
                         </div>
                         <div class="diary_friend_psy">
                             <h1 class="diary_letter_psy">o Friend Tag</h1>
-                                {% for checkbox in form.user_tags %}
-                                    <div class="friend_tag_item_psy">
-                                        {{ checkbox.tag }}
-                                        <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
-                                    </div>
-                                {% endfor %}
+                            {% comment %} 수정한 부분 {% endcomment %}
+                            {% for user in neighbors %}
+                                <div class="friend_tag_item_psy">
+                                    <input type="checkbox" name="user_tags" value="{{ user.login_id }}" id="friend_{{ user.login_id }}"
+                                        {% if user in form.instance.user_tags.all %}checked{% endif %}>  <!-- 기존 선택된 값 유지 -->
+                                    <label for="friend_{{ user.login_id }}">{{ user.nickname }}</label>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -105,6 +107,10 @@
                 }
             });
         });
+
+        // 페이지 로드 시 지도 핀 찍기
+        const placeName = document.getElementById("id_place").value;
+        placeSearch(placeName);
     });
     
     document.addEventListener("DOMContentLoaded", function() {
