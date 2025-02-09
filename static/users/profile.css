@@ -16,7 +16,7 @@
     line-height: 2.5;
     color: var(--title_color);
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 2.3rem;
 }
 .profile_title_introduce_second_ksy {
     color: var(--title_color);
@@ -37,7 +37,12 @@
     align-items: center;
     gap: 20px;
 }
-
+.profile_introduce_letter_ksy {
+    color: var(--content_color);
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 10px;
+}
 .profile-img_psy {
     position: relative;
     display: flex;
@@ -45,6 +50,9 @@
 }
 
 .profile-image_psy {
+    position: relative;
+    display: flex;
+    align-items: center;
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -82,8 +90,8 @@
 }
 
 .id-box_psy {
+    margin-bottom: 15px;
     text-align: center;
-    margin-bottom: 15%;
     color: #515738;
     font-size: 22px;
     font-weight: bold;
@@ -98,6 +106,7 @@
     margin-top: 10px;
 }
 .profile_stats_ksy {
+    margin-top: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -145,6 +154,11 @@
     gap: 8px;
 }
 
+.profile_edit_ksy {
+    width: 100%;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
 .action-btn_psy {
     font-size: 15px;
     width: 100%;
