@@ -51,14 +51,44 @@
     transform: scale(0.7);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 414px) {
+    .frame-container_psy {
+        height: auto;
+        padding: 20px;
+        margin-top: 60px;
+    }
+
+    .frame-select-text_psy {
+        font-size: 1.9rem;
+        margin: 1rem;
+        margin-top: 20px;
+    }
+
     .frame-btn_psy {
-        grid-template-columns: 1fr; 
-        max-width: 400px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        max-width: 100%;
+    }
+
+    .frame-btn_psy button {
+        padding: 8px;
+    }
+
+    .frame-btn_psy button img {
+        max-height: 200px; /* 이미지 크기 조정 */
+        transform: scale(0.9);
+    }
+
+    .frame-btn4_psy img {
+        transform: scale(0.7);
+    }
+
+    .custom-buttons_psy {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .frame-select-text_psy {
-        font-size: 1.2rem;
+    .cloud-btn_psy {
+        padding: 10px;
+        font-size: 12px
     }
 }

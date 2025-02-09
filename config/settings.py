@@ -13,10 +13,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=i9ndbi2s(($l^3lh^0p74-8o+0bm^h9d#rxxcvs-!c6if!h9i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('SETTING_DEBUGGING', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("SETTING_ALLOWED_HOSTS").split(",")  # 쉼표로 구분하여 리스트로 변환
 
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
+else:
+    CSRF_TRUSTED_ORIGINS = ["https://www.pictory.site"]
 
 # Application definition
 
@@ -120,7 +124,8 @@ USE_TZ = False  # False 로 설정해야 DB에 변경 된 TIME_ZONE 이 반영 �
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/ubuntu/Pictory/staticfiles/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # 전역 정적 파일 디렉토리
 ]
