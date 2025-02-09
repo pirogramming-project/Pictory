@@ -206,7 +206,7 @@
 
   function displayDiaryList(diaries) {
     const contentLetter = document.querySelector('.diary_map_content_letter_ksy');
-    contentLetter.style.display = 'none';
+    contentLetter.classList.add('hide');
 
     const diaryListContainer = document.getElementById("diaryListContainer");
     diaryListContainer.className = "map_diary-list_container_ljs";
@@ -222,8 +222,11 @@
     `;
     closeButton.onclick = () => {
         const diaryList = document.querySelector('.map_diary-list_ljs');
-        diaryList.style.display = 'none';
-        contentLetter.style.display = 'flex';
+        diaryList.classList.remove('show');
+        setTimeout(() => {
+            diaryList.style.display = 'none';
+            contentLetter.classList.remove('hide');
+        }, 300); // transition 시간과 맞춤
     };
     diaryListContainer.parentElement.appendChild(closeButton);
 
@@ -232,6 +235,8 @@
         emptyItem.className = "map_diary-list_item_ljs";
         emptyItem.textContent = "📌 관련된 다이어리가 없습니다.";
         diaryListContainer.appendChild(emptyItem);
+
+        
     } else {
         diaries.forEach(diary => {
             const listItem = document.createElement("li");
@@ -265,6 +270,7 @@
 
     const diaryList = document.querySelector('.map_diary-list_ljs');
     diaryList.style.display = 'block';
+    diaryList.classList.add('show');
   }
 
 
