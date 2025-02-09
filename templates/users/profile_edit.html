@@ -11,9 +11,10 @@
             <img src="{{ user.profile_photo.url }}" alt="프로필 사진" class="profile-edit_image_ksy"> 
 
             <!-- 숨겨진 파일임 -->
-            <form id="profileUploadForm" action="{% url 'users:update_profile_photo' %}" method="POST" enctype="multipart/form-data">
+            <form id="profileUploadForm" action="{% url 'users:update_profile_photo_edit' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="file" id="profileInput" name="profile_photo" accept="image/*" style="display: none;">
+                <input type="file" id="profileInput" name="profile_photo" accept="image/*" style="display: none;"
+                    onchange="document.getElementById('profileUploadForm').submit();">
             </form>
             
             <button class="profile_edit_photo_ksy" onclick="document.getElementById('profileInput').click();">
@@ -23,30 +24,30 @@
                 </svg>
             </button> 
         </div>
-        <form class="profile-edit-form_ksy">
+        <form class="profile-edit-form_ksy" method="POST">
             {% csrf_token %}
             <div class="profile_edit_form-group_ksy">
                 <label for="name">이름</label>
-                <input type="text" id="name" class="profile_edit_input_ksy" placeholder="이름을 입력해주세요" required>
+                <input type="text" id="name" name="name" class="profile_edit_input_ksy" value="{{ form.name.value|default_if_none:''}}" placeholder="이름을 입력해주세요">
             </div>
             
             <div class="profile_edit_form-group_ksy">
                 <label for="nickname">닉네임</label>
-                <input type="text" id="nickname" class="profile_edit_input_ksy" placeholder="닉네임을 입력해주세요" required>
+                <input type="text" id="nickname" name="nickname" class="profile_edit_input_ksy" value="{{ form.nickname.value|default_if_none:'' }}" placeholder="닉네임을 입력해주세요" required>
             </div>
             
             <div class="profile_edit_form-group_ksy">
                 <label for="birth">생년월일</label>
-                <input type="date" id="birth" class="profile_edit_input_ksy" placeholder="생년월일을 입력해주세요" required>
+                <input type="date" id="birth" name="birthday" class="profile_edit_input_ksy" value="{% if form.birthday.value %}{{ form.birthday.value|date:'Y-m-d' }}{% endif %}" placeholder="생년월일을 입력해주세요">
             </div>
             
             <div class="profile_edit_form-group_ksy">
                 <label for="email">이메일</label>
-                <input type="email" id="email" class="profile_edit_input_ksy" placeholder="이메일을 입력해주세요" required>
+                <input type="email" id="email" name="email" class="profile_edit_input_ksy" value="{{ form.email.value|default_if_none:'' }}" placeholder="이메일을 입력해주세요">
             </div>
             <div class="profile_edit_form-group_ksy">
                 <label for="introduce">한 줄 소개</label>
-                <input type="introduce" id="introduce" class="profile_edit_input_ksy" placeholder="한 줄 소개를 입력해주세요" required>
+                <input type="introduce" id="introduce" name="introduce" class="profile_edit_input_ksy" value="{{ form.introduce.value|default_if_none:'' }}" placeholder="한 줄 소개를 입력해주세요">
             </div>
             <button type="submit" class="profile_edit_save_ksy">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
