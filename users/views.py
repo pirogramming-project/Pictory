@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from diaries.models import Diary
 from django.utils.timezone import now, timedelta
-
+from .forms import UserUpdateForm
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -529,5 +529,30 @@ def update_profile_photo(request):
     messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
     return redirect("users:profile")
 
+
+# profile_edit에서 사진 바꾸면 profile_edit 페이지로 redirect되도록 따로 만든 함수(프로필 페이지에서 바꾸면 프로필 페이지로 가는 함수 따로 있음)
+@login_required
+def update_profile_photo_edit(request):
+    if request.method == "POST" and request.FILES.get("profile_photo"):
+        user = request.user
+        user.profile_photo = request.FILES["profile_photo"]
+        user.save()
+        
+        messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
+        return redirect("users:profile_edit")  
+    
+    messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
+    return redirect("users:profile_edit")
+
 def profile_edit(request):
-    return render(request, 'users/profile_edit.html')
+    user = request.user
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user) # 기존 정보 불러오기
+        if form.is_valid():
+            form.save()
+            return redirect("users:profile") # 수정하고 profile로 redirect, 향후에 바꿀거면 바꾸세용
+        
+    else:
+        form = UserUpdateForm(instance=user)
+    return render(request, 'users/profile_edit.html', {"form":form})
