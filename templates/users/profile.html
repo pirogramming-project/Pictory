@@ -31,7 +31,16 @@
                 </div>
                 <div class="profile-section_psy">   
                     <div class="profile-info_psy">
+                        <form class="profile_introduce_form_ksy" method="post" action="">
+                            {% csrf_token %}
+                            <div class="profile_introduce_ksy">
+                                <p class="profile_introduce_letter_ksy">한 줄 소개입니다</p>
+                            </div>
+                        </form>
                         <div class="id-box_psy">{{ request.user.nickname }}</div>
+                        <div class="profile_edit_ksy">
+                            <button class="action-btn_psy" onclick="location.href='{% url 'users:profile_edit' %}'">프로필 수정</button>
+                        </div>
                     </div>
                     <div class="profile_stats_ksy">
                         <div class="stat_item_ksy">

@@ -528,3 +528,6 @@ def update_profile_photo(request):
     
     messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
     return redirect("users:profile")
+
+def profile_edit(request):
+    return render(request, 'users/profile_edit.html')
