@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from diaries.models import Diary
 from django.utils.timezone import now, timedelta
+from django.db import transaction
 
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
@@ -359,6 +360,8 @@ def are_neighbors(user_a, user_b):
     """두 유저가 이웃인지 확인"""
     user1, user2 = sorted([user_a, user_b], key=lambda u: u.login_id)
     return Neighbor.objects.filter(user1=user1, user2=user2).exists()
+
+@transaction.atomic
 def addUsersToFriend(user1, user2):
     ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 기존의 이웃 요청은 삭제함 '''
     user1, user2 = sorted([user1, user2], key=lambda u: u.login_id)
