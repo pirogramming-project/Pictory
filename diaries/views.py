@@ -254,6 +254,7 @@ def create_diary(request, related_frame_id):
             return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))    
         else:
             print("error: form is not valid")
+            related_frame.delete()
             return redirect('diaries:create_diary')
         
     form = DiaryForm()
