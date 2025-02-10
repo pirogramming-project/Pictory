@@ -271,4 +271,11 @@
     .button-group_psy {
         justify-content: center;
     }
+      
+}
+
+@media (max-width: 414px) {
+    .profile-wrapper_psy {
+        display: block;
+    }
 }

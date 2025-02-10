@@ -191,7 +191,7 @@ select {
 /* 선택된 SVG를 강조 */
 .emotion-choice input[type="radio"]:checked + label {
     border-color: #5c6552; 
-    background-color: #f0f8ff;
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
 /* 날씨 임시 확인용 */
@@ -223,7 +223,7 @@ select {
 /* 선택된 날씨 강조 */
 .weather-choice input[type="radio"]:checked + label {
     border-color: #5c6552;
-    background-color: #f0f8ff;
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
 @media (max-width: 414px) {

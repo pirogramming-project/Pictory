@@ -75,17 +75,22 @@
     color: #515738;
     align-items: center;
 }
+
 .user_search_result_item_profileimage_kes {
     width: 50px;
     border-radius: 50%;
     aspect-ratio: 1/1;
     margin-right: 20px;
 }
+
 .user_search_result_item_nickname_kes {
     flex: 1;
     font-size: 18px;
-    margin-right: 200px;
+    margin-right: 180px;
+    display: flex;
+    align-items: center; 
 }
+
 .user_search_request_button_kes {
     background-color: #515738;
     color: #fff9ea;
@@ -127,6 +132,7 @@
     .user_search_result_item_nickname_kes {
         font-size: 14px;
         margin-top: 5px;
+        margin-right: 0;
         flex: 1;
     }
 
