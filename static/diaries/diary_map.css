@@ -36,6 +36,7 @@
     padding: 8px;
 }
 .map_search-input_ksy::placeholder{
+    font-family: var(--main_font);
     color: var(--content_color);
 }
 
@@ -99,6 +100,7 @@
     display: none;
 }
 .diary_map_description_ksy {
+    font-family: var(--main_font);
     line-height: 1.5;
     color: rgba(0, 0, 0, 0.719);
     font-size: 1.5rem;
@@ -166,7 +168,8 @@
 .map_diary-list_title_ljs {
     display: block;
     color: rgba(0, 0, 0, 0.611);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    font-family: var(--main_font);
     margin-top: 10px;
     margin-left: 30px;
 }
@@ -196,6 +199,7 @@
 }
 
 .diary_map_location_map_ksy {
+    font-family: var(--main_font);
     color: black;
     font-size: 1.5rem;
 }

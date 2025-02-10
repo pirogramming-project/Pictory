@@ -22,6 +22,7 @@
 
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
+    font-family: var(--main_font);
     color: #515738;
     font-size: 13px;
     font-weight: bold;
@@ -63,12 +64,13 @@
 
 /* 알림 온 시각(공통) */
 .alarm_time_kes {
+    font-family: var(--main_font);
     color: #5c6552;
     position: absolute;
     left: 0;
     top: 0;
     padding: 3px;
-    font-size: 7px;
+    font-size: 8px;
 }
 
 /* 알림창에서 친구수락 예/아니오 버튼 */

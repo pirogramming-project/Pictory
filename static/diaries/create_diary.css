@@ -92,9 +92,9 @@
     padding: 2px 5px;
     margin: 2px;
     border-radius: 5px;
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
     color: #5c6552;
-    font-size: 10px;
+    font-size: 11px;
     cursor: pointer;
 }
 
@@ -125,6 +125,7 @@
 }
 
 .fourth_line_psy textarea {
+    font-family: var(--main_font);
     width: 100%;
     min-height: 200px;
     padding: 16px;
@@ -148,6 +149,7 @@
 input[type="text"], 
 input[type="date"], 
 select {
+    font-family: var(--main_font);
     width: 100%;
     padding: 8px;
     border: 2px solid #5c6552;

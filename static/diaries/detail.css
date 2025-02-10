@@ -123,7 +123,7 @@
 }
 
 .diary_content_tag_psy span {
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
     color: #5c6552;
     font-size: 14px;
 }
@@ -138,6 +138,7 @@
 }
 
 .friend_tag_item_psy span {
+    font-family: var(--main_font);
     color: #5c6552;
     font-size: 14px;
     margin-right: 5px;
@@ -148,6 +149,7 @@
 }
 
 .diary_content_psy p{
+    font-family: var(--main_font);
     width: 100%;
     min-height: 200px;
     padding: 16px;
@@ -161,7 +163,9 @@
     height: calc(22vh - -15px);
     overflow-y: auto;
 }
-
+.diary_detail_place_ksy, .diary_detail_title_ksy, .diary_detail_date_ksy {
+    font-family: var(--main_font);
+}
 .diary_content_psy h1 {
     gap: 10px;
     display: grid;

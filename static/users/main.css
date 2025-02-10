@@ -1,4 +1,9 @@
-   
+@font-face {
+    font-family: 'NotoSerifKR';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .main-container_psy {
     height: 80vh;
     overflow-y: auto;
@@ -145,7 +150,8 @@
 .selected_diary_list_psy h3,
 .last_week_diary_list_psy h3 {
     color: #515738;
-    font-family: 'Gravitas One', serif;
+    font-family: var(--main_font);
+    font-weight: 700;
     font-size: 16px;
     margin-bottom: 15px;
     padding-bottom: 10px;
@@ -171,7 +177,8 @@
     transition: background-color 0.2s;
     color: #515738;
     font-size: 12px;
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
+    font-weight: 700;
 }
 
 .today_diary_list_psy li:hover,

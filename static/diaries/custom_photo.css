@@ -120,6 +120,7 @@
 
 /* 커스터마이제이션 영역 */
 #customization-area_psy {
+    font-family: var(--main_font);
     background-color: #FFF9EA;
     color: #515738;
     font-size: 20px;

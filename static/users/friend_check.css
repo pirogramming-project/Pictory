@@ -15,6 +15,7 @@
 }
 
 .friend_check_total_ksy {
+    font-family: var(--main_font);
     margin: 0;
     color: var(--title_color);
     font-weight: bold;
@@ -62,6 +63,7 @@
 }
 
 .friend_check_nickName_ksy {
+    font-family: var(--main_font);
     margin: 0;
     font-size: 16px;
     color: var(--title_color);
@@ -69,6 +71,7 @@
 }
 
 .friend_check_introduce_ksy {
+    font-family: var(--main_font);
     margin: 0;
     font-size: 12px;
     color: var(--content_color);
