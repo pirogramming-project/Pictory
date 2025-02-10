@@ -27,4 +27,5 @@ urlpatterns = [
     path('diary/last_week/', get_last_week_diaries, name='last_week_diaries'),
     path('profile/edit/', profile_edit, name='profile_edit'),
     path('update_profile_photo_edit/', update_profile_photo_edit, name="update_profile_photo_edit"),
+    path('profile/friend_check/', friend_check, name='friend_check'),
 ]

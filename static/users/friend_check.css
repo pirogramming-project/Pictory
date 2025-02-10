@@ -1,0 +1,68 @@
+.friend_check_container_ksy {
+    position: relative;
+    max-width: 520px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.friend_check_title_ksy {
+    margin-bottom: 10px;
+    text-align: start;
+    padding: 20px;
+    color: #333;
+    font-size: 14px;
+}
+
+.friend_check_total_ksy {
+    margin: 0;
+    color: var(--title_color);
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.friend_check_content_ksy {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px;
+    border: 1.5px solid var(--title_color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.frined_check_profile-img_ksy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #515738;
+    overflow: hidden;
+}
+
+.profile-image_ksy {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 텍스트 컨텐츠 스타일링 */
+.friend_check_letter_ksy {
+    flex: 1;
+}
+
+.friend_check_nickName_ksy {
+    margin: 0;
+    font-size: 16px;
+    color: var(--title_color);
+    margin-bottom: 4px;
+}
+
+.friend_check_introduce_ksy {
+    margin: 0;
+    font-size: 12px;
+    color: var(--content_color);
+}
