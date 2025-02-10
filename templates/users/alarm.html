@@ -27,7 +27,7 @@
         <!-- 알림 타입이 "TAG"인 경우 -->
         {% if alarm.type == "TAG" %}
             {% with tagged_diary=alarm.tag_notification.tagged_diary %}
-                <a href="{% url "diaries:create_diary" tagged_diary.four_cut_photo.id %}">Record to diary</a>
+                <a href="{% url "diaries:create_diary" tagged_diary.four_cut_photo.id %}">Record diary</a>
             {% endwith %}
         {% endif %}
     </div>

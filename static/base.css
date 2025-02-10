@@ -333,5 +333,15 @@
     .base_content-scroll_ksy {
         margin: 0;
     }
+
+    .base_header_ksy {
+        justify-content: center;
+    }
+
+    .base_logo_title_desktop_ksy {
+        position: relative;
+        left: 18%;
+    }
+
   }
   

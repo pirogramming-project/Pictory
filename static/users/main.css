@@ -126,7 +126,7 @@
     border-radius: 8px;
     padding: 13px;
     background-color: #FFF9EA;
-    min-height: 48%; 
+    display: inline-block;
     height: auto;  
 }
 
@@ -137,6 +137,7 @@
     background-color: #FFF9EA;
     display: inline-block;
     height: auto;
+    min-height: 100%; 
 }
 
 .today_diary_list_psy h3,
