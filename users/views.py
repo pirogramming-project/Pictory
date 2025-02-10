@@ -279,6 +279,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from django.shortcuts import render
+from matplotlib import font_manager, rc
 
 def generate_emotion_graph(user):
     # 1. 같은 날짜 내에서 가장 최근에 작성된 게시물만 가져오기
@@ -299,15 +300,18 @@ def generate_emotion_graph(user):
     x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
 
     if not recent_emotion_scores:
-        x_labels = ["없음"]  # 빈 그래프의 x축 라벨
+        x_labels = ["Date"]  # 빈 그래프의 x축 라벨
         recent_emotion_scores = [0]  # y축 값으로 0 추가
 
+
     # 그래프 생성
-    plt.rcParams["font.family"] = "GangwonEduSaeeum"  
+    plt.rcParams["font.family"] = "DejaVu Sans"
     fig, ax = plt.subplots(figsize=(8, 5))
+    ax.set_facecolor("#FFF9EA")  # 축 배경색
+    fig.patch.set_facecolor("#FFF9EA")  # 전체 그래프 배경색
     ax.plot(x_labels, recent_emotion_scores, marker="p", color="#5c6552", linewidth=4, markeredgewidth=2)
-    ax.set_xlabel("날짜", fontsize=20, color="#5c6552", labelpad=15)
-    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#5c6552", labelpad=15)
+    ax.set_xlabel("Date", fontsize=20, color="#5c6552", labelpad=15)
+    ax.set_ylabel("Emotion (0~8)", fontsize=20, color="#5c6552", labelpad=15)
     ax.set_ylim(0, 8)  
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
