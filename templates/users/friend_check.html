@@ -10,18 +10,19 @@
         <div class="friend_check_title_ksy">
             <h1 class="friend_check_total_ksy">{{ request.user.nickname }}님의 이웃 수는 {{ friend_count }}명 입니다</h1>
         </div>
-        <!-- 이웃 수 확인하기-->
-        {% for friend in friends %}
         <div class="friend_check_content_ksy">
-            <div class="frined_check_profile-img_ksy">
-                <img src="{{ friend.profile_photo }}" alt="프로필 사진" class="profile-image_ksy">
-            </div>
-            <div class="friend_check_letter_ksy">
-                <h1 class="friend_check_nickName_ksy">{{ friend.nickname }}</h1>
-                <p class="friend_check_introduce_ksy">{{ friend.introduce }}</p>
+            {% for friend in friends %}
+            <div class="friend_card_wrapper_ksy">
+                <div class="frined_check_profile-img_ksy">
+                    <img src="{{ friend.profile_photo }}" alt="프로필 사진" class="profile-image_ksy">
+                </div>
+                <div class="friend_check_letter_ksy">
+                    <h1 class="friend_check_nickName_ksy">{{ friend.nickname }}</h1>
+                    <p class="friend_check_introduce_ksy">{{ friend.introduce }}</p>
+                </div>
             </div>
             {% empty %}
-            <p class="friend_check_no_friends">아직 이웃이 없습니다.</p>
+                <p class="friend_check_no_friends">아직 이웃이 없습니다.</p>
             {% endfor %}
         </div>
     </div>
