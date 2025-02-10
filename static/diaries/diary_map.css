@@ -216,3 +216,14 @@
         transform: translateX(0);
     }
 }
+
+@media (max-width: 414px) {
+    .community-page_ksy .base_content-scroll_ksy {
+        flex-direction: column;
+    }
+    .map_container_ksy {
+        height: 50vh;
+        flex: none;
+    }
+
+  }
