@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/profile_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="profile-edit-container_ksy">
+        <div class="profile-edit_section_ksy">
+            <img src="{{ user.profile_photo.url }}" alt="프로필 사진" class="profile-edit_image_ksy"> 
+
+            <!-- 숨겨진 파일임 -->
+            <form id="profileUploadForm" action="{% url 'users:update_profile_photo_edit' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" id="profileInput" name="profile_photo" accept="image/*" style="display: none;"
+                    onchange="document.getElementById('profileUploadForm').submit();">
+            </form>
+            
+            <button class="profile_edit_photo_ksy" onclick="document.getElementById('profileInput').click();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                </svg>
+            </button> 
+        </div>
+        <form class="profile-edit-form_ksy" method="POST">
+            {% csrf_token %}
+            <div class="profile_edit_form-group_ksy">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" class="profile_edit_input_ksy" value="{{ form.name.value|default_if_none:''}}" placeholder="이름을 입력해주세요">
+            </div>
+            
+            <div class="profile_edit_form-group_ksy">
+                <label for="nickname">닉네임</label>
+                <input type="text" id="nickname" name="nickname" class="profile_edit_input_ksy" value="{{ form.nickname.value|default_if_none:'' }}" placeholder="닉네임을 입력해주세요" required>
+            </div>
+            
+            <div class="profile_edit_form-group_ksy">
+                <label for="birth">생년월일</label>
+                <input type="date" id="birth" name="birthday" class="profile_edit_input_ksy" value="{% if form.birthday.value %}{{ form.birthday.value|date:'Y-m-d' }}{% endif %}" placeholder="생년월일을 입력해주세요">
+            </div>
+            
+            <div class="profile_edit_form-group_ksy">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" class="profile_edit_input_ksy" value="{{ form.email.value|default_if_none:'' }}" placeholder="이메일을 입력해주세요">
+            </div>
+            <div class="profile_edit_form-group_ksy">
+                <label for="introduce">한 줄 소개</label>
+                <input type="introduce" id="introduce" name="introduce" class="profile_edit_input_ksy" value="{{ form.introduce.value|default_if_none:'' }}" placeholder="한 줄 소개를 입력해주세요">
+            </div>
+            <button type="submit" class="profile_edit_save_ksy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+{% endblock %}

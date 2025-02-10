@@ -17,6 +17,10 @@ DEBUG = config('SETTING_DEBUGGING', cast=bool)
 
 ALLOWED_HOSTS = config("SETTING_ALLOWED_HOSTS").split(",")  # 쉼표로 구분하여 리스트로 변환
 
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
+else:
+    CSRF_TRUSTED_ORIGINS = ["https://www.pictory.site"]
 
 # Application definition
 

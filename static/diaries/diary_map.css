@@ -92,6 +92,11 @@
     align-items: center;
     background-color: var(--content_color);
     flex: 1;
+    transition: opacity 0.3s ease-out;
+}
+.diary_map_content_letter_ksy.hide {
+    opacity: 0;
+    display: none;
 }
 .diary_map_description_ksy {
     line-height: 1.5;
@@ -118,6 +123,10 @@
     overflow-y: auto;
     display: none;
     position: relative;
+}
+.map_diary-list_ljs.show {
+    display: block;
+    transform: translateX(0);
 }
 
 .map_diary-list_container_ljs {
@@ -189,4 +198,21 @@
 .diary_map_location_map_ksy {
     color: black;
     font-size: 1.5rem;
+}
+.map_diary-list_item_ljs {
+    padding: 10px;
+    opacity: 0;
+    transform: translateX(10px);
+    animation: fadeInRight 0.5s ease forwards;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
