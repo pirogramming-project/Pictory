@@ -44,5 +44,13 @@
 
         </div>
     </div>
+
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{ message }}");  // 설정해둔 로그인 오류 메세지 출력
+            {% endfor %}
+        </script>
+    {% endif %}
 </body>
 </html>
