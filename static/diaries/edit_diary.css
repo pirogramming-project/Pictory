@@ -131,23 +131,13 @@
 }
 
 .diary_save_psy {
-    align-self: flex-end;
-    padding: 12px 24px;
+    font-size: 14px;
+    border: 3px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+    padding: 10px;
+    font-family: 'Gravitas One';
     color: #5c6552;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.diary_save_psy svg {
-   width: 32px;
-   height: 32px;
-}
-
-.diary_save_psy svg path {
-    stroke-width: 3; 
 }
 
 
