@@ -47,10 +47,10 @@
                             <div class="stat_value_ksy">{{ diary_count }}</div>
                             <div class="stat_label_ksy">총 일기 수</div>
                         </div>
-                        <div class="stat_item_friend_ksy">
+                        <button class="stat_item_friend_ksy" onclick="location.href='{% url 'users:friend_check' %}'">
                             <div class="stat_value_ksy">{{ friend_count }}</div>
                             <div class="stat_label_ksy">이웃 수</div>
-                        </div>
+                        </button>
                     </div>
                     <div class="profile_button_container_ksy">
                         <div class="button-group_psy">

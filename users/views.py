@@ -572,3 +572,7 @@ def profile_edit(request):
     else:
         form = UserUpdateForm(instance=user)
     return render(request, 'users/profile_edit.html', {"form":form})
+
+
+def friend_check(request):
+    return render(request, 'users/friend_check.html')

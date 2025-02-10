@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/friend_check.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="friend_check_container_ksy">
+        <div class="friend_check_title_ksy">
+            <h1 class="friend_check_total_ksy">{{ request.user.nickname }}님의 이웃 수는 1명 입니다</h1>
+        </div>
+        <!-- 이웃 수 확인하기-->
+        <div class="friend_check_content_ksy">
+            <div class="frined_check_profile-img_ksy">
+                <img src="" alt="프로필 사진" class="profile-image_ksy"> 
+            </div>
+            <div class="friend_check_letter_ksy">
+                <h1 class="friend_check_nickName_ksy">김수연</h1>
+                <p class="friend_check_introduce_ksy">안녕하세요</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
