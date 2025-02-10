@@ -18,10 +18,10 @@
             <div class="first_right_container_psy">
                 <div class="first_line_psy">
                     <div class="diary_title_psy">
-                        <h1 class="diary_letter_psy">o Title: {{ diary.title }}</h1>
+                        <h1 class="diary_letter_psy">o Title: <span class="diary_detail_title_ksy">{{ diary.title }}</span></h1>
                     </div>
                     <div class="diary_date_psy">
-                        <h1 class="diary_letter_date_psy">o Date: {{ diary.date }}</h1>
+                        <h1 class="diary_letter_date_psy">o Date: <span class="diary_detail_date_ksy">{{ diary.date }}</span></h1>
                         {{ form.date }}
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             <h1 class="diary_letter_psy">o Emotion: {{ emotion_svg|safe }}</h1>
                         </div>
                         <div class="diary_map_psy">
-                            <h1 class="diary_letter_psy">o Location: {{ diary.place }}</h1>
+                            <h1 class="diary_letter_psy">o Location: <span class="diary_detail_place_ksy">{{ diary.place }}</span></h1>
                             {{ form.place }}
                             <div class="real_location_psy"></div>
                         </div>

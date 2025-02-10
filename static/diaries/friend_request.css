@@ -38,6 +38,7 @@
 }
 
 .friend_search-input_ksy::placeholder{
+    font-family: var(--main_font);
     color: var(--content_color);
 }
 
@@ -84,6 +85,7 @@
 }
 
 .user_search_result_item_nickname_kes {
+    font-family: var(--main_font);
     flex: 1;
     font-size: 18px;
     margin-right: 180px;
@@ -92,12 +94,14 @@
 }
 
 .user_search_request_button_kes {
+    font-family: var(--main_font);
     background-color: #515738;
     color: #fff9ea;
     border-radius: 5px;
     padding: 5px;
 }
 .user_search_request_cancel_button_kes {
+    font-family: var(--main_font);
     background-color: #888d72ad;
     color: #515738;
     border-radius: 5px;
@@ -109,7 +113,10 @@
     color: #515738;
     padding: 50px;
 }
-
+.friend-message_ksy {
+    font-family: var(--main_font);
+    font-size: 1.3rem;
+}
 @media (max-width: 414px) {
     .friend_search-result_kes {
         display: flex;

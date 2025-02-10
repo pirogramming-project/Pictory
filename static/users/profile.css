@@ -13,12 +13,14 @@
     gap: 35px;
 }
 .profile_title_introduce_first_ksy {
+    font-family: var(--main_font);
     line-height: 2.5;
     color: var(--title_color);
     font-weight: bold;
     font-size: 2.3rem;
 }
 .profile_title_introduce_second_ksy {
+    font-family: var(--main_font);
     color: var(--title_color);
     font-size: 1.4rem;
 }
@@ -38,6 +40,7 @@
     gap: 20px;
 }
 .profile_introduce_letter_ksy {
+    font-family: var(--main_font);
     color: var(--content_color);
     text-align: center;
     margin-bottom: 7px;
@@ -94,6 +97,7 @@
 }
 
 .id-box_psy {
+    font-family: var(--main_font);
     margin-bottom: 15px;
     text-align: center;
     color: #515738;
@@ -141,6 +145,7 @@
     cursor: pointer;
 }
 .stat_value_ksy {
+    font-family: var(--main_font);
     font-size: 20px;
     font-weight: bold;
     color: #515738;
@@ -148,6 +153,7 @@
 }
 
 .stat_label_ksy {
+    font-family: var(--main_font);
     font-size: 14px;
     color: #515738;
 }
@@ -163,7 +169,8 @@
     padding: 0 20px;
     margin-bottom: 20px;
 }
-.action-btn_psy {
+.action-btn_ksy {
+    font-family: var(--main_font);
     font-size: 15px;
     width: 100%;
     padding: 8px 16px;
@@ -179,7 +186,7 @@
     transition: all 0.2s;
 }
 
-.action-btn_psy:hover {
+.action-btn_ksy:hover {
     background-color: var(--content_color);
 }
 
@@ -193,7 +200,7 @@
 
 .badges-title_psy {
     margin-top: 20px;
-    font-family: "Gravitas One", serif;
+    font-family: var(--main_font);
     font-weight: bold;
     color: var(--title_color);
     font-size: 1.8rem;
@@ -222,7 +229,7 @@
 }
 
 .graph-title_psy {
-    font-family: "Gravitas One", serif;
+    font-family: var(--main_font);
     font-weight: bold;
     color: #515738;
     font-size: 1.8rem;
