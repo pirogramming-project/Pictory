@@ -290,19 +290,27 @@ def generate_emotion_graph(user):
     # 1. 같은 날짜 내에서 가장 최근에 작성된 게시물만 가져오기
     recent_diaries = (
         Diary.objects.filter(writer=user)
-        .order_by('date', '-id')  # 같은 날짜 중 최신 게시물을 우선
-        .distinct('date')         # 중복 날짜 제거
-        .order_by('-date')        
-    )[:7]
+        .order_by('-date', '-id')  # 날짜 내림차순, ID 내림차순 (최신 다이어리 유지)
+    )
+    unique_diaries = []
+    seen_dates = set()
+
+    for diary in recent_diaries:
+        diary_date = diary.date.strftime("%Y-%m-%d")  # 날짜를 문자열로 변환하여 중복 체크
+        if diary_date not in seen_dates:
+            unique_diaries.append(diary)
+            seen_dates.add(diary_date)
+        if len(unique_diaries) >= 7:  # 최대 7개까지만
+            break
 
     # 2. 오래된 순으로 정렬
-    recent_diaries = sorted(recent_diaries, key=lambda x: x.date)
+    unique_diaries = sorted(unique_diaries, key=lambda x: x.date)
 
     # 3. 감정 점수(y축)
-    recent_emotion_scores = [diary.emotion for diary in recent_diaries]
+    recent_emotion_scores = [diary.emotion for diary in unique_diaries]
 
     # 4. X축 라벨(날짜)
-    x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
+    x_labels = [diary.date.strftime("%m/%d") for diary in unique_diaries]
 
     if not recent_emotion_scores:
         x_labels = ["Date"]  # 빈 그래프의 x축 라벨
