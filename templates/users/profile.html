@@ -34,7 +34,7 @@
                         <form class="profile_introduce_form_ksy" method="post" action="">
                             {% csrf_token %}
                             <div class="profile_introduce_ksy">
-                                <p class="profile_introduce_letter_ksy">{{ request.user.introduce }}</p>
+                                <p class="profile_introduce_letter_ksy">{{ request.user.introduce|default:"한 줄 소개를 작성해보세요" }}</p>
                             </div>
                         </form>
                         <div class="id-box_psy">{{ request.user.nickname }}</div>
