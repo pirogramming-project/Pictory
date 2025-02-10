@@ -20,7 +20,7 @@
 }
 .profile_title_introduce_second_ksy {
     color: var(--title_color);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
 }
 .profile_left_container_ksy {
     width: 100%;
@@ -40,8 +40,8 @@
 .profile_introduce_letter_ksy {
     color: var(--content_color);
     text-align: center;
-    margin-bottom: 5px;
-    font-size: 10px;
+    margin-bottom: 7px;
+    font-size: 13px;
 }
 .profile-img_psy {
     position: relative;
@@ -188,7 +188,7 @@
 }
 
 .badges-title_psy {
-    margin-top: 10px;
+    margin-top: 20px;
     font-family: "Gravitas One", serif;
     font-weight: bold;
     color: var(--title_color);
