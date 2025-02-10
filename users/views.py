@@ -298,6 +298,10 @@ def generate_emotion_graph(user):
     # 4. X축 라벨(날짜)
     x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
 
+    if not recent_emotion_scores:
+        x_labels = ["없음"]  # 빈 그래프의 x축 라벨
+        recent_emotion_scores = [0]  # y축 값으로 0 추가
+
     # 그래프 생성
     plt.rcParams["font.family"] = "GangwonEduSaeeum"  
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -310,6 +314,11 @@ def generate_emotion_graph(user):
     ax.spines["right"].set_visible(False)
     ax.tick_params(axis="x", labelsize=18, colors="#5c6552")  
     ax.tick_params(axis="y", labelsize=18, colors="#5c6552")
+
+    # 처음에 데이터가 하나도 없을 때 그래프 비워놓기
+    if len(recent_emotion_scores) == 1 and recent_emotion_scores[0] == 0:
+        ax.text(0.5, 4, "데이터가 없습니다.", horizontalalignment='center', verticalalignment='center', 
+                fontsize=16, color="#5c6552", transform=ax.transAxes)
     fig.tight_layout()
 
     # 이미지로 변환
