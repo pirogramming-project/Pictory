@@ -34,12 +34,12 @@ def login_view(request):
             user = User.objects.get(login_id=login_id)  
             if check_password(input_password, user.password):  
                 auth_login(request, user)
-                return redirect('users:main')    # 메인 페이지로 이동 (미구현)
+                return redirect('users:main')    
             else:
-                print("잘못된 비밀번호")
-                return redirect('users:login')
+                messages.error(request, "비밀번호가 올바르지 않습니다.")  
+                return redirect('users:login')  
         except User.DoesNotExist:
-            print("사용자를 찾을 수 없습니다.")
+            messages.error(request, "존재하지 않는 계정입니다.")
             return redirect('users:login')
     
     # 만약에 유저가 로그인했다
@@ -57,18 +57,22 @@ def signup(request):
   
         # 비밀번호 확인
         if password != password_confirm:
+            messages.error(request, '비밀번호가 일치하지 않습니다.')
             return redirect("users:signup")  
 
         # ID 중복 확인
         if User.objects.filter(login_id=login_id).exists():
+            messages.error(request, "이미 사용 중인 아이디입니다.")
             return redirect("users:signup")  
         
         user = User(login_id=login_id)
         user.set_password(password) 
         user.nickname=make_unique_nickname_of_social_login(login_id)
         user.save()
-        
+
+        messages.success(request, "회원가입이 완료되었습니다!")
         return redirect("users:login")
+    
     return render(request, "users/signup.html")
          
 
