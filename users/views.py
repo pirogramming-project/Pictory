@@ -574,5 +574,26 @@ def profile_edit(request):
     return render(request, 'users/profile_edit.html', {"form":form})
 
 
+@login_required
 def friend_check(request):
-    return render(request, 'users/friend_check.html')
+    neighbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+
+    # 이웃 정보를 리스트로 변환
+    friends = []
+    for neighbor in neighbors:
+        if neighbor.user1 == request.user:
+            friend = neighbor.user2  # user1이 본인이면 상대방(user2)을 이웃으로
+        else:
+            friend = neighbor.user1  # user2가 본인이면 상대방(user1)을 이웃으로
+        
+        friends.append({
+            "nickname": friend.nickname,
+            "profile_photo": friend.profile_photo.url if friend.profile_photo else None,
+            "introduce": friend.introduce if friend.introduce else " ",
+        })
+
+    context = {
+        "friends": friends,
+        "friend_count": len(friends),
+    }
+    return render(request, 'users/friend_check.html', context)
