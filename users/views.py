@@ -34,12 +34,12 @@ def login_view(request):
             user = User.objects.get(login_id=login_id)  
             if check_password(input_password, user.password):  
                 auth_login(request, user)
-                return redirect('users:main')    # 메인 페이지로 이동 (미구현)
+                return redirect('users:main')    
             else:
-                print("잘못된 비밀번호")
-                return redirect('users:login')
+                messages.error(request, "비밀번호가 올바르지 않습니다.")  
+                return redirect('users:login')  
         except User.DoesNotExist:
-            print("사용자를 찾을 수 없습니다.")
+            messages.error(request, "존재하지 않는 계정입니다.")
             return redirect('users:login')
     
     # 만약에 유저가 로그인했다
@@ -57,18 +57,22 @@ def signup(request):
   
         # 비밀번호 확인
         if password != password_confirm:
+            messages.error(request, '비밀번호가 일치하지 않습니다.')
             return redirect("users:signup")  
 
         # ID 중복 확인
         if User.objects.filter(login_id=login_id).exists():
+            messages.error(request, "이미 사용 중인 아이디입니다.")
             return redirect("users:signup")  
         
         user = User(login_id=login_id)
         user.set_password(password) 
         user.nickname=make_unique_nickname_of_social_login(login_id)
         user.save()
-        
+
+        messages.success(request, "회원가입이 완료되었습니다!")
         return redirect("users:login")
+    
     return render(request, "users/signup.html")
          
 
@@ -286,19 +290,27 @@ def generate_emotion_graph(user):
     # 1. 같은 날짜 내에서 가장 최근에 작성된 게시물만 가져오기
     recent_diaries = (
         Diary.objects.filter(writer=user)
-        .order_by('date', '-id')  # 같은 날짜 중 최신 게시물을 우선
-        .distinct('date')         # 중복 날짜 제거
-        .order_by('-date')        
-    )[:7]
+        .order_by('-date', '-id')  # 날짜 내림차순, ID 내림차순 (최신 다이어리 유지)
+    )
+    unique_diaries = []
+    seen_dates = set()
+
+    for diary in recent_diaries:
+        diary_date = diary.date.strftime("%Y-%m-%d")  # 날짜를 문자열로 변환하여 중복 체크
+        if diary_date not in seen_dates:
+            unique_diaries.append(diary)
+            seen_dates.add(diary_date)
+        if len(unique_diaries) >= 7:  # 최대 7개까지만
+            break
 
     # 2. 오래된 순으로 정렬
-    recent_diaries = sorted(recent_diaries, key=lambda x: x.date)
+    unique_diaries = sorted(unique_diaries, key=lambda x: x.date)
 
     # 3. 감정 점수(y축)
-    recent_emotion_scores = [diary.emotion for diary in recent_diaries]
+    recent_emotion_scores = [diary.emotion for diary in unique_diaries]
 
     # 4. X축 라벨(날짜)
-    x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
+    x_labels = [diary.date.strftime("%m/%d") for diary in unique_diaries]
 
     if not recent_emotion_scores:
         x_labels = ["Date"]  # 빈 그래프의 x축 라벨
