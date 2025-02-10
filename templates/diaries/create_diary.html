@@ -188,5 +188,35 @@
           });
         }
 
+        document.querySelector(".diary_save_psy").addEventListener("click", function(event) {
+            const weatherInputs = document.querySelectorAll('input[name="weather"]');
+            const emotionInputs = document.querySelectorAll('input[name="emotion"]');
+            
+            let weatherSelected = false;
+            let emotionSelected = false;
+    
+            // Weather 필드 체크
+            weatherInputs.forEach(input => {
+                if (input.checked) weatherSelected = true;
+            });
+    
+            // Emotion 필드 체크
+            emotionInputs.forEach(input => {
+                if (input.checked) emotionSelected = true;
+            });
+    
+            // 검증 실패 시 alert 띄우기
+            if (!weatherSelected && !emotionSelected) {
+                event.preventDefault(); 
+                alert("날씨와 감정을 선택해주세요!");
+            } else if (!weatherSelected) {
+                event.preventDefault();
+                alert("날씨를 선택해주세요!");
+            } else if (!emotionSelected) {
+                event.preventDefault(); 
+                alert("감정을 선택해주세요!");
+            }
+        });
+
       </script>
 {% endblock %}
