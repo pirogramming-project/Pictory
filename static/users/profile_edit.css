@@ -82,21 +82,15 @@
 }
 
 .profile_edit_save_ksy {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+    font-size: 14px;
+    border: 3px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+    padding: 10px;
+    font-family: 'Gravitas One';
+    color: #5c6552;
+    width: 100%;
 }
-
-.profile_edit_save_ksy svg {
-    width: 24px;
-    height: 24px;
-    color: #333;
-}
-
 
 
 /* 프로필 이미지가 없을 경우의 기본 스타일 */
