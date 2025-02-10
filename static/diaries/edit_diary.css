@@ -121,6 +121,8 @@
 }
 
 .fourth_line_psy textarea {
+    font-family: var(--main_font);
+    color: #5c6552;
     width: 100%;
     min-height: 200px;
     padding: 16px;
@@ -144,8 +146,10 @@
 input[type="text"], 
 input[type="date"], 
 select {
+    font-family: var(--main_font);
     width: 100%;
     padding: 8px;
+    color: #5c6552;
     border: 2px solid #5c6552;
     border-radius: 4px;
     background-color: var(--background);

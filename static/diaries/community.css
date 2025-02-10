@@ -52,6 +52,7 @@
     align-items: center;
 }
 .community_search-input_ksy::placeholder {
+    font-family: var(--main_font);
     color: var(--content_color);
 }
 
@@ -151,6 +152,7 @@
 }
 
 .community_detail-title_ksy {
+    font-family: var(--main_font);
     font-size: 2.5rem;
     margin: 0;
     color: var(--title_color);
@@ -204,6 +206,7 @@
 }
 
 .community_detail-hashtags_ksy {
+    font-family: var(--main_font);
     color: var(--title_color);
     font-size: 1.8rem;
 }
