@@ -84,8 +84,9 @@
 .alarm_no_alarm {
     display: flex;
     font-size: 22px;
-    color: black;
+    color: #5c6552;
     justify-content: center;
+    margin-top: 45px;
 }
 .alarm_btn_ksy:last-child {
     margin-bottom: 0;
