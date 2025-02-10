@@ -90,17 +90,7 @@
     transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
-    .photo-grid_ksy {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
-@media (max-width: 480px) {
-    .photo-grid_ksy {
-        grid-template-columns: 1fr;
-    }
-}
 /* 커뮤니티 이미지 클릭시 확대 */
 .community_detail-page_ksy .base_layout_ksy::before {
     content: '';
@@ -231,4 +221,9 @@ body.community_detail-page_ksy .base_header_ksy {
 body.community_detail-page_ksy {
     background-color: rgba(0, 0, 0, 0.9);
     transition: background-color 0.3s ease;
+}
+@media (max-width: 414px) {
+    .community_photo-grid_ksy {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

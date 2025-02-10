@@ -44,6 +44,11 @@
     font-size: 13px;
 }
 .profile-img_psy {
+    width: 122px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--title_color);
+    justify-content: center;
     position: relative;
     display: flex;
     align-items: center;
@@ -53,10 +58,9 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 120px;
-    height: 120px;
+    width: 98%;
+    height: 98%;
     border-radius: 50%;
-    background-color: #515738;
     overflow: hidden;
 }
 
