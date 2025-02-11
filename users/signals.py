@@ -1,11 +1,21 @@
 from django.db.models.signals import post_save, m2m_changed
+from django.contrib.auth.signals import user_logged_in
 from django.db import transaction
 from django.dispatch import receiver
 from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG, Notification_NBA, Badge, UserBadge
 from diaries.models import Diary
 from django.db.models import Q
 from datetime import timedelta
+from django.utils.timezone import now
 
+@receiver(user_logged_in)
+def check_anniversary(sender, request, user, **kwargs):
+    """유저가 가입한 지 1년이 넘었으면 배지를 추가"""
+    if user.created_at + timedelta(days=365) <= now():
+        UserBadge.objects.get_or_create(
+            user=user,
+            badge=Badge.objects.get(id='register_1year')
+        )
 
 # 이웃 요청 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=NeighborRequest)
