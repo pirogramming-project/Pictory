@@ -224,6 +224,7 @@
     }
     /* 사이드바 활성화 상태 */
     .base_side-nav_ksy.base_active_ksy {
+        gap: 10px;
         transform: translateX(0);
         opacity: 1;
     }
@@ -249,19 +250,20 @@
     /* 로그아웃 버튼 */
     .base_logout_ksy {
         font-family: var(--main_font);
-        font-size: 20px;
+        font-size: 15px;
         color: var(--content_color);
         margin-top: 10px;
     }
 
     /* 메뉴 아이템 스타일 */
     .base_menu-item_ksy {
-        font-family: "Gravitas One", serif;
+        font-family: var(--main_font);
         position: relative;
-        width: 82%;
+        width: 75%;
         background-color: var(--background);
         border: none;
-        font-size: 20px;
+        font-size: 15px;
+        font-weight: bold;
         padding: 15px;
         margin: 5px 0;
         border-radius: 10px;

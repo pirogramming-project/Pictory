@@ -141,6 +141,9 @@
                 closeButton.style.display = "block"; 
                 contentArea.classList.add("base_active_opacity"); 
                 requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
+
+                 // 모바일에서 스크롤 막기
+                document.body.style.overflow = "hidden";
             });
         
             // 닫기 버튼 클릭 시
@@ -151,6 +154,9 @@
                     sidebar.style.display = "none";
                     closeButton.style.display = "none";
                     menuButton.style.display = "flex"; 
+
+                    // 모바일에서 스크롤 다시 활성화
+                    document.body.style.overflow = "";
                 }, 100);
             });
         });

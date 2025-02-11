@@ -228,7 +228,12 @@ select {
     }
 
     .detail_btn_psy {
-        margin-top: 60px;
+        padding-top: 50px;
     }
   }
   
+  @media (max-width: 389px) {
+    .detail_btn_psy {
+        padding-top: 75px;
+    }
+  }

@@ -135,8 +135,18 @@
     .alarm_container_ksy a {
         display: flex;
         align-items: center;
-        width: 18%;
+        width: 20%;
 
+    }
+    .alarm_buttons_kes {
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    .alarm_btn_yes_kes, .alarm_btn_no_kes {
+        height: 27px;
+        width: 40px;
     }
   }
   

@@ -236,9 +236,15 @@
     .weekdays_psy {
         width: 86%;
     }
+    .diary_list_right_psy {
+        flex: initial;
+    }
 }
 
 @media (max-width: 430px) {
+    .diary_list_right_psy {
+        flex: initial;
+    }
     .main-container_psy {
         flex-direction: column;
         height: auto;
