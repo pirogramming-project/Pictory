@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG, Notification_NBA, Badge, UserBadge
 from diaries.models import Diary
 from django.db.models import Q
-
+from datetime import timedelta
 
 
 # 이웃 요청 모델에 뭔가 저장되면 실행됨.
@@ -68,22 +68,22 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
                 badge=Badge.objects.get(id='neighbor_1st')
             )
         elif user1NeighborCounts >= 10:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
         elif user1NeighborCounts >= 30:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
         elif user1NeighborCounts >= 50:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
         elif user1NeighborCounts >= 100:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_100th')
             )
@@ -93,22 +93,22 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
                 badge=Badge.objects.get(id='neighbor_1st')
             )
         elif user2NeighborCounts >= 10:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
         elif user2NeighborCounts >= 30:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
         elif user2NeighborCounts >= 50:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
         elif user2NeighborCounts >= 100:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_100th')
             )
@@ -148,22 +148,52 @@ def create_Diary_signal(sender, instance, created, **kwargs):
                 badge=Badge.objects.get(id='diary_1st')
             )
         elif diaryCount >= 10:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_10th')
             )
         elif diaryCount >= 30:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_30th')
             )
         elif diaryCount >= 50:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_50th')
             )
         elif diaryCount >= 100:
-                UserBadge.objects.get_or_create(
+            UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_100th')
             )
+                
+        if(has_written_7_days_consecutively(writer)):
+            UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_7days')
+            )
+
+# util함수
+def has_written_7_days_consecutively(user):
+    """유저가 7일 연속으로 일기를 작성했는지 확인"""
+    # 현재 날짜 기준으로 최근 7일 동안 작성한 날짜 가져오기 (중복 제거)
+    diary_dates = (
+        Diary.objects
+        .filter(writer=user)
+        .values('created_at__date')  # 날짜별 그룹화
+        .order_by('-created_at__date') # 최신 날짜부터 정렬
+    )
+
+    # 중복 제거된 날짜 리스트 생성
+    date_list = [entry['created_at__date'] for entry in diary_dates]
+
+    # 연속된 7일이 있는지 확인
+    if len(date_list) < 7:
+        return False  # 작성한 날짜가 7일 미만이면 False
+    
+    for i in range(6):
+        if (date_list[i] - date_list[i + 1]) != timedelta(days=1):
+            return False  # 연속되지 않은 날짜가 있으면 False 반환
+
+    return True  # 모든 날짜가 연속된 경우 True 반환
