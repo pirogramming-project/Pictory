@@ -232,6 +232,11 @@
     color: black;
 }
 
+@media (max-width: 1024px) {
+    .weekdays_psy {
+        width: 86%;
+    }
+}
 
 @media (max-width: 430px) {
     .main-container_psy {
@@ -263,6 +268,7 @@
     }
 
     .weekdays_psy {
+        width: 80%;
         font-size: 12px;
         font-size: 9px;
         height: 7%;
