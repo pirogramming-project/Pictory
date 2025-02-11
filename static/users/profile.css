@@ -263,26 +263,45 @@
     margin-top: 3px;
 }
 
-@media (max-width: 768px) {
-    .profile_psy {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-section_psy {
-        margin-left: 0;
-        align-items: center;
-    }
-
-    .button-group_psy {
-        justify-content: center;
-    }
-      
-}
-
+/*iphone 14 pro max 반응형*/
 @media (max-width: 430px) {
+    .profile-wrapper_psy {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .base_content-scroll_ksy {
+        margin: 0;
+    }
+    .profile_second_container_ksy {
+        width: 100%;
+    }
+    .base_logo_desktop_ksy {
+        margin: 0 auto;
+    }
+}
+/*iphone xr 반응형*/
+@media (max-width: 414px) {
+    .base_logo_desktop_ksy {
+        margin: 0;
+    }
+    .base_logo_title_desktop_ksy {
+        left: 0;
+    }
+}
+/*ipad mini 반응형*/
+@media (max-width: 1024px) { 
     .profile-wrapper_psy {
         display: block;
     }
-}
+    .base_content-scroll_ksy {
+        margin: 0;
+    }
+    .base_header_ksy {
+        justify-content: center;
+    }
+    .base_logo_desktop_ksy {
+        margin: 0;
+    }
+  }
