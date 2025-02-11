@@ -16,6 +16,7 @@
     <div class="create_diary_right_container_psy">
         <form class="create_diary_form_psy" method="post" action="{% url 'diaries:edit_diary' diary.id %}">
             {% csrf_token %}
+            <input type="hidden" id="create_diary_real_address" name="place_address">
             <div class="first_right_container_psy">
                 <div class="first_line_psy">
                     <div class="diary_title_psy">
@@ -64,7 +65,7 @@
                         {{ form.place }}
                         <!-- 장소 목록 출력 영역 -->
                         <div class="real_location_psy"></div>
-                        <ul id="placesList"></ul>
+                        <ul id="placesList" style="color:black;"></ul>
 
                     </div>
 
@@ -110,8 +111,7 @@
 
         // 페이지 로드 시 지도 핀 찍기
         const placeName = document.getElementById("id_place").value;
-        console.log(placeName)
-        placeSearch(placeName);
+        addLocation("{{ diary.place_address }}");
     });
     
     document.addEventListener("DOMContentLoaded", function() {
