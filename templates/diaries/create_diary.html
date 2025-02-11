@@ -64,8 +64,9 @@
                             <h1 class="diary_letter_psy">o Location</h1>
                             {{ form.place }}
                             <div class="real_location_psy"></div>
+                            <!-- 장소 목록 출력 영역 -->
+                            <ul id="placesList" style="color:black;"></ul>
                         </div>
-    
                     </div>
                 </div>
                 
@@ -110,82 +111,108 @@
         
         document.addEventListener("DOMContentLoaded", function() {
             let inputField = document.querySelector("#id_place");
-            
+            let placesList = document.getElementById('placesList');
+        
             if (inputField) {
-                inputField.addEventListener("change", function() {
-                    if (this.value) {
+                inputField.addEventListener("input", function() {
+                    if (this.value.trim()) {
                         placeSearch(this.value);
+                    } else {
+                        placesList.innerHTML = "";  //  입력 창이 비면 리스트 초기화
+                    }
+                });
+        
+                // 🔹 엔터키 입력 시 자동으로 가장 관련성 높은 장소 선택
+                inputField.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        selectTopPlace();
                     }
                 });
             }
         });
-
-
+        
         // 1. 지도 초기화
         const mapContainer = document.querySelector('.real_location_psy');
         const map = new kakao.maps.Map(mapContainer, {
-          center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
-          level: 6, // 지도 확대 레벨
+            center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+            level: 6, // 지도 확대 레벨
         });
-    
+        
         const geocoder = new kakao.maps.services.Geocoder(); // 주소 검색 객체
-        const markers = {}; // 마커 저장 객체
-    
-        // 장소 검색 객체를 생성합니다
-        var ps = new kakao.maps.services.Places(); 
-    
+        const ps = new kakao.maps.services.Places();  // 장소 검색 객체 생성
+        let marker;  // 단일 마커 관리
+        let topPlace = null;  // 🔹 가장 가능성 높은 장소 저장
+        
         function placeSearch(keyword) {
-          // 키워드 검색
-          ps.keywordSearch(keyword, placesSearchCB); 
+            ps.keywordSearch(keyword, placesSearchCB);
         }
-    
-        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        function placesSearchCB (data, status, pagination) {
+        
+        // 키워드 검색 완료 시 호출되는 콜백함수
+        function placesSearchCB(data, status) {
             if (status === kakao.maps.services.Status.OK) {
-              targetPlace = data[0];  // 가장 가능성 높은 장소를 타겟으로 설정
-              console.log(targetPlace['address_name'])  // 주소 가져오기
-
-                addLocation(targetPlace['address_name']);
-            } else {
-              alert("장소를 찾을 수 없습니다.")
+                displayPlaces(data.slice(0, 3)); // 🔹 가장 관련성 높은 3개만 표시
+                topPlace = data[0]; // 🔹 가장 가능성 높은 장소 저장
             }
         }
-
-        var marker;
-        // 2. 마커 추가 함수
+        
+        // 🔹 엔터를 누르면 가장 가능성 높은 장소 자동 선택
+        function selectTopPlace() {
+            if (topPlace) {
+                addLocation(topPlace.address_name);
+            } else {
+                alert("검색 결과가 없습니다.");
+            }
+        }
+        
+        // 2. 검색된 장소 목록을 화면에 표시하는 함수 (최대 3개만)
+        function displayPlaces(places) {
+            placesList.innerHTML = ""; // 기존 리스트 삭제
+        
+            places.forEach((place, index) => {
+                const itemEl = document.createElement('li');
+                itemEl.innerHTML = `
+                    <span class="markerbg marker_${index+1}"></span>
+                    <div class="info">
+                        <h5>${place.place_name}</h5>
+                        <span>${place.road_address_name || place.address_name}</span>
+                    </div>
+                `;
+        
+                itemEl.onclick = function() {
+                    addLocation(place.address_name);
+                };
+                placesList.appendChild(itemEl);
+            });
+        }
+        
+        // 3. 선택한 장소를 지도에 마커로 표시 & 입력 필드에 반영
         function addLocation(address) {
-          const input = address;
-    
-          if (!input) {
-            alert('장소를 찾을 수 없습니다.');
-            return;
-          }
-    
-          // 2. addressSearch : 주소 -> 좌표 변환해주는 함수
-          geocoder.addressSearch(input, function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-              // 마커를 생성합니다
-              if (marker) {
-                  marker.setMap(null);  // 이전 마커 제거
-              }
-                marker = new kakao.maps.Marker({
-                    position: coords
-                });
-                // 마커가 지도 위에 표시되도록 설정합니다
-                marker.setMap(map);
-    
-              // 지도 중심 이동
-              map.panTo(coords);
-                
-              // 폼 제출 준비
-              const placeAddressInput = document.getElementById("create_diary_real_address");
-              placeAddressInput.value = address;
-            } else {
-              alert('장소를 찾을 수 없습니다.');
+            if (!address) {
+                alert('장소를 찾을 수 없습니다.');
+                return;
             }
-          });
+        
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        
+                    // 기존 마커 삭제 후 새로운 마커 추가
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                    marker = new kakao.maps.Marker({ position: coords });
+                    marker.setMap(map);
+        
+                    // 지도 중심 이동
+                    map.panTo(coords);
+        
+                    // 선택한 주소를 입력 필드에 자동 반영
+                    document.getElementById("create_diary_real_address").value = address;
+                } else {
+                    alert('장소를 찾을 수 없습니다.');
+                }
+            });
         }
 
         document.querySelector(".diary_save_psy").addEventListener("click", function(event) {

@@ -78,6 +78,7 @@ def edit_diary(request, diary_id):
 
         if form.is_valid():
             diary = form.save(commit=False)
+            diary.place_address = request.POST.get('place_address')
             diary.save()
             form.save_m2m()
 
