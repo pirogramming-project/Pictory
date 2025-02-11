@@ -50,7 +50,10 @@
 .base_li_ksy {
     display: flex;
 }
-
+.base_footer_letter_ksy {
+    font-family: var(--main_font);
+    font-size: 1.3rem;
+}
 .base_desktop-nav-item_ksy {
     font-family: var(--main_font);
     color: var(--title_color);
