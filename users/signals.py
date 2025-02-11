@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, m2m_changed
 from django.db import transaction
 from django.dispatch import receiver
-from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG, Badge, UserBadge
+from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG, Notification_NBA, Badge, UserBadge
 from diaries.models import Diary
 from django.db.models import Q
 
@@ -22,6 +22,24 @@ def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
             notification=new_notification,
             from_user=instance.sender
         )
+        
+        
+# 유저 배지 모델에 뭔가 저장되면 실행됨.
+@receiver(post_save, sender=UserBadge)
+@transaction.atomic
+def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
+    """유저가 배지를 받으면 알림을 생성하는 함수"""
+    if created:  # 새로운 요청이 생성된 경우에만 실행
+        new_notification = Notification.objects.create(
+            user=instance.user,
+            type="NBA",
+            message=f"배지를 획득했어요! 축하해요!"
+        )
+        Notification_NBA.objects.create(
+            notification=new_notification,
+            acquired_badge=instance.badge
+        )
+
         
 # 친구관계 모델에 뭔가 추가되면 실행됨.
 @receiver(post_save, sender=Neighbor)
@@ -44,52 +62,52 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
         ## 2. 배지 지급
         user1NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user1) | Q(user2=instance.user1)).count()
         user2NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user2) | Q(user2=instance.user2)).count()
-        if user1NeighborCounts == 1:
+        if user1NeighborCounts >= 1:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_1st')
             )
-        elif user1NeighborCounts == 10:
+        elif user1NeighborCounts >= 10:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
-        elif user1NeighborCounts == 30:
+        elif user1NeighborCounts >= 30:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
-        elif user1NeighborCounts == 50:
+        elif user1NeighborCounts >= 50:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
-        elif user1NeighborCounts == 100:
+        elif user1NeighborCounts >= 100:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_100th')
             )
-        if user2NeighborCounts == 1:
+        if user2NeighborCounts >= 1:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_1st')
             )
-        elif user2NeighborCounts == 10:
+        elif user2NeighborCounts >= 10:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
-        elif user2NeighborCounts == 30:
+        elif user2NeighborCounts >= 30:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
-        elif user2NeighborCounts == 50:
+        elif user2NeighborCounts >= 50:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
-        elif user2NeighborCounts == 100:
+        elif user2NeighborCounts >= 100:
                 UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_100th')
@@ -124,27 +142,27 @@ def create_Diary_signal(sender, instance, created, **kwargs):
         writer = instance.writer
         diaryCount = Diary.objects.filter(writer=instance.writer).count()
         
-        if diaryCount == 1:
+        if diaryCount >= 1:
             UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_1st')
             )
-        elif diaryCount == 10:
+        elif diaryCount >= 10:
                 UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_10th')
             )
-        elif diaryCount == 30:
+        elif diaryCount >= 30:
                 UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_30th')
             )
-        elif diaryCount == 50:
+        elif diaryCount >= 50:
                 UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_50th')
             )
-        elif diaryCount == 100:
+        elif diaryCount >= 100:
                 UserBadge.objects.get_or_create(
                 user=writer,
                 badge=Badge.objects.get(id='diary_100th')

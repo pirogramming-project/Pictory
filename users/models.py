@@ -150,6 +150,10 @@ class Notification_TAG(models.Model):
     notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="tag_notification")
     tagged_diary = models.ForeignKey('diaries.Diary', on_delete=models.CASCADE, related_name="related_notifications")
 
+class Notification_NBA(models.Model):
+    notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="tag_notification")
+    acquired_badge = models.ForeignKey(Badge, on_delete=models.CASCADE, related_name="related_notifications")
+
 ###### 사용하게 될 지도 모르는 utility 함수들
 # def are_neighbors(user_a, user_b):
 #     """두 유저가 이웃인지 확인"""
