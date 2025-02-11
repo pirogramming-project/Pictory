@@ -56,7 +56,7 @@
 
 
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .select-btn_psy {
         flex-direction: row;
         gap: 20px;

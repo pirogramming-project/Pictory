@@ -225,7 +225,7 @@ body.community_detail-page_ksy {
     background-color: rgba(0, 0, 0, 0.9);
     transition: background-color 0.3s ease;
 }
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .community_photo-grid_ksy {
         grid-template-columns: repeat(3, 1fr);
     }

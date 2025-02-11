@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
-        currentMonthElement.textContent = new Date(year, month).toLocaleString("ko-KR", { year: "numeric", month: "long" });
+        currentMonthElement.textContent = new Date(year, month).toLocaleString("en-US", { month: "short", year: "numeric" });
 
         const firstDayIndex = new Date(year, month, 1).getDay();
         const lastDate = new Date(year, month + 1, 0).getDate();

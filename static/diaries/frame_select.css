@@ -47,7 +47,7 @@
     transform: scale(0.7);
 }
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .frame-container_psy {
         height: auto;
         padding: 20px;
