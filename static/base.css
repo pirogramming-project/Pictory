@@ -341,6 +341,9 @@
     .base_header_ksy {
         justify-content: center;
     }
+    .base_logo_desktop_ksy {
+        margin: 0;
+    }
 
   }
   
