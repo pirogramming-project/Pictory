@@ -154,7 +154,7 @@
 }
 
 /* 모바일용 햄버거바 */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
     .base_button_icon_ksy {
         display: none;
     }
