@@ -1,8 +1,10 @@
 from django.db.models.signals import post_save, m2m_changed
 from django.db import transaction
 from django.dispatch import receiver
-from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG
+from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG, Badge, UserBadge
 from diaries.models import Diary
+from django.db.models import Q
+
 
 
 # 이웃 요청 모델에 뭔가 저장되면 실행됨.
@@ -27,6 +29,7 @@ def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
 def create_FriendRequestAccepted_notification(sender, instance, created, **kwargs):
     """친구가 생기면 알림을 생성하는 함수"""
     if created:
+        ## 1. 알림 만들기
         Notification.objects.create(
             user=instance.user1,
             type="FRA",
@@ -37,6 +40,60 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
             type="FRA",
             message=f"@{instance.user1.nickname}님과 이웃이 되었습니다."
         )
+        
+        ## 2. 배지 지급
+        user1NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user1) | Q(user2=instance.user1)).count()
+        user2NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user2) | Q(user2=instance.user2)).count()
+        if user1NeighborCounts == 1:
+            UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_1st')
+            )
+        elif user1NeighborCounts == 10:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_10th')
+            )
+        elif user1NeighborCounts == 30:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_30th')
+            )
+        elif user1NeighborCounts == 50:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_50th')
+            )
+        elif user1NeighborCounts == 100:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_100th')
+            )
+        if user2NeighborCounts == 1:
+            UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_1st')
+            )
+        elif user2NeighborCounts == 10:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_10th')
+            )
+        elif user2NeighborCounts == 30:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_30th')
+            )
+        elif user2NeighborCounts == 50:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_50th')
+            )
+        elif user2NeighborCounts == 100:
+                UserBadge.objects.get_or_create(
+                user=instance.user1,
+                badge=Badge.objects.get(id='neighbor_100th')
+            )
 
 
 # 유저태그 모델에 뭔가 추가되면 실행됨.
