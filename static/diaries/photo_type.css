@@ -53,3 +53,28 @@
     white-space: nowrap;
     font-family: 'Gravitas One';
 }
+
+
+
+@media (max-width: 414px) {
+    .select-btn_psy {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .select-btn1_psy, .select-btn2_psy {
+        height: auto; 
+        min-width: 150px;
+        min-height: 100px;
+    }
+
+    .select-btn1_psy img, .select-btn2_psy img {
+        width: 100%;
+        height: auto;
+    }
+
+    .select-text {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+}

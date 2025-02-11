@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'NotoSerifKR';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .main-container_psy {
     height: 80vh;
     overflow-y: auto;
@@ -126,7 +132,7 @@
     border-radius: 8px;
     padding: 13px;
     background-color: #FFF9EA;
-    min-height: 48%; 
+    display: inline-block;
     height: auto;  
 }
 
@@ -137,13 +143,15 @@
     background-color: #FFF9EA;
     display: inline-block;
     height: auto;
+    min-height: 100%; 
 }
 
 .today_diary_list_psy h3,
 .selected_diary_list_psy h3,
 .last_week_diary_list_psy h3 {
     color: #515738;
-    font-family: 'Gravitas One', serif;
+    font-family: var(--main_font);
+    font-weight: 700;
     font-size: 16px;
     margin-bottom: 15px;
     padding-bottom: 10px;
@@ -169,7 +177,8 @@
     transition: background-color 0.2s;
     color: #515738;
     font-size: 12px;
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
+    font-weight: 700;
 }
 
 .today_diary_list_psy li:hover,
@@ -194,16 +203,6 @@
 .last_week_diary_list_psy li:hover a {
     color: var(--background);
 }
-
-
-
-
-
-
-
-
-
-
 
 
  * {
@@ -231,4 +230,77 @@
 
 #selectedDateTitle {
     color: black;
+}
+
+
+@media (max-width: 414px) {
+    .main-container_psy {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .calendar-wrapper_psy,
+    .today_diary_psy {
+        width: 100%;
+        padding: 0 10px;
+        margin-top: 20px;
+    }
+
+    .today_diary_psy {
+        padding: 0 17px;
+    }
+
+    .calendar_psy {
+        padding-top: 20px;
+    }
+
+    .month_psy h2 {
+        font-size: 20px;
+    }
+
+    .month_psy span {
+        font-size: 20px;
+    }
+
+    .weekdays_psy {
+        font-size: 12px;
+        font-size: 9px;
+        height: 7%;
+        display: flex;
+        align-items: center;
+    }
+
+    .day_psy {
+        font-size: 9px;
+        border-radius: 4px;
+    }
+
+    .today_diary_list_psy,
+    .selected_diary_list_psy,
+    .last_week_diary_list_psy {
+        min-height: auto; 
+        font-size: 12px;
+        border-radius: 6px;
+    }
+
+    .today_diary_list_psy h3,
+    .selected_diary_list_psy h3,
+    .last_week_diary_list_psy h3 {
+        font-size: 14px;
+        padding-bottom: 8px;
+    }
+
+    .today_diary_list_psy li,
+    .selected_diary_list_psy li,
+    .last_week_diary_list_psy li {
+        font-size: 10px;
+        padding: 6px;
+        border-radius: 4px;
+    }
+
+    .today_diary_list_psy a, 
+    .selected_diary_list_psy a, 
+    .last_week_diary_list_psy {
+        font-size: 12px;
+    } 
 }

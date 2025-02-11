@@ -10,6 +10,7 @@ from django.core.files.base import ContentFile
 import base64
 from django.http import Http404, JsonResponse
 from django.db.models import Q
+from django.db import transaction
 import json
 from django.http import HttpResponseForbidden
 import os
@@ -61,6 +62,7 @@ def diaries_by_date(request, year, month, day):
 
 # 다이어리 수정
 @login_required
+@transaction.atomic
 def edit_diary(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)
 
@@ -142,6 +144,7 @@ def select_frame(request):
   
 # 인생네컷 추가 페이지3
 @login_required
+@transaction.atomic
 def custom_photo(request, frame_type):
     if request.method == "POST":
         '''사진 관련 데이터 몽땅 저장하고 다음 페이지로 이동 '''
@@ -207,6 +210,7 @@ def custom_photo(request, frame_type):
 
 # 인생네컷 추가 페이지4
 @login_required
+@transaction.atomic
 def create_diary(request, related_frame_id):
     related_frame = Frame.objects.get(id=related_frame_id)
     # 로그인한 유저의 이웃 관계 필터링
@@ -250,6 +254,7 @@ def create_diary(request, related_frame_id):
             return redirect(reverse('diaries:diary_detail', kwargs={'diary_id': diary.id}))    
         else:
             print("error: form is not valid")
+            related_frame.delete()
             return redirect('diaries:create_diary')
         
     form = DiaryForm()
@@ -263,7 +268,7 @@ def create_diary(request, related_frame_id):
     return render(request, 'diaries/create_diary.html', context)
 
 
-
+@login_required
 def community(request):
     myNeightbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).select_related("user1", "user2")
 
@@ -375,6 +380,7 @@ def mydiariesTagSearchAjax(request):
         
 
 @login_required
+@transaction.atomic
 def upload_photo(request):
     if request.method == 'POST' and request.FILES.get('photo'):
         uploaded_photo = request.FILES['photo']

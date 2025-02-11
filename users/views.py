@@ -16,7 +16,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from diaries.models import Diary
 from django.utils.timezone import now, timedelta
-
+from django.db import transaction
+from .forms import UserUpdateForm
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -33,12 +34,12 @@ def login_view(request):
             user = User.objects.get(login_id=login_id)  
             if check_password(input_password, user.password):  
                 auth_login(request, user)
-                return redirect('users:main')    # 메인 페이지로 이동 (미구현)
+                return redirect('users:main')    
             else:
-                print("잘못된 비밀번호")
-                return redirect('users:login')
+                messages.error(request, "비밀번호가 올바르지 않습니다.")  
+                return redirect('users:login')  
         except User.DoesNotExist:
-            print("사용자를 찾을 수 없습니다.")
+            messages.error(request, "존재하지 않는 계정입니다.")
             return redirect('users:login')
     
     # 만약에 유저가 로그인했다
@@ -56,18 +57,22 @@ def signup(request):
   
         # 비밀번호 확인
         if password != password_confirm:
+            messages.error(request, '비밀번호가 일치하지 않습니다.')
             return redirect("users:signup")  
 
         # ID 중복 확인
         if User.objects.filter(login_id=login_id).exists():
+            messages.error(request, "이미 사용 중인 아이디입니다.")
             return redirect("users:signup")  
         
         user = User(login_id=login_id)
         user.set_password(password) 
         user.nickname=make_unique_nickname_of_social_login(login_id)
         user.save()
-        
+
+        messages.success(request, "회원가입이 완료되었습니다!")
         return redirect("users:login")
+    
     return render(request, "users/signup.html")
          
 
@@ -279,37 +284,58 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from django.shortcuts import render
+from matplotlib import font_manager, rc
 
 def generate_emotion_graph(user):
     # 1. 같은 날짜 내에서 가장 최근에 작성된 게시물만 가져오기
     recent_diaries = (
         Diary.objects.filter(writer=user)
-        .order_by('date', '-id')  # 같은 날짜 중 최신 게시물을 우선
-        .distinct('date')         # 중복 날짜 제거
-        .order_by('-date')        
-    )[:7]
+        .order_by('-date', '-id')  # 날짜 내림차순, ID 내림차순 (최신 다이어리 유지)
+    )
+    unique_diaries = []
+    seen_dates = set()
+
+    for diary in recent_diaries:
+        diary_date = diary.date.strftime("%Y-%m-%d")  # 날짜를 문자열로 변환하여 중복 체크
+        if diary_date not in seen_dates:
+            unique_diaries.append(diary)
+            seen_dates.add(diary_date)
+        if len(unique_diaries) >= 7:  # 최대 7개까지만
+            break
 
     # 2. 오래된 순으로 정렬
-    recent_diaries = sorted(recent_diaries, key=lambda x: x.date)
+    unique_diaries = sorted(unique_diaries, key=lambda x: x.date)
 
     # 3. 감정 점수(y축)
-    recent_emotion_scores = [diary.emotion for diary in recent_diaries]
+    recent_emotion_scores = [diary.emotion for diary in unique_diaries]
 
     # 4. X축 라벨(날짜)
-    x_labels = [diary.date.strftime("%m/%d") for diary in recent_diaries]
+    x_labels = [diary.date.strftime("%m/%d") for diary in unique_diaries]
+
+    if not recent_emotion_scores:
+        x_labels = ["Date"]  # 빈 그래프의 x축 라벨
+        recent_emotion_scores = [0]  # y축 값으로 0 추가
+
 
     # 그래프 생성
-    plt.rcParams["font.family"] = "GangwonEduSaeeum"  
+    plt.rcParams["font.family"] = "DejaVu Sans"
     fig, ax = plt.subplots(figsize=(8, 5))
+    ax.set_facecolor("#FFF9EA")  # 축 배경색
+    fig.patch.set_facecolor("#FFF9EA")  # 전체 그래프 배경색
     ax.plot(x_labels, recent_emotion_scores, marker="p", color="#5c6552", linewidth=4, markeredgewidth=2)
-    ax.set_xlabel("날짜", fontsize=20, color="#5c6552", labelpad=15)
-    ax.set_ylabel("감정 점수 (0~8)", fontsize=20, color="#5c6552", labelpad=15)
+    ax.set_xlabel("Date", fontsize=20, color="#5c6552", labelpad=15)
+    ax.set_ylabel("Emotion (0~8)", fontsize=20, color="#5c6552", labelpad=15)
     ax.set_ylim(0, 8)  
     ax.grid(False) 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.tick_params(axis="x", labelsize=18, colors="#5c6552")  
     ax.tick_params(axis="y", labelsize=18, colors="#5c6552")
+
+    # 처음에 데이터가 하나도 없을 때 그래프 비워놓기
+    if len(recent_emotion_scores) == 1 and recent_emotion_scores[0] == 0:
+        ax.text(0.5, 4, "데이터가 없습니다.", horizontalalignment='center', verticalalignment='center', 
+                fontsize=16, color="#5c6552", transform=ax.transAxes)
     fig.tight_layout()
 
     # 이미지로 변환
@@ -359,6 +385,8 @@ def are_neighbors(user_a, user_b):
     """두 유저가 이웃인지 확인"""
     user1, user2 = sorted([user_a, user_b], key=lambda u: u.login_id)
     return Neighbor.objects.filter(user1=user1, user2=user2).exists()
+
+@transaction.atomic
 def addUsersToFriend(user1, user2):
     ''' user1과 user2를 이웃으로 만듦. 이미 이웃이었는지는 검사하지 않음 기존의 이웃 요청은 삭제함 '''
     user1, user2 = sorted([user1, user2], key=lambda u: u.login_id)
@@ -528,3 +556,56 @@ def update_profile_photo(request):
     
     messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
     return redirect("users:profile")
+
+
+# profile_edit에서 사진 바꾸면 profile_edit 페이지로 redirect되도록 따로 만든 함수(프로필 페이지에서 바꾸면 프로필 페이지로 가는 함수 따로 있음)
+@login_required
+def update_profile_photo_edit(request):
+    if request.method == "POST" and request.FILES.get("profile_photo"):
+        user = request.user
+        user.profile_photo = request.FILES["profile_photo"]
+        user.save()
+        
+        messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
+        return redirect("users:profile_edit")  
+    
+    messages.error(request, "바꿀 프로필 사진을 선택하지 않았습니다.")
+    return redirect("users:profile_edit")
+
+def profile_edit(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user) # 기존 정보 불러오기
+        if form.is_valid():
+            form.save()
+            return redirect("users:profile") # 수정하고 profile로 redirect, 향후에 바꿀거면 바꾸세용
+        
+    else:
+        form = UserUpdateForm(instance=user)
+    return render(request, 'users/profile_edit.html', {"form":form})
+
+
+@login_required
+def friend_check(request):
+    neighbors = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+
+    # 이웃 정보를 리스트로 변환
+    friends = []
+    for neighbor in neighbors:
+        if neighbor.user1 == request.user:
+            friend = neighbor.user2  # user1이 본인이면 상대방(user2)을 이웃으로
+        else:
+            friend = neighbor.user1  # user2가 본인이면 상대방(user1)을 이웃으로
+        
+        friends.append({
+            "nickname": friend.nickname,
+            "profile_photo": friend.profile_photo.url if friend.profile_photo else None,
+            "introduce": friend.introduce if friend.introduce else " ",
+        })
+
+    context = {
+        "friends": friends,
+        "friend_count": len(friends),
+    }
+    return render(request, 'users/friend_check.html', context)

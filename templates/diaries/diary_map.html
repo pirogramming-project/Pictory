@@ -206,7 +206,7 @@
 
   function displayDiaryList(diaries) {
     const contentLetter = document.querySelector('.diary_map_content_letter_ksy');
-    contentLetter.style.display = 'none';
+    contentLetter.classList.add('hide');
 
     const diaryListContainer = document.getElementById("diaryListContainer");
     diaryListContainer.className = "map_diary-list_container_ljs";
@@ -216,14 +216,17 @@
     const closeButton = document.createElement("button");
     closeButton.className = "map_diary-list_close-btn_ljs";
     closeButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
         </svg>
     `;
     closeButton.onclick = () => {
         const diaryList = document.querySelector('.map_diary-list_ljs');
-        diaryList.style.display = 'none';
-        contentLetter.style.display = 'flex';
+        diaryList.classList.remove('show');
+        setTimeout(() => {
+            diaryList.style.display = 'none';
+            contentLetter.classList.remove('hide');
+        }, 300); // transition 시간과 맞춤
     };
     diaryListContainer.parentElement.appendChild(closeButton);
 
@@ -232,6 +235,8 @@
         emptyItem.className = "map_diary-list_item_ljs";
         emptyItem.textContent = "📌 관련된 다이어리가 없습니다.";
         diaryListContainer.appendChild(emptyItem);
+
+        
     } else {
         diaries.forEach(diary => {
             const listItem = document.createElement("li");
@@ -265,6 +270,7 @@
 
     const diaryList = document.querySelector('.map_diary-list_ljs');
     diaryList.style.display = 'block';
+    diaryList.classList.add('show');
   }
 
 

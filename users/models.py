@@ -41,6 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("이메일", null=True, blank=True, unique=True)
     birthday = models.DateField("생일", null=True, blank=True)
     created_at = models.DateTimeField("생성일시", auto_now_add=True)
+    name = models.CharField("이름", max_length=50, null=True, blank=True)
+    introduce = models.CharField("소개", max_length=50, null=True, blank=True) 
 
     # 추가 필드 (Django 인증 시스템과의 호환성)
     is_active = models.BooleanField(default=True)  # 계정 활성화 여부

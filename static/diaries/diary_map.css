@@ -36,6 +36,7 @@
     padding: 8px;
 }
 .map_search-input_ksy::placeholder{
+    font-family: var(--main_font);
     color: var(--content_color);
 }
 
@@ -92,8 +93,14 @@
     align-items: center;
     background-color: var(--content_color);
     flex: 1;
+    transition: opacity 0.3s ease-out;
+}
+.diary_map_content_letter_ksy.hide {
+    opacity: 0;
+    display: none;
 }
 .diary_map_description_ksy {
+    font-family: var(--main_font);
     line-height: 1.5;
     color: rgba(0, 0, 0, 0.719);
     font-size: 1.5rem;
@@ -118,6 +125,10 @@
     overflow-y: auto;
     display: none;
     position: relative;
+}
+.map_diary-list_ljs.show {
+    display: block;
+    transform: translateX(0);
 }
 
 .map_diary-list_container_ljs {
@@ -157,7 +168,8 @@
 .map_diary-list_title_ljs {
     display: block;
     color: rgba(0, 0, 0, 0.611);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    font-family: var(--main_font);
     margin-top: 10px;
     margin-left: 30px;
 }
@@ -187,6 +199,35 @@
 }
 
 .diary_map_location_map_ksy {
+    font-family: var(--main_font);
     color: black;
     font-size: 1.5rem;
 }
+.map_diary-list_item_ljs {
+    padding: 10px;
+    opacity: 0;
+    transform: translateX(10px);
+    animation: fadeInRight 0.5s ease forwards;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 414px) {
+    .community-page_ksy .base_content-scroll_ksy {
+        flex-direction: column;
+    }
+    .map_container_ksy {
+        height: 50vh;
+        flex: none;
+    }
+
+  }

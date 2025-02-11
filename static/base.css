@@ -40,11 +40,12 @@
     flex-grow: 1;
 }
 .base_name_nav_ksy {
+    font-family: var(--main_font);
     margin-top: 3px;
-    margin-right: 2px;
+    margin-right: 5px;
     font-weight: bold;
     color: var(--title_color);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }
 .base_li_ksy {
     display: flex;
@@ -327,3 +328,21 @@
     z-index: 10;
 }
 
+
+
+@media (max-width: 414px) {
+    .base_content-scroll_ksy {
+        margin: 0;
+    }
+
+    .base_header_ksy {
+        justify-content: center;
+    }
+
+    .base_logo_title_desktop_ksy {
+        position: relative;
+        left: 18%;
+    }
+
+  }
+  

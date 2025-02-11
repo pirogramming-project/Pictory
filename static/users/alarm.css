@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 80%;
+    width: 60%;
     margin: 55px auto;
     padding: 1rem;
 
@@ -22,10 +22,10 @@
 
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
+    font-family: var(--main_font);
     color: #515738;
     font-size: 13px;
     font-weight: bold;
-    padding-top: 10px;
     padding-inline: 10px;;
 }
 
@@ -34,6 +34,8 @@
     padding: 5px;
     font-family: "Gravitas One", serif;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
 
 }
 
@@ -53,14 +55,22 @@
     display: none;
 }
 
+.alarm_icon_wrapper_ksy {
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 가로 정렬 */
+    padding-top: 10px;
+}
+
 /* 알림 온 시각(공통) */
 .alarm_time_kes {
+    font-family: var(--main_font);
     color: #5c6552;
     position: absolute;
     left: 0;
     top: 0;
     padding: 3px;
-    font-size: 7px;
+    font-size: 8px;
 }
 
 /* 알림창에서 친구수락 예/아니오 버튼 */
@@ -84,81 +94,25 @@
 .alarm_no_alarm {
     display: flex;
     font-size: 22px;
-    color: black;
+    color: #5c6552;
     justify-content: center;
+    margin-top: 45px;
 }
 .alarm_btn_ksy:last-child {
     margin-bottom: 0;
 }
 
+@media (max-width: 414px) {
+    .alarm_container_ksy {
+        width: 100%;
+        padding: 2rem;
+    }
 
+    .alarm_container_ksy a {
+        display: flex;
+        align-items: center;
+        width: 18%;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.alarm_icon_wrapper_ksy {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-right: .6rem;
-}
-.alarm_icon_ksy {
-    font-size: 1.2rem;
-}
-
-.alarm_text_ksy {
-    font-family: var(--main_font);
-    color: #333;
-    font-size: 23px;
-    line-height: 1.4;
-    flex: 1;
-    word-break: break-word;
-}
-
-.alarm_writable_item_ksy {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    background-color: #B5DAFF;
-    border: none;
-    border-radius: 8px;
-    text-align: left;
-    transition: all 0.2s ease;
-}
-
-.alarm_writable_item_ksy:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transform: translateY(-1px);
-}
-
-.alarm_write_btn_ksy {
-    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.10) inset, -2px -2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    font-family: var(--main_font);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 12px;
-    background-color: white;
-    color: #333;
-    border-radius: 20px;
-    font-size: 23px;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-.alarm_write_btn_ksy:hover {
-    background-color: #f5f5f5de;
-}
+    }
+  }
+  

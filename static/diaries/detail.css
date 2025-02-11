@@ -123,7 +123,7 @@
 }
 
 .diary_content_tag_psy span {
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
     color: #5c6552;
     font-size: 14px;
 }
@@ -138,6 +138,7 @@
 }
 
 .friend_tag_item_psy span {
+    font-family: var(--main_font);
     color: #5c6552;
     font-size: 14px;
     margin-right: 5px;
@@ -147,19 +148,24 @@
     flex: 1;
 }
 
-.diary_content_psy {
+.diary_content_psy p{
+    font-family: var(--main_font);
     width: 100%;
     min-height: 200px;
     padding: 16px;
-    margin-bottom: 20px;
     border: 3px solid #5c6552;
     border-radius: 8px;
     resize: vertical;
     background-color: var(--background);
-    height: calc(22vh - -5px);
+    overflow: auto; 
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    height: calc(22vh - -15px);
     overflow-y: auto;
 }
-
+.diary_detail_place_ksy, .diary_detail_title_ksy, .diary_detail_date_ksy {
+    font-family: var(--main_font);
+}
 .diary_content_psy h1 {
     gap: 10px;
     display: grid;
@@ -186,6 +192,7 @@ select {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
+    margin-top: 20px;
 }
 
 .diary_save_ksy, .diary_delete_psy {
@@ -197,3 +204,31 @@ select {
     font-family: 'Gravitas One';
     color: #5c6552;
 }
+
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+    }
+
+    .second_third_container_psy {
+        display: block;
+    }
+    
+    .first_line_psy {
+        display: block;
+    }
+
+    .diary_tag_psy,.third_line_psy  {
+        gap: 10px;
+    }
+
+    .diary_content_psy {
+        height: calc(22vh - -5px);
+    }
+
+    .detail_btn_psy {
+        margin-top: 60px;
+    }
+  }
+  

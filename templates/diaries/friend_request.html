@@ -81,7 +81,8 @@
                                 lastFieldDOM.addEventListener("click", boundHandleClick);
                             } else if (friend_status === "현재 친구") {
                                 lastFieldDOM = document.createElement("p");
-                                lastFieldDOM.textContent = "소중한 친구입니다..";
+                                lastFieldDOM.textContent = "이미 친구입니다";
+                                lastFieldDOM.classList.add("friend-message_ksy");
                             } else {
                                 lastFieldDOM = document.createElement("button");
                                 lastFieldDOM.className = friendRequestCancelButtonClassName;

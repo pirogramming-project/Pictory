@@ -1,4 +1,5 @@
 from django.db.models.signals import post_save, m2m_changed
+from django.db import transaction
 from django.dispatch import receiver
 from .models import Neighbor, NeighborRequest, Notification, Notification_NFR, Notification_TAG
 from diaries.models import Diary
@@ -6,6 +7,7 @@ from diaries.models import Diary
 
 # 이웃 요청 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=NeighborRequest)
+@transaction.atomic
 def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
     """이웃 요청이 생성되면 알림을 생성하는 함수"""
     if created:  # 새로운 요청이 생성된 경우에만 실행
@@ -21,6 +23,7 @@ def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
         
 # 친구관계 모델에 뭔가 추가되면 실행됨.
 @receiver(post_save, sender=Neighbor)
+@transaction.atomic
 def create_FriendRequestAccepted_notification(sender, instance, created, **kwargs):
     """친구가 생기면 알림을 생성하는 함수"""
     if created:
@@ -38,6 +41,7 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
 
 # 유저태그 모델에 뭔가 추가되면 실행됨.
 @receiver(m2m_changed, sender=Diary.user_tags.through)
+@transaction.atomic
 def create_tagged_notification(sender, instance, action, reverse, model, pk_set, **kwargs):
     """일기에서 태그된 유저에게 알림을 보내는 함수"""
     if action == "post_add":  # ManyToManyField에 새로운 값이 추가될 때만 실행

@@ -92,9 +92,9 @@
     padding: 2px 5px;
     margin: 2px;
     border-radius: 5px;
-    font-family: 'Gravitas One';
+    font-family: var(--main_font);
     color: #5c6552;
-    font-size: 10px;
+    font-size: 11px;
     cursor: pointer;
 }
 
@@ -120,44 +120,36 @@
     margin-top: 8px;
     border: 2px solid #5c6552;
     border-radius: 4px;
-    height: 200px; 
+    height: 23vh; 
     width: 100%;
 }
 
 .fourth_line_psy textarea {
+    font-family: var(--main_font);
     width: 100%;
     min-height: 200px;
     padding: 16px;
     border: 3px solid #5c6552;
-    border-radius: 8px;
+    border-radius: 5px;
     resize: vertical;
     background-color: var(--background);
 }
 
 .diary_save_psy {
-    align-self: flex-end;
-    padding: 12px 24px;
+    font-size: 14px;
+    border: 3px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+    padding: 10px;
+    font-family: 'Gravitas One';
     color: #5c6552;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.diary_save_psy svg {
-   width: 32px;
-   height: 32px;
-}
-
-.diary_save_psy svg path {
-    stroke-width: 3; 
 }
 
 
 input[type="text"], 
 input[type="date"], 
 select {
+    font-family: var(--main_font);
     width: 100%;
     padding: 8px;
     border: 2px solid #5c6552;
@@ -201,7 +193,7 @@ select {
 /* 선택된 SVG를 강조 */
 .emotion-choice input[type="radio"]:checked + label {
     border-color: #5c6552; 
-    background-color: #f0f8ff;
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
 /* 날씨 임시 확인용 */
@@ -233,5 +225,29 @@ select {
 /* 선택된 날씨 강조 */
 .weather-choice input[type="radio"]:checked + label {
     border-color: #5c6552;
-    background-color: #f0f8ff;
+    background-color: rgba(0, 0, 0, 0.10);
 }
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+        padding: 0;
+        padding-left: 0;
+        margin: 20px
+    }
+
+    input[type="text"] {
+        font-size: 9px;
+    }
+    
+    .real_location_psy {
+        height: 215px;
+    }
+
+    .emotion-choice label, .weather-choice label {
+        padding: 1px;
+        border-color: unset;
+    }
+
+  }
+  

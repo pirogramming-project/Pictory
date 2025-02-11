@@ -116,11 +116,13 @@
     margin-top: 8px;
     border: 2px solid #5c6552;
     border-radius: 4px;
-    height: 200px; 
+    height: 23vh; 
     width: 100%;
 }
 
 .fourth_line_psy textarea {
+    font-family: var(--main_font);
+    color: #5c6552;
     width: 100%;
     min-height: 200px;
     padding: 16px;
@@ -131,31 +133,23 @@
 }
 
 .diary_save_psy {
-    align-self: flex-end;
-    padding: 12px 24px;
+    font-size: 14px;
+    border: 3px solid #5c6552;
+    border-radius: 4px;
+    background-color: var(--background);
+    padding: 10px;
+    font-family: 'Gravitas One';
     color: #5c6552;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.diary_save_psy svg {
-   width: 32px;
-   height: 32px;
-}
-
-.diary_save_psy svg path {
-    stroke-width: 3; 
 }
 
 
 input[type="text"], 
 input[type="date"], 
 select {
+    font-family: var(--main_font);
     width: 100%;
     padding: 8px;
+    color: #5c6552;
     border: 2px solid #5c6552;
     border-radius: 4px;
     background-color: var(--background);
@@ -232,3 +226,26 @@ select {
     border-color: #5c6552;
     background-color: rgba(0, 0, 0, 0.10);
 }
+
+@media (max-width: 414px) {
+    .create_diary_container_ksy {
+        display: block;
+        padding: 0;
+        padding-left: 0;
+        margin: 20px
+    }
+
+    input[type="text"] {
+        font-size: 9px;
+    }
+    
+    .real_location_psy {
+        height: 215px;
+    }
+
+    .emotion-choice label, .weather-choice label {
+        padding: 1px;
+    }
+  }
+  
+

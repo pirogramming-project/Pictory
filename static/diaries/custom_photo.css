@@ -102,17 +102,25 @@
 }
 
 .custom_save_btn_psy {
+    padding: 7px 7px;
     display: flex;
-    justify-content: flex-end;
-}
-
-.custom_save_btn_psy svg {   
-    stroke-width: 1;
-    stroke: #5c6552;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #5c6552;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #5c6552;
+    position: relative;
+    left: 73%;
+    width: 100px;
+    max-width: 100%;
+    font-family: 'Gravitas One';
+    transition: all 0.3s ease;
 }
 
 /* 커스터마이제이션 영역 */
 #customization-area_psy {
+    font-family: var(--main_font);
     background-color: #FFF9EA;
     color: #515738;
     font-size: 20px;
@@ -272,5 +280,9 @@ input[type="range"]::-webkit-slider-thumb {
     #customization-area_psy {
         width: 100%;
         margin-left: 0;
+    }
+
+    .custom_save_btn_psy {
+        width: 40%;
     }
 }
