@@ -5,7 +5,7 @@ import requests
 import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User, NeighborRequest, Neighbor, Notification
+from users.models import User, NeighborRequest, Neighbor, Notification, UserBadge
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -244,10 +244,12 @@ def profile(request):
     my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
     graph = generate_emotion_graph(request.user)  # 감정 그래프 생성
     my_diary_count = Diary.objects.filter(writer=request.user).count()
+    my_badges = UserBadge.objects.filter(user=request.user)
     context = {
         "friend_count" : my_friends_count,
         "graph": graph,
         "diary_count": my_diary_count,
+        "badges": my_badges
     }
     return render(request, 'users/profile.html', context)
 

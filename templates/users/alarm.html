@@ -30,6 +30,15 @@
                 <a href="{% url "diaries:create_diary" tagged_diary.four_cut_photo.id %}">Record diary</a>
             {% endwith %}
         {% endif %}
+        <!-- 알림 타입이 "NBA"인 경우 -->
+        {% if alarm.type == "NBA" %}
+            {% with acquired_badge=alarm.nba_notification.acquired_badge %}
+            <div class="badge_overlay_kes">
+                <p class="badge_overlay_text_kes">{{acquired_badge.description}}</p>
+                <img src="/{{ acquired_badge.image_url }}" alt="배지" class="alarm_badge_img_kes">
+             </div>
+            {% endwith %}
+        {% endif %}
     </div>
     {% empty %}
     <div class="alarm_no_alarm"> 

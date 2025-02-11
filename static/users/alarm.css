@@ -90,6 +90,30 @@
     color: #5c6552;
 }
 
+/* 배지 획득 알림 배지미리보기 */
+.alarm_badge_img_kes {
+    height: 30px;
+    width: auto;
+    transition: all 0.3s ease
+}
+.badge_overlay_text_kes {
+    display: none;
+    position: absolute;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    background-color: #fff;
+    transform: translateY(-110%);
+    font-size: 18px;
+    line-height: 30px;
+}
+.badge_overlay_kes:hover .alarm_badge_img_kes {
+    transform: scale(1.1);
+}
+.badge_overlay_kes:hover .badge_overlay_text_kes {
+    display: block;
+}
+
 /* 알람이 없을 때 */
 .alarm_no_alarm {
     display: flex;
