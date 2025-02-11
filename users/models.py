@@ -104,6 +104,11 @@ class Badge(models.Model):
         recursive=True
     )
     description = models.CharField("배지 설명", max_length=50)
+    
+    @property
+    def image_url(self):
+        """OS에 상관없이 항상 '/'로 경로를 변환"""
+        return self.image.replace("\\", "/")
 
     def __str__(self):
         return f'{self.id} - {self.description}'
@@ -151,7 +156,7 @@ class Notification_TAG(models.Model):
     tagged_diary = models.ForeignKey('diaries.Diary', on_delete=models.CASCADE, related_name="related_notifications")
 
 class Notification_NBA(models.Model):
-    notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="tag_notification")
+    notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="nba_notification")
     acquired_badge = models.ForeignKey(Badge, on_delete=models.CASCADE, related_name="related_notifications")
 
 ###### 사용하게 될 지도 모르는 utility 함수들
