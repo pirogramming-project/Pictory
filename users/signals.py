@@ -113,3 +113,39 @@ def create_tagged_notification(sender, instance, action, reverse, model, pk_set,
                 notification=new_notification,
                 tagged_diary=instance
             )
+
+
+# 일기 모델에 뭔가 저장되면 실행됨.
+@receiver(post_save, sender=Diary)
+@transaction.atomic
+def create_Diary_signal(sender, instance, created, **kwargs):
+    """일기 수 관련 배지 지급"""
+    if created:  # 새로운 일기가 생성된 경우에만 실행
+        writer = instance.writer
+        diaryCount = Diary.objects.filter(writer=instance.writer).count()
+        
+        if diaryCount == 1:
+            UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_1st')
+            )
+        elif diaryCount == 10:
+                UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_10th')
+            )
+        elif diaryCount == 30:
+                UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_30th')
+            )
+        elif diaryCount == 50:
+                UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_50th')
+            )
+        elif diaryCount == 100:
+                UserBadge.objects.get_or_create(
+                user=writer,
+                badge=Badge.objects.get(id='diary_100th')
+            )
