@@ -206,7 +206,7 @@ select {
 }
 
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .create_diary_container_ksy {
         display: block;
     }

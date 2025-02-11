@@ -221,7 +221,7 @@
     }
 }
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .community-page_ksy .base_content-scroll_ksy {
         flex-direction: column;
     }

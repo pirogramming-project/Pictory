@@ -107,7 +107,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .profile-edit-container_ksy {
         padding: 20px 16px;
         margin: 0 auto;
