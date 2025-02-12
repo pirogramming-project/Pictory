@@ -581,7 +581,6 @@ def profile_edit(request):
         form = UserUpdateForm(request.POST, instance=user) # 기존 정보 불러오기
         if form.is_valid():
             form.save()
-            messages.success(request, "프로필이 성공적으로 업데이트되었습니다!")
             return redirect("users:profile") # 수정하고 profile로 redirect, 향후에 바꿀거면 바꾸세용
         
         # 닉네임 중복 오류 메시지
