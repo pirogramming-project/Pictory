@@ -110,6 +110,12 @@
 
 .diary_map_psy {
     flex: 1;
+    position: relative;
+}
+
+input[type="text"] {
+    position: relative;
+    z-index: 1000;
 }
 
 .real_location_psy {
@@ -227,6 +233,34 @@ select {
     background-color: rgba(0, 0, 0, 0.10);
 }
 
+#placesList {
+    color: #515738;
+    border-radius: 5px;
+    position: absolute;
+    top: 19%;
+    left: 0;
+    right: 0;
+    display: none;
+    gap: 10px;
+    padding: 15px;
+    font-size: 14px;
+    z-index: 10;
+    background-color: #fdf8ec;
+    border: 3px solid #5c6552;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#placesList li {
+    padding: 5px;
+    border-bottom: 2px solid #5c6552;
+    cursor: pointer;
+}
+
+#placesList li:last-child {
+    border-bottom: none;
+}
+
 @media (max-width: 430px) {
     .create_diary_container_ksy {
         display: block;
@@ -245,6 +279,10 @@ select {
 
     .emotion-choice label, .weather-choice label {
         padding: 1px;
+    }
+
+    #placesList {
+        top: 16%;
     }
   }
   

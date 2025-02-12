@@ -241,4 +241,8 @@ body.community_detail-page_ksy {
     .community_detail-container_ksy {
         height: auto;
     }
+
+    #pictory-frame_psy {
+        transform: scale(0.8);
+    }
 }
