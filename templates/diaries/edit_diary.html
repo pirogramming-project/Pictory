@@ -65,8 +65,6 @@
                         {{ form.place }}
                         <ul id="placesList"></ul>
                         <div class="real_location_psy"></div>
-                        
-
                     </div>
 
                 </div>
@@ -94,11 +92,27 @@
         let marker;
         let topPlace = null;
         const map = new kakao.maps.Map(mapContainer, {
-            center: new kakao.maps.LatLng(37.5665, 126.9780),
-            level: 6
+            center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+            level: 6 // 지도 확대 레벨
         });
 
-        // 🔹 input 클릭 또는 입력 시 장소 목록 표시
+        // 🔹 친구 태그 색상 변경 기능
+        const friendTags = document.querySelectorAll(".friend_tag_item_psy");
+        friendTags.forEach(function(tagItem) {
+            const checkbox = tagItem.querySelector("input[type='checkbox']");
+
+            // 초기 상태 설정 (체크된 경우 selected 클래스 추가)
+            if (checkbox.checked) {
+                tagItem.classList.add("selected");
+            }
+
+            tagItem.addEventListener("click", function() {
+                checkbox.checked = !checkbox.checked; // 체크 상태 토글
+                tagItem.classList.toggle("selected", checkbox.checked); // 선택 여부에 따라 클래스 토글
+            });
+        });
+
+        // 🔹 장소 검색 및 목록 표시
         inputField.addEventListener("focus", function() {
             if (placesList.innerHTML.trim() !== "") {
                 placesList.style.display = "block";
@@ -119,7 +133,7 @@
             ps.keywordSearch(keyword, function(data, status) {
                 if (status === kakao.maps.services.Status.OK) {
                     topPlace = data[0];
-                    displayPlaces(data.slice(0, 3));
+                    displayPlaces(data.slice(0, 3)); // 최대 3개만 표시
                     placesList.style.display = "block";
                 } else {
                     placesList.style.display = "none";
@@ -139,12 +153,13 @@
                 `;
                 itemEl.addEventListener("click", function() {
                     addLocation(place.address_name);
-                    placesList.style.display = "none";  // 🔹 장소 클릭 시 목록 숨기기
+                    placesList.style.display = "none"; // 장소 클릭 시 목록 숨기기
                 });
                 placesList.appendChild(itemEl);
             });
         }
 
+        // 🔹 선택한 장소 지도에 마커로 표시
         function addLocation(address) {
             if (!address) {
                 alert('장소를 찾을 수 없습니다.');
@@ -163,7 +178,21 @@
                 }
             });
         }
+
+        // 🔹 엔터키 입력 시 자동으로 가장 관련성 높은 장소 선택
+        inputField.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                if (topPlace) {
+                    addLocation(topPlace.address_name);
+                    placesList.style.display = "none";
+                } else {
+                    alert("검색 결과가 없습니다.");
+                }
+            }
+        });
     });
 </script>
+
 
 {% endblock %}
