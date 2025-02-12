@@ -66,8 +66,9 @@
 .custom-logo_psy {
     text-align: center;
     width: 100%;
-    height: 30px;
+    height: 36px;
     line-height: 30px;
+    font-size: 15px;
 }
 
 /* 수정된 버튼 스타일 */
