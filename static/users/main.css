@@ -133,7 +133,9 @@
     padding: 13px;
     background-color: #FFF9EA;
     display: inline-block;
-    height: auto;  
+    height: auto; 
+    min-height: 48%;
+    overflow-y: auto; 
 }
 
 .last_week_diary_list_psy {
@@ -143,7 +145,8 @@
     background-color: #FFF9EA;
     display: inline-block;
     height: auto;
-    min-height: 100%; 
+    min-height: 100%;
+    width: 100%; 
 }
 
 .today_diary_list_psy h3,
