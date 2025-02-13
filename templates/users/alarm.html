@@ -27,7 +27,11 @@
         <!-- 알림 타입이 "TAG"인 경우 -->
         {% if alarm.type == "TAG" %}
             {% with tagged_diary=alarm.tag_notification.tagged_diary %}
-                <a href="{% url "diaries:create_diary" tagged_diary.four_cut_photo.id %}">Record diary</a>
+                {% if tagged_diary and tagged_diary.four_cut_photo %}
+                    <a href="{% url 'diaries:create_diary' tagged_diary.four_cut_photo.id %}">Record diary</a>
+                {% else %}
+                    <span>📌 해당 게시물이 삭제되었습니다.</span>
+                {% endif %}
             {% endwith %}
         {% endif %}
         <!-- 알림 타입이 "NBA"인 경우 -->
