@@ -231,8 +231,8 @@
 
 /*일기 쓴 날짜 달력 디자인*/
 .diary-exists {
-    background-color: #8ba329; 
-    color: black;
+    background-color: #63702cba;
+    color: #515738;
     font-weight: bold;
 }
 
