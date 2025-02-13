@@ -130,6 +130,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentDate = new Date();
     let selectedDate = null;
 
+    // AJAX 요청을 이용해 특정 날짜에 일기가 있는지 확인하는 함수
+    function checkDiaryExists(year, month, day, dayElement) {
+        fetch(`/diary/by_date/${year}/${month}/${day}/`, {
+            method: "GET",
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                // 해당 날짜에 일기가 있으면 클래스 추가
+                dayElement.classList.add("diary-exists");
+            }
+        })
+        .catch(error => console.error("❌ 달력 데이터 오류:", error));
+    }
+
     function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -179,6 +195,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 dayElement.classList.add("past");
             }
 
+            // AJAX 요청을 통해 해당 날짜에 일기가 있는지 확인
+            checkDiaryExists(year, month + 1, day, dayElement);
+
             daysContainer.appendChild(dayElement);
         }
     }
@@ -195,5 +214,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderCalendar();
 });
+
 </script>
 {% endblock %}
