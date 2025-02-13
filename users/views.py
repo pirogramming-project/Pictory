@@ -521,7 +521,7 @@ def get_diaries_by_date(request, year, month, day):
             date__month=month,
             date__day=day
         ).order_by('-created_at')
-        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -531,7 +531,7 @@ def get_today_diaries(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         today = now().date()
         diaries = Diary.objects.filter(writer=request.user, date=today).order_by('-created_at')
-        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
 

@@ -235,6 +235,13 @@
     color: black;
 }
 
+/*일기 쓴 날짜 달력 디자인*/
+.diary-exists {
+    background-color: #8ba329; 
+    color: black;
+    font-weight: bold;
+}
+
 @media (max-width: 1024px) {
     .weekdays_psy {
         width: 86%;
