@@ -139,9 +139,12 @@
 }
 
 /* 색깔 css*/
-.pagesColor_content1_ksy, .pagesColor_content3_ksy {
+.pagesColor_content1_ksy, 
+.pagesColor_content3_ksy, 
+.pagesColor_content5_ksy {
     margin-bottom: 20px;
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
@@ -151,6 +154,15 @@ input[type="color"] {
 
 #opacitySlider_psy, #gradientAngle_kes {
     margin-bottom: 20px;
+}
+
+#gradientToggle_kes {
+    font-family: var(--main_font);
+    color: var(--title_color);
+    font-size: 14px;
+    border: 3px solid var(--container_color);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 /*두께*/
