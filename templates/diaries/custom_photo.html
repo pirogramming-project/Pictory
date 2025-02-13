@@ -34,8 +34,6 @@
                         </div>
                         <form id="frameSaveForm_kes" method="post" enctype="multipart/form-data" action="{% url 'diaries:custom_photo' frame_option %}">
                             {% csrf_token %}
-                            <input type="hidden" id="frame_cssInput_kes" name="frame_css" value="">
-                            <input type="hidden" id="frame_logoInput_kes" name="logo_text" value="">
                             <input type="hidden" id="saved_photo_image_kes" name="saved_photo">  <!-- 최종 완성본의 Base64 데이터를 담을 input -->
                         </form>
                     </div>
@@ -67,45 +65,13 @@
                 item.style.display = 'none';
             });
 
-            // 프레임 색상, 두께 - css text 형태로 저장
-            const frame = document.getElementById("pictory-frame_psy");  // 대상 요소
-            const computedStyle = window.getComputedStyle(frame);  // 요소의 CSS 속성값 가져오기
-            const cssText = computedStyle.cssText || Object.values(computedStyle).join("; "); // CSS를 문자열로 변환
-            document.getElementById("frame_cssInput_kes").value = cssText;  // 숨겨진 input에 값 저장
-            
-            // 로고 - text 저장
-            document.getElementById("frame_logoInput_kes").value = document.querySelector('.custom-logo_psy').textContent;  // 숨겨진 input에 값 저장
-
-            // sticker들 저장
-            const stickers = frame.querySelectorAll(".added_sticker_kes");
-            const form = document.getElementById("frameSaveForm_kes");
-            stickers.forEach(img => {
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "sticker_srcs";  // 같은 name을 사용하면 리스트로 전송됨
-                srcsplit = img.src.split('/');
-                input.value = srcsplit[srcsplit.length - 1];
-                form.appendChild(input);
-
-                const coorXInput = document.createElement("input");
-                coorXInput.type = "hidden";
-                coorXInput.name = "sticker_coorXs";  // 같은 name을 사용하면 리스트로 전송됨
-                coorXInput.value = Number(img.style.left.replace('px',''));
-                form.appendChild(coorXInput);
-                const coorYInput = document.createElement("input");
-                coorYInput.type = "hidden";
-                coorYInput.name = "sticker_coorYs";  // 같은 name을 사용하면 리스트로 전송됨
-                coorYInput.value = Number(img.style.top.replace('px',''));
-                form.appendChild(coorYInput);
-            });
-
             // 프레임 이미지 자체 저장
             const captureArea = document.getElementById("pictory-frame_psy");
 
             html2canvas(captureArea, { scale: 4 }).then(canvas => {
                 let imgData = canvas.toDataURL("image/png");  // Base64 인코딩된 이미지 데이터
                 document.getElementById("saved_photo_image_kes").value = imgData;
-                form.submit();  // form 제출
+                document.getElementById("frameSaveForm_kes").submit();  // form 제출
             });
         }
 

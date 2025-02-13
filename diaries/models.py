@@ -4,26 +4,7 @@ from datetime import date
 
 ########### 사진 관련 모델들 ###########
 class Frame(models.Model):
-    frame_css = models.TextField("프레임 css")
-    # 스티커는 역참조 stickers로 접근.
-    # 사진들도 역참조 photos로 접근
-    logo_text = models.CharField("로고 text", max_length=20, default='pictory')
     image_file = models.ImageField("최종 이미지 파일", upload_to="images/frames/%Y/%m/%d")
-    
-class Photo(models.Model):
-    frame = models.ForeignKey(Frame, models.CASCADE, related_name="photos")
-    photo = models.ImageField("사진", upload_to="images/user_photos/%Y/%m/%d")
-
-
-class Sticker(models.Model):
-    frame = models.ForeignKey(Frame, models.CASCADE, related_name="stickers")
-    sticker_image = models.FilePathField(
-        "스티커 이미지",    
-        path='static/images/stickers', 
-        match=r".*\.(png|jpg|jpeg|gif|webp|bmp|tiff)$", 
-        recursive=True)
-    coor_x = models.FloatField("x좌표")
-    coor_y = models.FloatField("y좌표")
     
 ### 일기 관련 모델들 ###
 
