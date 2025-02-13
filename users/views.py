@@ -133,7 +133,7 @@ def kakao_callback(request):
 # 네이버 로그인 페이지로 리디렉션하는 함수
 def naver_login(request):
     naver_auth_url = "https://nid.naver.com/oauth2.0/authorize"
-    state = secrets.token_urlsafe(16) # 보안 관련
+    state = secrets.token_urlsafe(16)  # CSRF 보호용 state 값
     request.session['naver_state'] = state
 
     params = {
@@ -141,7 +141,9 @@ def naver_login(request):
         "client_id": NAVER_CLIENT_ID,
         "redirect_uri": NAVER_REDIRECT_URI,
         "state": state,
+        "auth_type": "reauthenticate",  # 🔹 사용자가 네이버 계정을 다시 선택하도록 강제
     }
+    
     url = f"{naver_auth_url}?{urllib.parse.urlencode(params)}"
     return redirect(url)
 
@@ -228,10 +230,31 @@ def make_unique_nickname_of_social_login(base_nickname):
         
     return new_nickname
 
-# 로그아웃
+
+
+NAVER_LOGOUT_URL = "https://nid.naver.com/nidlogin.logout"
+
 def logout_view(request):
     if request.method == "POST":
+        # 네이버 소셜 로그아웃 처리
+        access_token = request.session.get("naver_access_token")  
+        if access_token:
+            delete_token_url = "https://nid.naver.com/oauth2.0/token"
+            params = {
+                "grant_type": "delete",
+                "client_id": NAVER_CLIENT_ID,
+                "client_secret": NAVER_CLIENT_SECRET,
+                "access_token": access_token,
+                "service_provider": "NAVER"
+            }
+            requests.get(delete_token_url, params=params, timeout=10)  # 네이버 토큰 삭제 요청
+        
+        # 모든 로그인 세션 삭제
+        request.session.flush()
         logout(request)
+
+        # 🔹 네이버 로그인 세션도 삭제하도록 로그아웃 페이지로 이동
+        return redirect('users:login')
 
     return redirect('users:main')
 
