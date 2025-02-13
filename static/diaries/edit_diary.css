@@ -35,7 +35,7 @@
 .first_right_container_psy {
     background-color: var(--background);
     padding: 20px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 5px;
 }
 
@@ -53,9 +53,9 @@
 
 .diary_letter_psy {
     font-size: 14px;
-    color: #5c6552;
+    color: var(--container_color);
     margin-bottom: 8px;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);
 }
 
 .third_line_psy {
@@ -76,7 +76,7 @@
 .content_tag_psy {
     width: 100%;
     padding: 8px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     pointer-events: auto; 
 
@@ -89,19 +89,19 @@
     padding: 2px 5px;
     margin: 2px;
     border-radius: 5px;
-    font-family: 'Gravitas One';
-    color: #5c6552;
+    font-family: var(--logo_font);
+    color: var(--container_color);
     font-size: 10px;
     cursor: pointer;
 }
 
 .friend_tag_item_psy.selected label{
-    background-color: #5c6552;
+    background-color: var(--container_color);
     color: var(--background);
 }
 
 .diary_friend_psy{
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     padding: 10px;
     height: calc(22vh - -5px);
     overflow-y: auto;
@@ -120,7 +120,7 @@ input[type="text"] {
 
 .real_location_psy {
     margin-top: 8px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     height: 23vh; 
     width: 100%;
@@ -128,11 +128,11 @@ input[type="text"] {
 
 .fourth_line_psy textarea {
     font-family: var(--main_font);
-    color: #5c6552;
+    color: var(--container_color);
     width: 100%;
     min-height: 200px;
     padding: 16px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 8px;
     resize: vertical;
     background-color: var(--background);
@@ -140,12 +140,12 @@ input[type="text"] {
 
 .diary_save_psy {
     font-size: 14px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 4px;
     background-color: var(--background);
     padding: 10px;
-    font-family: 'Gravitas One';
-    color: #5c6552;
+    font-family: var(--logo_font);
+    color: var(--container_color);
 }
 
 
@@ -155,8 +155,8 @@ select {
     font-family: var(--main_font);
     width: 100%;
     padding: 8px;
-    color: #5c6552;
-    border: 2px solid #5c6552;
+    color: var(--container_color);
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     background-color: var(--background);
 }
@@ -192,12 +192,12 @@ select {
 .emotion-choice label svg {
     width: 32px;
     height: 32px;
-    fill: #5c6552;
+    fill: var(--container_color);
 }
 
 /* 선택된 SVG를 강조 */
 .emotion-choice input[type="radio"]:checked + label {
-    border-color: #5c6552; 
+    border-color: var(--container_color); 
     background-color: rgba(0, 0, 0, 0.10);
 }
 
@@ -224,17 +224,17 @@ select {
 .weather-choice label svg {
     width: 32px;
     height: 32px;
-    fill: #5c6552;  /* 감정과 동일한 색상 */
+    fill: var(--container_color);  /* 감정과 동일한 색상 */
 }
 
 /* 선택된 날씨 강조 */
 .weather-choice input[type="radio"]:checked + label {
-    border-color: #5c6552;
+    border-color: var(--container_color);
     background-color: rgba(0, 0, 0, 0.10);
 }
 
 #placesList {
-    color: #515738;
+    color: var(--title_color);
     border-radius: 5px;
     position: absolute;
     top: 19%;
@@ -246,14 +246,14 @@ select {
     font-size: 14px;
     z-index: 10;
     background-color: #fdf8ec;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     flex-direction: column;
     cursor: pointer;
 }
 
 #placesList li {
     padding: 5px;
-    border-bottom: 2px solid #5c6552;
+    border-bottom: 2px solid var(--container_color);
     cursor: pointer;
 }
 

@@ -51,7 +51,7 @@
     line-height: 1.4;
     pointer-events: none;
     white-space: nowrap;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);
 }
 
 

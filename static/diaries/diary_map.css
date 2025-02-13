@@ -73,7 +73,7 @@
 
 .diary_map_introduce_ksy {
     color: black;
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     font-weight: bold;
     font-size: 2.5rem;
 }
