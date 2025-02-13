@@ -30,7 +30,7 @@
                 {% if tagged_diary and tagged_diary.four_cut_photo %}
                     <a href="{% url 'diaries:create_diary' tagged_diary.four_cut_photo.id %}">Record diary</a>
                 {% else %}
-                    <span>📌 해당 게시물이 삭제되었습니다.</span>
+                    <span class="alarm_delete_post_ksy">📌 해당 게시물이 삭제되었습니다.</span>
                 {% endif %}
             {% endwith %}
         {% endif %}

@@ -4,7 +4,6 @@
     width: 90%;
     margin: 20px auto;
     padding: 30px;
-    background-color: #fdf8ec;
 }
 .profile_psy {
     flex: 0.8;
@@ -100,7 +99,7 @@
     font-family: var(--main_font);
     margin-bottom: 15px;
     text-align: center;
-    color: #515738;
+    color: var(--title_color);
     font-size: 20px;
     font-weight: bold;
 }
@@ -131,7 +130,7 @@
     transform: translate(-50%, -50%);
     width: 1px;
     height: 45px;
-    background-color: #515738;
+    background-color: var(--title_color);
     opacity: 0.5;
 }
 .stat_item_ksy, .stat_item_friend_ksy {
@@ -148,14 +147,14 @@
     font-family: var(--main_font);
     font-size: 20px;
     font-weight: bold;
-    color: #515738;
+    color: var(--title_color);
     margin-bottom: 5px;
 }
 
 .stat_label_ksy {
     font-family: var(--main_font);
     font-size: 14px;
-    color: #515738;
+    color: var(--title_color);
 }
 
 .profile_button_container_ksy {
@@ -220,7 +219,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #515738;
+    background-color: var(--title_color);
 }
 
 .graph-section_psy {
@@ -231,7 +230,7 @@
 .graph-title_psy {
     font-family: var(--main_font);
     font-weight: bold;
-    color: #515738;
+    color: var(--title_color);
     font-size: 1.8rem;
     margin-bottom: 5px;
 }

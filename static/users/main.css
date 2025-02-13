@@ -1,13 +1,7 @@
-@font-face {
-    font-family: 'NotoSerifKR';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 .main-container_psy {
     height: 80vh;
     overflow-y: auto;
-    background-color: #FFF9EA;
+    background-color: var(--background);
     display: flex;
 }
 
@@ -18,7 +12,7 @@
 
 .calendar_psy {
     width: 100%;
-    background: #FFF9EA;
+    background: var(--background);
     padding-top: 50px;
 }
 
@@ -28,8 +22,8 @@
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
-    font-family: 'Gravitas One';
-    color: #515738;
+    font-family: var(--logo_font);;
+    color: var(--title_color);
 }
 
 .month_psy h2 {
@@ -45,11 +39,11 @@
 .weekdays_psy {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    background: #515738;
+    background: var(--title_color);
     color: var(--background);
     padding: 10px 0;
     margin-bottom: 10px;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);;
     font-size: 14px;
     width: 80%;
     margin: 0 auto;
@@ -79,9 +73,9 @@
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);;
     cursor: pointer;
-    color: #515738;
+    color: var(--title_color);
     box-shadow: inset 0px -1px 4px rgba(0, 0, 0, 0.25), inset 0px 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
 }
@@ -103,7 +97,7 @@
 
  /* 날짜 선택했을 때 스타일 */
  .selected {
-    background-color: #515738 !important;
+    background-color: var(--title_color) !important;
     color: white !important;
  }
 
@@ -128,10 +122,10 @@
 
 .today_diary_list_psy,
 .selected_diary_list_psy{
-    border: 3px solid #515738;
+    border: 3px solid var(--title_color);
     border-radius: 8px;
     padding: 13px;
-    background-color: #FFF9EA;
+    background-color: var(--background);
     display: inline-block;
     height: auto; 
     min-height: 48%;
@@ -139,7 +133,7 @@
 }
 
 .last_week_diary_list_psy {
-    border: 3px solid #515738;
+    border: 3px solid var(--title_color);
     border-radius: 8px;
     padding: 13px;
     background-color: #FFF9EA;
@@ -152,13 +146,13 @@
 .today_diary_list_psy h3,
 .selected_diary_list_psy h3,
 .last_week_diary_list_psy h3 {
-    color: #515738;
+    color: var(--title_color);
     font-family: var(--main_font);
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #515738;
+    border-bottom: 1px solid var(--title_color);
     font-weight: bold;
 }
 
@@ -176,9 +170,9 @@
     margin-bottom: 10px;
     padding: 8px;
     border-radius: 4px;
-    background-color: #FFF9EA;
+    background-color: var(--background);
     transition: background-color 0.2s;
-    color: #515738;
+    color: var(--title_color);
     font-size: 12px;
     font-family: var(--main_font);
     font-weight: 700;
@@ -194,7 +188,7 @@
 .today_diary_list_psy a,
 .selected_diary_list_psy a,
 .last_week_diary_list_psy a {
-    color: #515738;
+    color: var(--title_color);
     text-decoration: none;
     display: block;
     font-size: 13px;
@@ -215,7 +209,7 @@
 
 /* 스크롤바 트랙 (배경 부분) */
 .main-container_psy::-webkit-scrollbar-track {
-    background: #FFF9EA !important; /* 트랙 배경 색 */
+    background: var(--background) !important; /* 트랙 배경 색 */
     border-radius: 10px;
 }
 
@@ -227,7 +221,7 @@
 
 /* 마우스를 올렸을 때 스크롤바 핸들 색상 변경 */
 .main-container_psy::-webkit-scrollbar-thumb:hover {
-    background: #515738 !important;;
+    background: var(--title_color) !important;;
 }
 
 

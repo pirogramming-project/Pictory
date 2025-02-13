@@ -1,5 +1,3 @@
-
-
 .profile-edit-container_ksy {
     position: relative;
     max-width: 480px;
@@ -89,12 +87,12 @@
 
 .profile_edit_save_ksy {
     font-size: 14px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 10px;
     background-color: var(--background);
     padding: 10px;
-    font-family: 'Gravitas One';
-    color: #5c6552;
+    font-family: var(--logo_font);;
+    color: var(--container_color);
     width: 25%;
     position: absolute; 
     right: 20px;
