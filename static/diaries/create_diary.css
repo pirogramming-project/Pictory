@@ -116,7 +116,24 @@
     flex: 1;
     position: relative;
 }
-
+.create_input_button_ksy {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.placeListOnclick {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 8px;
+}
+.bi-search {
+    fill: var(--content_color);
+}
+.bi-search:hover {
+    fill: var(--title_color);
+}
 .real_location_psy {
     margin-top: 8px;
     border: 2px solid var(--container_color);
