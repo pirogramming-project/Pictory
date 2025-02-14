@@ -194,11 +194,11 @@ input[type="color"] {
 .stickers_list_kes {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 15px;
     padding: 10px;
     height: calc(35vh - 60px);
     overflow-y: auto;
-    margin: 20px
+    margin: 20px;
 }
 
 .added_sticker_container_kes {
