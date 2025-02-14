@@ -19,6 +19,7 @@ from django.utils.timezone import now, timedelta
 from django.db import transaction
 from .forms import UserUpdateForm
 
+
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
 
@@ -305,6 +306,8 @@ def alarm_read_ajax(request):
 
 
 # 감정 그래프
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
