@@ -591,7 +591,7 @@ def update_profile_photo(request):
 def update_profile_photo_edit(request):
     if request.method == "POST" and request.FILES.get("profile_photo"):
         user = request.user
-        user.profile_photo = request.FILES["profile_photo"]
+        user.profile_photo = request.FILES.get("profile_photo")
         user.save()
         
         messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
