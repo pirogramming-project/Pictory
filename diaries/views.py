@@ -208,7 +208,7 @@ def create_diary(request, related_frame_id):
             diary.save()
             
             ### 일반 태그 처리 및 저장
-            raw_tag_string = request.POST['create_diary_post']
+            raw_tag_string = request.POST.get('create_diary_post')
             raw_tags = raw_tag_string.split('#')
             tags = set([])
             for raw_tag in raw_tags:

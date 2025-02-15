@@ -73,7 +73,7 @@
 
 .diary_content_tag_psy {
     margin-bottom: 20px;
-    pointer-events: none;
+    position: relative;
 }
 
 .content_tag_psy {
@@ -83,6 +83,38 @@
     border-radius: 4px;
     pointer-events: auto; 
 
+}
+
+#addTagBtn {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+    top: 25px;
+    transform: translateX(-100%);
+}
+#addTagBtn > svg {
+    width: 30px;
+    height: 30px;
+}
+.tag-container {
+    line-height: 25px;
+}
+.tag {
+    display: inline;
+    height: 20px;
+    background-color: var(--container_color);
+    color: var(--background);
+    font-size: 11px;
+    padding: 2px 5px;
+    margin: 2px;
+    margin-block-start: 5px;
+    border-radius: 5px;
+}
+.tag .remove {
+    background-color: transparent;
+    height: 10px;
+    font-size: 10px;
+    color: white;
 }
 
 .friend_tag_item_psy label {

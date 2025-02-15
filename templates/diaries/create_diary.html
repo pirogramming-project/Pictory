@@ -46,7 +46,14 @@
                         <div class="diary_tag_psy">
                             <div class="diary_content_tag_psy">
                                 <h1 class="diary_letter_psy">o Tag</h1>
-                                <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" required>
+                                <input type="text" placeholder="태그를 추가하세요" class="content_tag_psy">
+                                <button type="button" id="addTagBtn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                      </svg>
+                                </button>
+                                <div class="tag-container" id="tagContainer" style="color: black;"></div>
+                                <input type="hidden" name="create_diary_post" id="tagsInput">
                             </div>
                             <div class="diary_friend_psy">
                                 <h1 class="diary_letter_psy">o Friend Tag</h1>
@@ -93,6 +100,12 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            InitTagInput();
+            InitPlaceInput();
+
+        });
+
+        function InitPlaceInput() {
             const inputField = document.querySelector("#id_place");
             const placesList = document.getElementById("placesList");
             const mapContainer = document.querySelector(".real_location_psy");
@@ -183,7 +196,7 @@
                 const emotionSelected = Array.from(emotionInputs).some(input => input.checked);
     
                 if (!weatherSelected || !emotionSelected) {
-                    event.preventDefault();
+                    <!-- event.preventDefault(); -->
                     if (!weatherSelected) alert("날씨를 선택해주세요!");
                     if (!emotionSelected) alert("감정을 선택해주세요!");
                 }
@@ -192,7 +205,64 @@
             document.querySelector('.placeListOnclick').addEventListener('click', () => {
                 placeSearch(inputField.value)
             });
-        });
+
+            inputField.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    placeSearch(inputField.value);
+                }
+            });
+
+        }
+
+        function InitTagInput() {
+            const tagInput = document.querySelector('.content_tag_psy');
+            const addTagBtn = document.getElementById("addTagBtn");
+            const tagContainer = document.getElementById("tagContainer");
+            const tagsInput = document.getElementById("tagsInput");
+            let tags = [];
+            
+            function addTag(tag) {
+                if (!tag || tags.includes(tag)) return; // 중복 방지
+                tags.push(tag);
+                
+                // 태그 UI 추가
+                const tagElement = document.createElement("div");
+                tagElement.classList.add("tag");
+                tagElement.innerHTML = `#${tag} <button class="remove">x</button>`;
+                tagContainer.appendChild(tagElement);
+                console.log(tagElement.querySelector(".remove"))
+                // 삭제 이벤트 추가
+                tagElement.querySelector(".remove").addEventListener("click", () => {
+                    console.log("삭제삭제");
+                    tags = tags.filter(t => t !== tag);
+                    tagElement.remove();
+                    updateHiddenInput();
+                });
+    
+                updateHiddenInput();
+            }
+
+            function updateHiddenInput() {
+                tagsInput.value = tags.join("#");
+            }
+
+            // 엔터 키 입력 시 태그 추가
+            tagInput.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    addTag(tagInput.value.trim());
+                    tagInput.value = ""; // 입력창 초기화
+                }
+            });
+                
+            // 버튼 클릭 시 태그 추가
+            addTagBtn.addEventListener("click", () => {
+                addTag(tagInput.value.trim());
+                tagInput.value = ""; // 입력창 초기화
+            });
+    
+        }
     </script>
     
 {% endblock %}
