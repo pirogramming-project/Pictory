@@ -176,6 +176,7 @@
     font-size: 12px;
     font-family: var(--main_font);
     font-weight: 700;
+    cursor: pointer;
 }
 
 .today_diary_list_psy li:hover,
