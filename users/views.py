@@ -5,7 +5,7 @@ import requests
 import json
 from django.conf import settings
 from django.contrib.auth import login as auth_login
-from users.models import User, NeighborRequest, Neighbor, Notification
+from users.models import User, NeighborRequest, Neighbor, Notification, UserBadge
 import urllib.parse
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -18,6 +18,7 @@ from diaries.models import Diary
 from django.utils.timezone import now, timedelta
 from django.db import transaction
 from .forms import UserUpdateForm
+
 
 KAKAO_CLIENT_ID = settings.KAKAO_CLIENT_ID
 KAKAO_REDIRECT_URI = settings.KAKAO_REDIRECT_URI
@@ -133,7 +134,7 @@ def kakao_callback(request):
 # 네이버 로그인 페이지로 리디렉션하는 함수
 def naver_login(request):
     naver_auth_url = "https://nid.naver.com/oauth2.0/authorize"
-    state = secrets.token_urlsafe(16) # 보안 관련
+    state = secrets.token_urlsafe(16)  # CSRF 보호용 state 값
     request.session['naver_state'] = state
 
     params = {
@@ -141,7 +142,9 @@ def naver_login(request):
         "client_id": NAVER_CLIENT_ID,
         "redirect_uri": NAVER_REDIRECT_URI,
         "state": state,
+        "auth_type": "reauthenticate",  # 🔹 사용자가 네이버 계정을 다시 선택하도록 강제
     }
+    
     url = f"{naver_auth_url}?{urllib.parse.urlencode(params)}"
     return redirect(url)
 
@@ -228,10 +231,31 @@ def make_unique_nickname_of_social_login(base_nickname):
         
     return new_nickname
 
-# 로그아웃
+
+
+NAVER_LOGOUT_URL = "https://nid.naver.com/nidlogin.logout"
+
 def logout_view(request):
     if request.method == "POST":
+        # 네이버 소셜 로그아웃 처리
+        access_token = request.session.get("naver_access_token")  
+        if access_token:
+            delete_token_url = "https://nid.naver.com/oauth2.0/token"
+            params = {
+                "grant_type": "delete",
+                "client_id": NAVER_CLIENT_ID,
+                "client_secret": NAVER_CLIENT_SECRET,
+                "access_token": access_token,
+                "service_provider": "NAVER"
+            }
+            requests.get(delete_token_url, params=params, timeout=10)  # 네이버 토큰 삭제 요청
+        
+        # 모든 로그인 세션 삭제
+        request.session.flush()
         logout(request)
+
+        # 🔹 네이버 로그인 세션도 삭제하도록 로그아웃 페이지로 이동
+        return redirect('users:login')
 
     return redirect('users:main')
 
@@ -244,10 +268,12 @@ def profile(request):
     my_friends_count = Neighbor.objects.filter(Q(user1=request.user) | Q(user2=request.user)).count()
     graph = generate_emotion_graph(request.user)  # 감정 그래프 생성
     my_diary_count = Diary.objects.filter(writer=request.user).count()
+    my_badges = UserBadge.objects.filter(user=request.user)
     context = {
         "friend_count" : my_friends_count,
         "graph": graph,
         "diary_count": my_diary_count,
+        "badges": my_badges
     }
     return render(request, 'users/profile.html', context)
 
@@ -280,6 +306,8 @@ def alarm_read_ajax(request):
 
 
 # 감정 그래프
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
@@ -519,7 +547,7 @@ def get_diaries_by_date(request, year, month, day):
             date__month=month,
             date__day=day
         ).order_by('-created_at')
-        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -529,7 +557,7 @@ def get_today_diaries(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         today = now().date()
         diaries = Diary.objects.filter(writer=request.user, date=today).order_by('-created_at')
-        diary_list = [{"id": diary.id, "title": diary.title} for diary in diaries]
+        diary_list = [{"id": diary.id, "title": diary.title, "date": diary.date.strftime("%Y-%m-%d")} for diary in diaries]
         return JsonResponse(diary_list, safe=False)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -563,7 +591,7 @@ def update_profile_photo(request):
 def update_profile_photo_edit(request):
     if request.method == "POST" and request.FILES.get("profile_photo"):
         user = request.user
-        user.profile_photo = request.FILES["profile_photo"]
+        user.profile_photo = request.FILES.get("profile_photo")
         user.save()
         
         messages.success(request, "프로필 사진이 성공적으로 변경되었습니다!")
@@ -580,6 +608,11 @@ def profile_edit(request):
         if form.is_valid():
             form.save()
             return redirect("users:profile") # 수정하고 profile로 redirect, 향후에 바꿀거면 바꾸세용
+        
+        # 닉네임 중복 오류 메시지
+        else:
+            if "nickname" in form.errors:
+                messages.error(request, "이미 사용 중인 닉네임입니다.")
         
     else:
         form = UserUpdateForm(instance=user)

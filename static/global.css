@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gravitas+One&display=swap');
+
 @font-face {
     font-family: 'NotoSerifKR';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
@@ -5,8 +7,10 @@
     font-style: normal;
 }
 :root {
+    --logo_font: "Gravitas One", serif;
     --main_font: 'NotoSerifKR';
     --content_color: #888D72;
     --title_color: #515738;
     --background: #FFF9EA;
+    --container_color: #5c6552;
 }

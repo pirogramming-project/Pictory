@@ -4,26 +4,7 @@ from datetime import date
 
 ########### 사진 관련 모델들 ###########
 class Frame(models.Model):
-    frame_css = models.TextField("프레임 css")
-    # 스티커는 역참조 stickers로 접근.
-    # 사진들도 역참조 photos로 접근
-    logo_text = models.CharField("로고 text", max_length=20, default='pictory')
     image_file = models.ImageField("최종 이미지 파일", upload_to="images/frames/%Y/%m/%d")
-    
-class Photo(models.Model):
-    frame = models.ForeignKey(Frame, models.CASCADE, related_name="photos")
-    photo = models.ImageField("사진", upload_to="images/user_photos/%Y/%m/%d")
-
-
-class Sticker(models.Model):
-    frame = models.ForeignKey(Frame, models.CASCADE, related_name="stickers")
-    sticker_image = models.FilePathField(
-        "스티커 이미지",    
-        path='static/images/stickers', 
-        match=r".*\.(png|jpg|jpeg|gif|webp|bmp|tiff)$", 
-        recursive=True)
-    coor_x = models.FloatField("x좌표")
-    coor_y = models.FloatField("y좌표")
     
 ### 일기 관련 모델들 ###
 
@@ -50,7 +31,7 @@ class Diary(models.Model):
     title = models.CharField("제목", max_length=40)
     writer = models.ForeignKey(User, models.CASCADE, verbose_name="작성자", related_name="wirte_diaries")
     date = models.DateField("날짜", default=date.today)
-    four_cut_photo = models.OneToOneField(Frame, models.CASCADE)
+    four_cut_photo = models.ForeignKey(Frame, models.CASCADE, verbose_name="프레임", related_name="diaries")
     weather = models.CharField("날씨", max_length=20, choices=WEATHER_CHOICES, default='sunny')  # 기본값 '맑음'
     place = models.CharField("장소", max_length=40)
     place_address = models.CharField("실주소", max_length=120)

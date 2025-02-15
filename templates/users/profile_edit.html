@@ -54,4 +54,19 @@
             </button>
         </form>
     </div>
+
+    {% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for message in messages %}
+                alert("{{ message }}");
+
+                {% if "이미 사용 중인 닉네임입니다." in message.message %}
+                    // 닉네임 필드를 원래 값으로 복원
+                    document.getElementById("nickname").value = "{{ request.user.nickname }}";
+                {% endif %}
+            {% endfor %}
+        });
+    </script>
+    {% endif %}
 {% endblock %}

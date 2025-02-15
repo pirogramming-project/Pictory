@@ -12,9 +12,9 @@
 /* 알림 아이템 컨테이너 */
 .alarm_item_container {
     position: relative;
-    background-color: #fff9ea;
-    border: 2px solid #5c6552;
-    color: #515738;
+    background-color: var(--background);
+    border: 2px solid var(--container_color);
+    color: var(--title_color);
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -23,16 +23,16 @@
 /* 알림 메시지 내용(공통) */
 .alarm_message_kes {
     font-family: var(--main_font);
-    color: #515738;
+    color: var(--title_color);
     font-size: 13px;
     font-weight: bold;
     padding-inline: 10px;;
 }
 
 .alarm_container_ksy a{
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     padding: 5px;
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -42,9 +42,9 @@
 /* 읽은 알림(공통) */
 .alarm_read_kes {
     position: relative;
-    background-color: #fff9ea;
-    border: 2px solid #5c6552;
-    color: #515738;
+    background-color: var(--background);
+    border: 2px solid var(--container_color);
+    color: var(--title_color);
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -65,7 +65,7 @@
 /* 알림 온 시각(공통) */
 .alarm_time_kes {
     font-family: var(--main_font);
-    color: #5c6552;
+    color: var(--container_color);
     position: absolute;
     left: 0;
     top: 0;
@@ -77,32 +77,64 @@
 .alarm_btn_yes_kes, .alarm_btn_no_kes {
     padding: 5px;
     border-radius: 5px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     font-size: 10px;
 }
 
 .alarm_btn_yes_kes {
-    background-color: #5c6552;
-    color: #fff9ea;
+    background-color: var(--container_color);
+    color: var(--background);
 }
 .alarm_btn_no_kes {
-    background-color: #fff9ea;
-    color: #5c6552;
+    background-color: var(--background);
+    color: var(--container_color);
+}
+
+/* 배지 획득 알림 배지미리보기 */
+.alarm_badge_img_kes {
+    cursor: pointer;
+    height: 30px;
+    width: auto;
+    transition: all 0.3s ease
+}
+.badge_overlay_text_kes {
+    box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    font-family: var(--main_font);
+    display: none;
+    position: absolute;
+    width: 20%;
+    border-radius: 10px;
+    background-color: var(--content_color);
+    color: white;
+    text-align: center;
+    transform: translateY(-110%);
+    font-size: 13px;
+    line-height: 30px;
+}
+.badge_overlay_kes:hover .alarm_badge_img_kes {
+    transform: scale(1.1);
+}
+.badge_overlay_kes:hover .badge_overlay_text_kes {
+    display: block;
 }
 
 /* 알람이 없을 때 */
 .alarm_no_alarm {
     display: flex;
     font-size: 22px;
-    color: #5c6552;
+    color: var(--container_color);
     justify-content: center;
     margin-top: 45px;
 }
 .alarm_btn_ksy:last-child {
     margin-bottom: 0;
 }
-
-@media (max-width: 414px) {
+.alarm_delete_post_ksy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media (max-width: 430px) {
     .alarm_container_ksy {
         width: 100%;
         padding: 2rem;
@@ -111,8 +143,18 @@
     .alarm_container_ksy a {
         display: flex;
         align-items: center;
-        width: 18%;
+        width: 20%;
 
+    }
+    .alarm_buttons_kes {
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    .alarm_btn_yes_kes, .alarm_btn_no_kes {
+        height: 27px;
+        width: 40px;
     }
   }
   

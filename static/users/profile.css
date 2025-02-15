@@ -4,7 +4,6 @@
     width: 90%;
     margin: 20px auto;
     padding: 30px;
-    background-color: #fdf8ec;
 }
 .profile_psy {
     flex: 0.8;
@@ -100,7 +99,7 @@
     font-family: var(--main_font);
     margin-bottom: 15px;
     text-align: center;
-    color: #515738;
+    color: var(--title_color);
     font-size: 20px;
     font-weight: bold;
 }
@@ -131,7 +130,7 @@
     transform: translate(-50%, -50%);
     width: 1px;
     height: 45px;
-    background-color: #515738;
+    background-color: var(--title_color);
     opacity: 0.5;
 }
 .stat_item_ksy, .stat_item_friend_ksy {
@@ -148,14 +147,14 @@
     font-family: var(--main_font);
     font-size: 20px;
     font-weight: bold;
-    color: #515738;
+    color: var(--title_color);
     margin-bottom: 5px;
 }
 
 .stat_label_ksy {
     font-family: var(--main_font);
     font-size: 14px;
-    color: #515738;
+    color: var(--title_color);
 }
 
 .profile_button_container_ksy {
@@ -220,7 +219,29 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #515738;
+    background-color: var(--title_color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.badge_overlay_text_kes {
+    box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    font-family: var(--main_font);
+    display: none;
+    position: absolute;
+    width: 20%;
+    border-radius: 10px;
+    background-color: var(--content_color);
+    color: white;
+    text-align: center;
+    transform: translateY(-110%);
+    font-size: 13px;
+    line-height: 30px;
+}
+.badge_overlay_kes:hover .alarm_badge_img_kes {
+    transform: scale(1.1);
+}
+.badge_overlay_kes:hover .badge_overlay_text_kes {
+    display: block;
 }
 
 .graph-section_psy {
@@ -231,7 +252,7 @@
 .graph-title_psy {
     font-family: var(--main_font);
     font-weight: bold;
-    color: #515738;
+    color: var(--title_color);
     font-size: 1.8rem;
     margin-bottom: 5px;
 }
@@ -263,26 +284,45 @@
     margin-top: 3px;
 }
 
-@media (max-width: 768px) {
-    .profile_psy {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-section_psy {
-        margin-left: 0;
-        align-items: center;
-    }
-
-    .button-group_psy {
+/*iphone 14 pro max 반응형*/
+@media (max-width: 430px) {
+    .profile-wrapper_psy {
+        display: flex;
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
-      
+    .base_content-scroll_ksy {
+        margin: 0;
+    }
+    .profile_second_container_ksy {
+        width: 100%;
+    }
+    .base_logo_desktop_ksy {
+        margin: 0 auto;
+    }
 }
-
+/*iphone xr 반응형*/
 @media (max-width: 414px) {
+    .base_logo_desktop_ksy {
+        margin: 0;
+    }
+    .base_logo_title_desktop_ksy {
+        left: 0;
+    }
+}
+/*ipad mini 반응형*/
+@media (max-width: 1024px) { 
     .profile-wrapper_psy {
         display: block;
     }
-}
+    .base_content-scroll_ksy {
+        margin: 0;
+    }
+    .base_header_ksy {
+        justify-content: center;
+    }
+    .base_logo_desktop_ksy {
+        margin: 0;
+    }
+  }

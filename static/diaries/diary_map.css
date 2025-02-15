@@ -73,7 +73,7 @@
 
 .diary_map_introduce_ksy {
     color: black;
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     font-weight: bold;
     font-size: 2.5rem;
 }
@@ -221,7 +221,7 @@
     }
 }
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .community-page_ksy .base_content-scroll_ksy {
         flex-direction: column;
     }

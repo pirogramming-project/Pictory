@@ -1,9 +1,3 @@
-.gravitas-one-regular {
-    font-family: "Gravitas One", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
 * {
     margin: 0;
     padding: 0;
@@ -23,7 +17,7 @@
 
 .base_logo_title_desktop_ksy {
     color: var(--title_color);
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     font-size: 2.5rem;
 }
 .base_button_icon_ksy {
@@ -50,7 +44,10 @@
 .base_li_ksy {
     display: flex;
 }
-
+.base_footer_letter_ksy {
+    font-family: var(--main_font);
+    font-size: 1.3rem;
+}
 .base_desktop-nav-item_ksy {
     font-family: var(--main_font);
     color: var(--title_color);
@@ -130,7 +127,7 @@
 
 .base_logo_title_desktop_ksy {
     color: var(--title_color);
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     font-size: 4rem;
 }
 .base_menu-button_ksy {
@@ -151,14 +148,14 @@
 }
 
 /* 모바일용 햄버거바 */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
     .base_button_icon_ksy {
         display: none;
     }
     /* 로고 */
     .base_logo_title_ksy {
         color: var(--title_color);
-        font-family: "Gravitas One", serif;
+        font-family: var(--logo_font);
         font-size: 5rem;
     }
     /* 햄버거 메뉴 버튼 */
@@ -173,7 +170,7 @@
         background: none;
         border: none;
         cursor: pointer;
-        padding: 10px;
+        padding: 5px 0;
         z-index: 20;
     }
 
@@ -221,6 +218,7 @@
     }
     /* 사이드바 활성화 상태 */
     .base_side-nav_ksy.base_active_ksy {
+        gap: 10px;
         transform: translateX(0);
         opacity: 1;
     }
@@ -246,19 +244,20 @@
     /* 로그아웃 버튼 */
     .base_logout_ksy {
         font-family: var(--main_font);
-        font-size: 20px;
+        font-size: 15px;
         color: var(--content_color);
         margin-top: 10px;
     }
 
     /* 메뉴 아이템 스타일 */
     .base_menu-item_ksy {
-        font-family: "Gravitas One", serif;
+        font-family: var(--main_font);
         position: relative;
-        width: 82%;
+        width: 75%;
         background-color: var(--background);
         border: none;
-        font-size: 20px;
+        font-size: 15px;
+        font-weight: bold;
         padding: 15px;
         margin: 5px 0;
         border-radius: 10px;
@@ -330,7 +329,7 @@
 
 
 
-@media (max-width: 414px) {
+@media (max-width: 1024px) {
     .base_content-scroll_ksy {
         margin: 0;
     }
@@ -338,10 +337,8 @@
     .base_header_ksy {
         justify-content: center;
     }
-
-    .base_logo_title_desktop_ksy {
-        position: relative;
-        left: 18%;
+    .base_logo_desktop_ksy {
+        margin: 0;
     }
 
   }

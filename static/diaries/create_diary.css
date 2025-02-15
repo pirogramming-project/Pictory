@@ -37,7 +37,7 @@
 .first_right_container_psy {
     background-color: var(--background);
     padding: 20px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 5px;
     margin-top: 35px;
 }
@@ -56,9 +56,9 @@
 
 .diary_letter_psy {
     font-size: 14px;
-    color: #5c6552;
+    color: var(--container_color);
     margin-bottom: 8px;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);
 }
 
 .third_line_psy {
@@ -73,16 +73,48 @@
 
 .diary_content_tag_psy {
     margin-bottom: 20px;
-    pointer-events: none;
+    position: relative;
 }
 
 .content_tag_psy {
     width: 100%;
     padding: 8px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     pointer-events: auto; 
 
+}
+
+#addTagBtn {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+    top: 25px;
+    transform: translateX(-100%);
+}
+#addTagBtn > svg {
+    width: 30px;
+    height: 30px;
+}
+.tag-container {
+    line-height: 25px;
+}
+.tag {
+    display: inline;
+    height: 20px;
+    background-color: var(--container_color);
+    color: var(--background);
+    font-size: 11px;
+    padding: 2px 5px;
+    margin: 2px;
+    margin-block-start: 5px;
+    border-radius: 5px;
+}
+.tag .remove {
+    background-color: transparent;
+    height: 10px;
+    font-size: 10px;
+    color: white;
 }
 
 .friend_tag_item_psy label {
@@ -93,19 +125,19 @@
     margin: 2px;
     border-radius: 5px;
     font-family: var(--main_font);
-    color: #5c6552;
+    color: var(--container_color);
     font-size: 11px;
     cursor: pointer;
 }
 
 .friend_tag_item_psy.selected label{
-    background-color: #5c6552;
+    background-color: var(--container_color);
     color: var(--background);
 }
 
 
 .diary_friend_psy{
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     padding: 10px;
     height: calc(22vh - -5px);
     overflow-y: auto;
@@ -114,11 +146,29 @@
 
 .diary_map_psy {
     flex: 1;
+    position: relative;
 }
-
+.create_input_button_ksy {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.placeListOnclick {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 8px;
+}
+.bi-search {
+    fill: var(--content_color);
+}
+.bi-search:hover {
+    fill: var(--title_color);
+}
 .real_location_psy {
     margin-top: 8px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     height: 23vh; 
     width: 100%;
@@ -129,7 +179,7 @@
     width: 100%;
     min-height: 200px;
     padding: 16px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 5px;
     resize: vertical;
     background-color: var(--background);
@@ -137,12 +187,12 @@
 
 .diary_save_psy {
     font-size: 14px;
-    border: 3px solid #5c6552;
+    border: 3px solid var(--container_color);
     border-radius: 4px;
     background-color: var(--background);
     padding: 10px;
-    font-family: 'Gravitas One';
-    color: #5c6552;
+    font-family: var(--logo_font);
+    color: var(--container_color);
 }
 
 
@@ -152,9 +202,14 @@ select {
     font-family: var(--main_font);
     width: 100%;
     padding: 8px;
-    border: 2px solid #5c6552;
+    border: 2px solid var(--container_color);
     border-radius: 4px;
     background-color: var(--background);
+}
+
+input[type="text"] {
+    position: relative;
+    z-index: 1000;
 }
 
 .create_diary_usertag_item_kes {
@@ -187,7 +242,7 @@ select {
 .emotion-choice label svg {
     width: 32px;
     height: 32px;
-    fill: #5c6552;
+    fill: var(--container_color);
 }
 
 /* 선택된 SVG를 강조 */
@@ -219,16 +274,44 @@ select {
 .weather-choice label svg {
     width: 32px;
     height: 32px;
-    fill: #5c6552;  /* 감정과 동일한 색상 */
+    fill: var(--container_color);  /* 감정과 동일한 색상 */
 }
 
 /* 선택된 날씨 강조 */
 .weather-choice input[type="radio"]:checked + label {
-    border-color: #5c6552;
+    border-color: var(--container_color);
     background-color: rgba(0, 0, 0, 0.10);
 }
 
-@media (max-width: 414px) {
+#placesList {
+    color: var(--title_color);
+    border-radius: 5px;
+    position: absolute;
+    top: 19%;
+    left: 0;
+    right: 0;
+    display: none;
+    gap: 10px;
+    padding: 15px;
+    font-size: 14px;
+    z-index: 10;
+    background-color: #fdf8ec;
+    border: 3px solid var(--container_color);
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#placesList li {
+    padding: 5px;
+    border-bottom: 2px solid var(--container_color);
+    cursor: pointer;
+}
+
+#placesList li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 430px) {
     .create_diary_container_ksy {
         display: block;
         padding: 0;
@@ -247,6 +330,10 @@ select {
     .emotion-choice label, .weather-choice label {
         padding: 1px;
         border-color: unset;
+    }
+
+    #placesList {
+        top: 16%;
     }
 
   }

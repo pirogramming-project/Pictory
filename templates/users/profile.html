@@ -73,13 +73,12 @@
                 <hr class="bages_line_ksy">
                 <div class="badges-section_psy">
                     <div class="badges-container_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
-                        <img src="github-icon.png" alt="배지" class="badge-icon_psy">
+                        {% for badge in badges %}
+                        <div class="badge_overlay_kes">
+                            <p class="badge_overlay_text_kes">{{badge.badge.description}}</p>
+                            <img src="/{{ badge.badge.image_url }}" alt="배지" class="badge-icon_psy">
+                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

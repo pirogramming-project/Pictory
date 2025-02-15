@@ -1,5 +1,5 @@
 .gravitas-one-regular {
-    font-family: "Gravitas One", serif;
+    font-family: var(--logo_font);
     font-weight: 400;
     font-style: normal;
 }
@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: #FFF9EA;
+    background: var(--background);
     padding: 30px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), inset 0px -1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
@@ -29,21 +29,22 @@
 }
 
 .signup_title_psy p {
-    color: #515738;
+    font-family: var(--main_font);
+    color: var(--title_color);
     font-size: 14px;
     font-weight: bold;
 }
 
 .signup_title_psy h1 {
     font-size: 32px;
-    font-family: 'Gravitas One';
+    font-family: var(--logo_font);
     font-style: normal;
     font-weight: 400;
-    color: #515738;
+    color: var(--title_color);
 }
 
 .signup_container_psy{
-    border: 2px solid #515738;
+    border: 2px solid var(--title_color);
     padding: 20px;
 }
 
@@ -57,11 +58,11 @@
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
-    border: 2px solid #515738;
+    border: 2px solid var(--title_color);
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: #FFF9EA;
-    color: #515738;
+    background-color: var(--background);
+    color: var(--title_color);
 }
 
 .signup_button_psy {
@@ -77,7 +78,7 @@
 
 .login_link_psy {
     text-align: center;
-    color: #515738;
+    color: var(--title_color);
     font-size: 14px;
     margin-bottom: 20px;
 }
@@ -88,7 +89,7 @@
     text-decoration: underline;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 430px) {
     .signup_wrapper_psy {
         width: 80%;
     }

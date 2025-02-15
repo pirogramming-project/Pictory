@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Diary, Frame, Tag, User_Tag, User, Sticker, Photo
+from .models import Diary, Frame, Tag, User_Tag, User
 from users.models import Neighbor
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm
@@ -12,7 +12,6 @@ from django.http import Http404, JsonResponse
 from django.db.models import Q
 from django.db import transaction
 import json
-from django.http import HttpResponseForbidden
 import os
 
 KAKAO_APPKEY_JS = settings.KAKAO_APPKEY_JS
@@ -78,6 +77,7 @@ def edit_diary(request, diary_id):
 
         if form.is_valid():
             diary = form.save(commit=False)
+            diary.place_address = request.POST.get('place_address')
             diary.save()
             form.save_m2m()
 
@@ -111,7 +111,7 @@ def edit_diary(request, diary_id):
 
     #all_users = User.objects.all()
     user_tags = diary.user_tags.all()
-    diary_tags = diary.tags.all()
+    diary_tags = list(diary.tags.all().values("name",))
 
     context = {
         'form': form,
@@ -119,7 +119,7 @@ def edit_diary(request, diary_id):
         # 'all_users': all_users,
         'neighbors':neighbors, #이웃들만
         'user_tags': user_tags, #create에서 태그했던 이웃들들
-        'diary_tags': diary_tags,
+        'diary_tags': json.dumps(list(diary_tags)), 
         "KAKAO_MAP_APPKEY_JS":KAKAO_APPKEY_JS
     }
     return render(request, 'diaries/edit_diary.html', context)
@@ -149,43 +149,17 @@ def custom_photo(request, frame_type):
     if request.method == "POST":
         '''사진 관련 데이터 몽땅 저장하고 다음 페이지로 이동 '''
         # 1. 사진 프레임 저장
-        frame_css = request.POST.get("frame_css")  # 프레임 CSS 속성
-        logo_text = request.POST.get("logo_text")  # 프레임 로고 속성
         saved_photo = request.POST.get("saved_photo") # 최종 이미지
 
         created_frame = None
-        if frame_css and logo_text and saved_photo:
+        if saved_photo:
             format, imgstr = saved_photo.split(";base64,")  # Base64 데이터(saved_photo) 분리
             ext = format.split("/")[-1]  # 확장자 추출 (png, jpg 등)
             img_file = ContentFile(base64.b64decode(imgstr), name=f"frame.{ext}")   # Base64 디코딩하여 파일로 변환
-            created_frame = Frame.objects.create(frame_css=frame_css, logo_text=logo_text, image_file=img_file)
+            created_frame = Frame.objects.create(image_file=img_file)
             if not created_frame:
                 print("[프레임]저장실패.. 다시시도")
                 return render(request, 'diaries/custom_photo.html')
-        
-        # 2. 스티커 저장
-        stickers_filenames = request.POST.getlist("sticker_srcs")  # 이미지 파일명들을 리스트로 받음
-        stickers_Xs = request.POST.getlist("sticker_coorXs")
-        stickers_Ys = request.POST.getlist("sticker_coorYs")
-        if stickers_filenames:
-            for i in range(len(stickers_filenames)):
-                sticker_filename = stickers_filenames[i]
-                sticker_X = stickers_Xs[i]
-                sticker_Y = stickers_Ys[i]
-                
-                Sticker.objects.create(
-                    frame=created_frame,
-                    sticker_image=f'static/images/stickers/{sticker_filename}',
-                    coor_x=sticker_X,
-                    coor_y=sticker_Y
-                    )
-                
-        # 3. 사진들 저장
-        if request.FILES:
-            uploaded_files = request.FILES.getlist("photos")  # 여러 개의 파일 받기
-            print(uploaded_files)
-            for file in uploaded_files:
-                Photo.objects.create(frame=created_frame, photo=file)  # 이미지 저장
                      
         # 저장 성공 시 리다이렉트
         if created_frame:
@@ -234,7 +208,7 @@ def create_diary(request, related_frame_id):
             diary.save()
             
             ### 일반 태그 처리 및 저장
-            raw_tag_string = request.POST['create_diary_post']
+            raw_tag_string = request.POST.get('create_diary_post')
             raw_tags = raw_tag_string.split('#')
             tags = set([])
             for raw_tag in raw_tags:
@@ -387,9 +361,6 @@ def upload_photo(request):
 
         # 새로운 Frame 생성
         new_frame = Frame.objects.create(image_file=uploaded_photo)
-
-        # 업로드한 사진을 Photo 모델에 저장
-        Photo.objects.create(frame=new_frame, photo=uploaded_photo)
 
         # 저장 후 create_diary 페이지로 이동 (사진을 업로드한 Frame ID 포함)
         return redirect('diaries:create_diary', related_frame_id=new_frame.id)

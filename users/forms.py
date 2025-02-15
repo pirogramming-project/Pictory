@@ -26,5 +26,12 @@ class UserUpdateForm(forms.ModelForm):
 
     def clean_birthday(self):
         birthday = self.cleaned_data.get("birthday")
-        return birthday if birthday else None  
+        return birthday if birthday else None 
+    
+    # 닉네임 중복 검사
+    def clean_nickname(self):
+        nickname = self.cleaned_data.get("nickname")
+        if User.objects.exclude(pk=self.instance.pk).filter(nickname=nickname).exists():
+            raise forms.ValidationError("이미 사용 중인 닉네임입니다.")
+        return nickname 
 

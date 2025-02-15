@@ -76,7 +76,7 @@
 }
 
 .community_photo-item_ksy {
-    aspect-ratio: 1/1;
+    aspect-ratio: 1/1.2;
     overflow: hidden;
     cursor: pointer;
 }
@@ -225,8 +225,24 @@ body.community_detail-page_ksy {
     background-color: rgba(0, 0, 0, 0.9);
     transition: background-color 0.3s ease;
 }
-@media (max-width: 414px) {
+@media (max-width: 1024px) {
+    .community-container_ksy {
+        margin: 70px auto 0;
+    }
+}
+
+@media (max-width: 430px) {
     .community_photo-grid_ksy {
         grid-template-columns: repeat(3, 1fr);
+    }
+    .community-container_ksy {
+        margin: 40px auto 0;
+    }
+    .community_detail-container_ksy {
+        height: auto;
+    }
+
+    #pictory-frame_psy {
+        transform: scale(0.8);
     }
 }

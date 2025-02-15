@@ -96,16 +96,22 @@ class Neighbor(models.Model):
 ## 배지 관련 모델들
 class Badge(models.Model):
     """배지 정보"""
+    id = models.CharField("식별자", max_length=20, primary_key=True, unique=True)
     image = models.FilePathField(
         "배지 이미지", 
         path='static/images/badges', 
         match=r".*\.(png|jpg|jpeg|gif|webp|bmp|tiff)$", 
         recursive=True
     )
-    description = models.CharField("배지 설명", max_length=30)
+    description = models.CharField("배지 설명", max_length=50)
+    
+    @property
+    def image_url(self):
+        """OS에 상관없이 항상 '/'로 경로를 변환"""
+        return self.image.replace("\\", "/")
 
     def __str__(self):
-        return self.description
+        return f'{self.id} - {self.description}'
 
 
 class UserBadge(models.Model):
@@ -127,6 +133,7 @@ class Notification(models.Model):
         ('NFR', 'new friend request'),
         ('FRA', 'friend request accepted'),
         ('TAG', 'tagged'),
+        ('NBA', 'new badge acquire')
     )
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
@@ -147,6 +154,10 @@ class Notification_NFR(models.Model):
 class Notification_TAG(models.Model):
     notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="tag_notification")
     tagged_diary = models.ForeignKey('diaries.Diary', on_delete=models.CASCADE, related_name="related_notifications")
+
+class Notification_NBA(models.Model):
+    notification = models.OneToOneField(Notification, on_delete=models.CASCADE, primary_key=True, related_name="nba_notification")
+    acquired_badge = models.ForeignKey(Badge, on_delete=models.CASCADE, related_name="related_notifications")
 
 ###### 사용하게 될 지도 모르는 utility 함수들
 # def are_neighbors(user_a, user_b):
