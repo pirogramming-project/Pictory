@@ -111,7 +111,7 @@ def edit_diary(request, diary_id):
 
     #all_users = User.objects.all()
     user_tags = diary.user_tags.all()
-    diary_tags = diary.tags.all()
+    diary_tags = list(diary.tags.all().values("name",))
 
     context = {
         'form': form,
@@ -119,7 +119,7 @@ def edit_diary(request, diary_id):
         # 'all_users': all_users,
         'neighbors':neighbors, #이웃들만
         'user_tags': user_tags, #create에서 태그했던 이웃들들
-        'diary_tags': diary_tags,
+        'diary_tags': json.dumps(list(diary_tags)), 
         "KAKAO_MAP_APPKEY_JS":KAKAO_APPKEY_JS
     }
     return render(request, 'diaries/edit_diary.html', context)

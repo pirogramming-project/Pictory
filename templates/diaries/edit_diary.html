@@ -45,7 +45,14 @@
                     <div class="diary_tag_psy">
                         <div class="diary_content_tag_psy">
                             <h1 class="diary_letter_psy">o Tag</h1>
-                            <input type="text" name="create_diary_post" placeholder="#으로 태그를 추가하세요" class="content_tag_psy" value="{% for tag in diary.tags.all %}#{{ tag.name }} {% endfor %}" required>
+                            <input type="text" placeholder="태그를 추가하세요" class="content_tag_psy">
+                            <button type="button" id="addTagBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                  </svg>
+                            </button>
+                            <div class="tag-container" id="tagContainer"></div>
+                            <input type="hidden" name="create_diary_post" id="tagsInput">
                         </div>
                         <div class="diary_friend_psy">
                             <h1 class="diary_letter_psy">o Friend Tag</h1>
@@ -62,9 +69,18 @@
 
                     <div class="diary_map_psy">
                         <h1 class="diary_letter_psy">o Location</h1>
-                        {{ form.place }}
+                        <div class="create_input_button_ksy">
+                            {{ form.place }}
+                            <button class="placeListOnclick">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </div>
                         <ul id="placesList"></ul>
                         <div class="real_location_psy"></div>
+                        <!-- 장소 목록 출력 영역 -->
+
                     </div>
 
                 </div>
@@ -83,7 +99,29 @@
     </div>
 </div>
 <script>
+    const geocoder = new kakao.maps.services.Geocoder();
+    const inputField = document.querySelector("#id_place");
+    const placesList = document.getElementById("placesList");
+    const mapContainer = document.querySelector(".real_location_psy");
+    const ps = new kakao.maps.services.Places();
+    let marker;
+    let topPlace = null;
+    const map = new kakao.maps.Map(mapContainer, {
+        center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
+        level: 6, // 지도 확대 레벨
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
+        InitFriendTag();
+        InitTagInput();
+        InitPlaceInput();
+
+        // 페이지 로드 시 지도 핀 찍기
+        const placeName = document.getElementById("id_place").value;
+        addLocation("{{ diary.place_address }}");
+    });
+
+    function InitFriendTag() {
         // 모든 친구 태그 요소를 가져옴
         let friendTags = document.querySelectorAll(".friend_tag_item_psy");
 
@@ -106,117 +144,160 @@
                 }
             });
         });
+    }
 
-        // 페이지 로드 시 지도 핀 찍기
-        const placeName = document.getElementById("id_place").value;
-        addLocation("{{ diary.place_address }}");
-    });
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        let inputField = document.querySelector("#id_place");
-        let placesList = document.getElementById('placesList');
-    
-        if (inputField) {
-            inputField.addEventListener("input", function() {
-                if (this.value.trim()) {
-                    placeSearch(this.value);
+
+    function InitPlaceInput() {
+        // 친구 태그 선택 기능
+        document.querySelectorAll(".friend_tag_item_psy").forEach(function (tagItem) {
+            const checkbox = tagItem.querySelector("input[type='checkbox']");
+            if (checkbox.checked) {
+                tagItem.classList.add("selected");
+            }
+            tagItem.addEventListener("click", function () {
+                checkbox.checked = !checkbox.checked;
+                tagItem.classList.toggle("selected", checkbox.checked);
+            });
+        });   
+
+        function placeSearch(keyword) {
+            ps.keywordSearch(keyword, function (data, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    topPlace = data[0];
+                    displayPlaces(data.slice(0, 3));
+                    placesList.style.display = "flex";
                 } else {
-                    placesList.innerHTML = "";  //  입력 창이 비면 리스트 초기화
-                }
-            });
-    
-            // 🔹 엔터키 입력 시 자동으로 가장 관련성 높은 장소 선택
-            inputField.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    selectTopPlace();
+                    placesList.style.display = "none";
                 }
             });
         }
-    });
-    
-    // 1. 지도 초기화
-    const mapContainer = document.querySelector('.real_location_psy');
-    const map = new kakao.maps.Map(mapContainer, {
-        center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 중심 좌표
-        level: 6, // 지도 확대 레벨
-    });
-    
-    const geocoder = new kakao.maps.services.Geocoder(); // 주소 검색 객체
-    const ps = new kakao.maps.services.Places();  // 장소 검색 객체 생성
-    let marker;  // 단일 마커 관리
-    let topPlace = null;  // 🔹 가장 가능성 높은 장소 저장
-    
-    function placeSearch(keyword) {
-        ps.keywordSearch(keyword, placesSearchCB);
-    }
-    
-    // 키워드 검색 완료 시 호출되는 콜백함수
-    function placesSearchCB(data, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            displayPlaces(data.slice(0, 3)); // 🔹 가장 관련성 높은 3개만 표시
-            topPlace = data[0]; // 🔹 가장 가능성 높은 장소 저장
-            document.getElementById('placesList').style.display = "block";
-        } else {
-            document.getElementById('placesList').style.display = "none";
+
+        function displayPlaces(places) {
+            placesList.innerHTML = "";
+            places.forEach((place, index) => {
+                const itemEl = document.createElement("li");
+                itemEl.innerHTML = `
+                    <span class="markerbg marker_${index + 1}"></span>
+                    <div class="info">
+                        <h5>${place.place_name}</h5>
+                        <span>${place.road_address_name || place.address_name}</span>
+                    </div>
+                `;
+                itemEl.addEventListener("click", function () {
+                    addLocation(place.address_name);
+                    placesList.style.display = "none";
+                });
+                placesList.appendChild(itemEl);
+            });
         }
-    }
-    
-    // 🔹 엔터를 누르면 가장 가능성 높은 장소 자동 선택
-    function selectTopPlace() {
-        if (topPlace) {
-            addLocation(topPlace.address_name);
-        } else {
-            alert("검색 결과가 없습니다.");
+
+        function selectTopPlace() {
+            if (topPlace) {
+                addLocation(topPlace.address_name);
+                placesList.style.display = "none";
+            } else {
+                alert("검색 결과가 없습니다.");
+            }
         }
-    }
-    
-    // 2. 검색된 장소 목록을 화면에 표시하는 함수 (최대 3개만)
-    function displayPlaces(places) {
-        placesList.innerHTML = ""; // 기존 리스트 삭제
-    
-        places.forEach((place, index) => {
-            const itemEl = document.createElement('li');
-            itemEl.innerHTML = `
-                <span class="markerbg marker_${index+1}"></span>
-                <div class="info">
-                    <h5>${place.place_name}</h5>
-                    <span>${place.road_address_name || place.address_name}</span>
-                </div>
-            `;
-    
-            itemEl.onclick = function() {
-                addLocation(place.address_name);
-            };
-            placesList.appendChild(itemEl);
+
+
+
+        // 🔹 Save 버튼 클릭 시 검증
+        document.querySelector(".diary_save_psy").addEventListener("click", function (event) {
+            const weatherInputs = document.querySelectorAll('input[name="weather"]');
+            const emotionInputs = document.querySelectorAll('input[name="emotion"]');
+
+            const weatherSelected = Array.from(weatherInputs).some(input => input.checked);
+            const emotionSelected = Array.from(emotionInputs).some(input => input.checked);
+
+            if (!weatherSelected || !emotionSelected) {
+                <!-- event.preventDefault(); -->
+                if (!weatherSelected) alert("날씨를 선택해주세요!");
+                if (!emotionSelected) alert("감정을 선택해주세요!");
+            }
         });
+
+        document.querySelector('.placeListOnclick').addEventListener('click', () => {
+            placeSearch(inputField.value)
+        });
+
+        inputField.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                placeSearch(inputField.value);
+            }
+        });
+
     }
-    
-    // 3. 선택한 장소를 지도에 마커로 표시 & 입력 필드에 반영
-    function addLocation(address) {
-        if (!address) {
-            alert('장소를 찾을 수 없습니다.');
-            return;
+
+    function InitTagInput() {
+        const tagInput = document.querySelector('.content_tag_psy');
+        const addTagBtn = document.getElementById("addTagBtn");
+        const tagContainer = document.getElementById("tagContainer");
+        const tagsInput = document.getElementById("tagsInput");
+        let tags = [];
+        
+        function addTag(tag) {
+            if (!tag || tags.includes(tag)) return; // 중복 방지
+            tags.push(tag);
+            
+            // 태그 UI 추가
+            const tagElement = document.createElement("div");
+            tagElement.classList.add("tag");
+            tagElement.innerHTML = `#${tag} <button class="remove">x</button>`;
+            tagContainer.appendChild(tagElement);
+            console.log(tagElement.querySelector(".remove"))
+            // 삭제 이벤트 추가
+            tagElement.querySelector(".remove").addEventListener("click", () => {
+                console.log("삭제삭제");
+                tags = tags.filter(t => t !== tag);
+                tagElement.remove();
+                updateHiddenInput();
+            });
+
+            updateHiddenInput();
         }
-    
-        geocoder.addressSearch(address, function(result, status) {
+
+        function updateHiddenInput() {
+            tagsInput.value = tags.join("#");
+        }
+
+        // 엔터 키 입력 시 태그 추가
+        tagInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addTag(tagInput.value.trim());
+                tagInput.value = ""; // 입력창 초기화
+            }
+        });
+            
+        // 버튼 클릭 시 태그 추가
+        addTagBtn.addEventListener("click", () => {
+            addTag(tagInput.value.trim());
+            tagInput.value = ""; // 입력창 초기화
+        });
+
+        const diaryTags = JSON.parse('{{ diary_tags|safe }}');  
+        
+        diaryTags.forEach(tag => {
+            addTag(tag.name);
+        });
+
+    }
+
+    function addLocation(address) {
+        geocoder.addressSearch(address, function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-    
-                // 기존 마커 삭제 후 새로운 마커 추가
                 if (marker) {
                     marker.setMap(null);
                 }
                 marker = new kakao.maps.Marker({ position: coords });
                 marker.setMap(map);
-    
-                // 지도 중심 이동
                 map.panTo(coords);
-    
-                // 선택한 주소를 입력 필드에 자동 반영
                 document.getElementById("create_diary_real_address").value = address;
             } else {
-                alert('장소를 찾을 수 없습니다.');
+                alert("장소를 찾을 수 없습니다.");
             }
         });
     }
