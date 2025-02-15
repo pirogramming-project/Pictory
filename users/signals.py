@@ -37,7 +37,7 @@ def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
 # 유저 배지 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=UserBadge)
 @transaction.atomic
-def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
+def create_NewBadge_notification(sender, instance, created, **kwargs):
     """유저가 배지를 받으면 알림을 생성하는 함수"""
     if created:  # 새로운 요청이 생성된 경우에만 실행
         new_notification = Notification.objects.create(
@@ -77,49 +77,49 @@ def create_FriendRequestAccepted_notification(sender, instance, created, **kwarg
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_1st')
             )
-        elif user1NeighborCounts >= 10:
+        if user1NeighborCounts >= 10:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
-        elif user1NeighborCounts >= 30:
+        if user1NeighborCounts >= 30:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
-        elif user1NeighborCounts >= 50:
+        if user1NeighborCounts >= 50:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
-        elif user1NeighborCounts >= 100:
+        if user1NeighborCounts >= 100:
             UserBadge.objects.get_or_create(
                 user=instance.user1,
                 badge=Badge.objects.get(id='neighbor_100th')
             )
         if user2NeighborCounts >= 1:
             UserBadge.objects.get_or_create(
-                user=instance.user1,
+                user=instance.user2,
                 badge=Badge.objects.get(id='neighbor_1st')
             )
-        elif user2NeighborCounts >= 10:
+        if user2NeighborCounts >= 10:
             UserBadge.objects.get_or_create(
-                user=instance.user1,
+                user=instance.user2,
                 badge=Badge.objects.get(id='neighbor_10th')
             )
-        elif user2NeighborCounts >= 30:
+        if user2NeighborCounts >= 30:
             UserBadge.objects.get_or_create(
-                user=instance.user1,
+                user=instance.user2,
                 badge=Badge.objects.get(id='neighbor_30th')
             )
-        elif user2NeighborCounts >= 50:
+        if user2NeighborCounts >= 50:
             UserBadge.objects.get_or_create(
-                user=instance.user1,
+                user=instance.user2,
                 badge=Badge.objects.get(id='neighbor_50th')
             )
-        elif user2NeighborCounts >= 100:
+        if user2NeighborCounts >= 100:
             UserBadge.objects.get_or_create(
-                user=instance.user1,
+                user=instance.user2,
                 badge=Badge.objects.get(id='neighbor_100th')
             )
 
