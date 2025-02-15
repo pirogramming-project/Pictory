@@ -133,6 +133,7 @@
 }
 
 .diary_friend_psy{
+    border-radius: 4px;
     border: 2px solid var(--container_color);
     padding: 10px;
     height: calc(22vh - -5px);
