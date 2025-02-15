@@ -149,6 +149,9 @@
 
 /* 모바일용 햄버거바 */
 @media screen and (max-width: 1024px) {
+    .base_header_ksy {
+        z-index: 98; 
+    }
     .base_button_icon_ksy {
         display: none;
     }
@@ -203,7 +206,7 @@
         width: 250px;
         height: 100vh;
         background-color: var(--background);
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         z-index: 100;
@@ -215,6 +218,7 @@
         opacity: 0;
         transform: translateX(-250px);
         transition: transform 0.3s ease, opacity 0.3s ease;
+        overflow-y: auto;
     }
     /* 사이드바 활성화 상태 */
     .base_side-nav_ksy.base_active_ksy {
@@ -275,9 +279,18 @@
         position: absolute;
     }
     /* 사이드바가 열렸을 때 배경 투명도 적용 */
-    .base_content-area_ksy.base_active_opacity::before {
-        opacity: 0.8;
+
+    .base_layout_ksy.base_active_opacity::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.88); 
+        z-index: 99;
     }
+    
     .base_background_div_ksy {
         background-color: var(--background);
     }
@@ -292,6 +305,7 @@
     .base_menu-button_ksy {
         display: flex;
     }
+
 }
 
 /* 사이드바 기본 스타일 */
