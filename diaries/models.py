@@ -31,7 +31,7 @@ class Diary(models.Model):
     title = models.CharField("제목", max_length=40)
     writer = models.ForeignKey(User, models.CASCADE, verbose_name="작성자", related_name="wirte_diaries")
     date = models.DateField("날짜", default=date.today)
-    four_cut_photo = models.OneToOneField(Frame, models.CASCADE)
+    four_cut_photo = models.ForeignKey(Frame, models.CASCADE, verbose_name="프레임", related_name="diaries")
     weather = models.CharField("날씨", max_length=20, choices=WEATHER_CHOICES, default='sunny')  # 기본값 '맑음'
     place = models.CharField("장소", max_length=40)
     place_address = models.CharField("실주소", max_length=120)
