@@ -126,37 +126,56 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const menuButton = document.getElementById("base_menuButton_ksy");
-            const closeButton = document.getElementById("base_closeButton_ksy");
-            const sidebar = document.getElementById("base_sidebar_ksy");
-            const contentArea = document.querySelector(".base_content-area_ksy");
-        
-            // 햄버거 메뉴 클릭 시
-            menuButton.addEventListener("click", function () {
-                menuButton.style.display = "none"; // 햄버거 버튼 숨기기
-                sidebar.style.display = "flex"; // 사이드바 보이기
-                closeButton.style.display = "block"; 
-                contentArea.classList.add("base_active_opacity"); 
-                requestAnimationFrame(() => sidebar.classList.add("base_active_ksy")); 
+        const menuButton = document.getElementById("base_menuButton_ksy");
+        const closeButton = document.getElementById("base_closeButton_ksy");
+        const sidebar = document.getElementById("base_sidebar_ksy");
+        const layoutArea = document.querySelector(".base_layout_ksy");
 
-                 // 모바일에서 스크롤 막기
-                document.body.style.overflow = "hidden";
-            });
-        
-            // 닫기 버튼 클릭 시
-            closeButton.addEventListener("click", function () {
-                sidebar.classList.remove("base_active_ksy");
-                contentArea.classList.remove("base_active_opacity"); // opacity 원래대로 복구
-                setTimeout(() => {
-                    sidebar.style.display = "none";
-                    closeButton.style.display = "none";
-                    menuButton.style.display = "flex"; 
+        let scrollPosition = 0;
 
-                    // 모바일에서 스크롤 다시 활성화
-                    document.body.style.overflow = "";
-                }, 100);
-            });
+        // 햄버거 메뉴 클릭 시
+        menuButton.addEventListener("click", function () {
+            scrollPosition = window.pageYOffset;
+
+            menuButton.style.display = "none";
+            sidebar.style.display = "flex";
+            closeButton.style.display = "block";
+
+            // 레이아웃 전체에 어두운 배경 활성화
+            layoutArea.classList.add("base_active_opacity");
+
+            document.body.classList.add('sidebar-open');
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+
+            requestAnimationFrame(() => sidebar.classList.add("base_active_ksy"));
         });
+
+        // 닫기 버튼 클릭 시
+        closeButton.addEventListener("click", function () {
+            sidebar.classList.remove("base_active_ksy");
+
+            // 레이아웃 전체 어두운 배경 제거
+            layoutArea.classList.remove("base_active_opacity");
+
+            document.body.classList.remove('sidebar-open');
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.overflow = '';
+            document.body.style.width = '';
+
+            window.scrollTo(0, scrollPosition);
+
+            setTimeout(() => {
+                sidebar.style.display = "none";
+                closeButton.style.display = "none";
+                menuButton.style.display = "flex";
+            }, 100);
+        });
+    });
+
     </script>
         
 
