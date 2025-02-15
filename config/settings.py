@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,8 +23,36 @@ if DEBUG:
 else:
     CSRF_TRUSTED_ORIGINS = ["https://www.pictory.site"]
 
-# Application definition
 
+# 로그 관련
+LOGGING_DIR = BASE_DIR / 'logs'
+if not os.path.exists(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR)  # logs 디렉토리 생성
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(LOGGING_DIR, "django_errors.log"),
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["file"],
+        "level": "ERROR",
+    },
+}
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
