@@ -19,170 +19,179 @@ def check_anniversary(sender, request, user, **kwargs):
 
 # 이웃 요청 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=NeighborRequest)
-@transaction.atomic
 def create_NewFriendRequest_notification(sender, instance, created, **kwargs):
     """이웃 요청이 생성되면 알림을 생성하는 함수"""
     if created:  # 새로운 요청이 생성된 경우에만 실행
-        new_notification = Notification.objects.create(
-            user=instance.receiver,
-            type="NFR",
-            message=f"@{instance.sender.nickname}님이 이웃을 요청했습니다."
-        )
-        Notification_NFR.objects.create(
-            notification=new_notification,
-            from_user=instance.sender
-        )
+        def notify():
+            new_notification = Notification.objects.create(
+                user=instance.receiver,
+                type="NFR",
+                message=f"@{instance.sender.nickname}님이 이웃을 요청했습니다."
+            )
+            Notification_NFR.objects.create(
+                notification=new_notification,
+                from_user=instance.sender
+            )
+            
+        transaction.on_commit(notify)
         
         
 # 유저 배지 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=UserBadge)
-@transaction.atomic
 def create_NewBadge_notification(sender, instance, created, **kwargs):
     """유저가 배지를 받으면 알림을 생성하는 함수"""
     if created:  # 새로운 요청이 생성된 경우에만 실행
-        new_notification = Notification.objects.create(
-            user=instance.user,
-            type="NBA",
-            message=f"배지를 획득했어요! 축하해요!"
-        )
-        Notification_NBA.objects.create(
-            notification=new_notification,
-            acquired_badge=instance.badge
-        )
+        def notify():
+            new_notification = Notification.objects.create(
+                user=instance.user,
+                type="NBA",
+                message=f"배지를 획득했어요! 축하해요!"
+            )
+            Notification_NBA.objects.create(
+                notification=new_notification,
+                acquired_badge=instance.badge
+            )
+            
+        transaction.on_commit(notify)
 
         
 # 친구관계 모델에 뭔가 추가되면 실행됨.
 @receiver(post_save, sender=Neighbor)
-@transaction.atomic
 def create_FriendRequestAccepted_notification(sender, instance, created, **kwargs):
     """친구가 생기면 알림을 생성하는 함수"""
     if created:
-        ## 1. 알림 만들기
-        Notification.objects.create(
-            user=instance.user1,
-            type="FRA",
-            message=f"@{instance.user2.nickname}님과 이웃이 되었습니다."
-        )
-        Notification.objects.create(
-            user=instance.user2,
-            type="FRA",
-            message=f"@{instance.user1.nickname}님과 이웃이 되었습니다."
-        )
+        def notify():
+            ## 1. 알림 만들기
+            Notification.objects.create(
+                user=instance.user1,
+                type="FRA",
+                message=f"@{instance.user2.nickname}님과 이웃이 되었습니다."
+            )
+            Notification.objects.create(
+                user=instance.user2,
+                type="FRA",
+                message=f"@{instance.user1.nickname}님과 이웃이 되었습니다."
+            )
         
-        ## 2. 배지 지급
-        user1NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user1) | Q(user2=instance.user1)).count()
-        user2NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user2) | Q(user2=instance.user2)).count()
-        if user1NeighborCounts >= 1:
-            UserBadge.objects.get_or_create(
-                user=instance.user1,
-                badge=Badge.objects.get(id='neighbor_1st')
-            )
-        if user1NeighborCounts >= 10:
-            UserBadge.objects.get_or_create(
-                user=instance.user1,
-                badge=Badge.objects.get(id='neighbor_10th')
-            )
-        if user1NeighborCounts >= 30:
-            UserBadge.objects.get_or_create(
-                user=instance.user1,
-                badge=Badge.objects.get(id='neighbor_30th')
-            )
-        if user1NeighborCounts >= 50:
-            UserBadge.objects.get_or_create(
-                user=instance.user1,
-                badge=Badge.objects.get(id='neighbor_50th')
-            )
-        if user1NeighborCounts >= 100:
-            UserBadge.objects.get_or_create(
-                user=instance.user1,
-                badge=Badge.objects.get(id='neighbor_100th')
-            )
-        if user2NeighborCounts >= 1:
-            UserBadge.objects.get_or_create(
-                user=instance.user2,
-                badge=Badge.objects.get(id='neighbor_1st')
-            )
-        if user2NeighborCounts >= 10:
-            UserBadge.objects.get_or_create(
-                user=instance.user2,
-                badge=Badge.objects.get(id='neighbor_10th')
-            )
-        if user2NeighborCounts >= 30:
-            UserBadge.objects.get_or_create(
-                user=instance.user2,
-                badge=Badge.objects.get(id='neighbor_30th')
-            )
-        if user2NeighborCounts >= 50:
-            UserBadge.objects.get_or_create(
-                user=instance.user2,
-                badge=Badge.objects.get(id='neighbor_50th')
-            )
-        if user2NeighborCounts >= 100:
-            UserBadge.objects.get_or_create(
-                user=instance.user2,
-                badge=Badge.objects.get(id='neighbor_100th')
-            )
+            ## 2. 배지 지급
+            user1NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user1) | Q(user2=instance.user1)).count()
+            user2NeighborCounts = Neighbor.objects.filter(Q(user1=instance.user2) | Q(user2=instance.user2)).count()
+            if user1NeighborCounts >= 1:
+                UserBadge.objects.get_or_create(
+                    user=instance.user1,
+                    badge=Badge.objects.get(id='neighbor_1st')
+                )
+            if user1NeighborCounts >= 10:
+                UserBadge.objects.get_or_create(
+                    user=instance.user1,
+                    badge=Badge.objects.get(id='neighbor_10th')
+                )
+            if user1NeighborCounts >= 30:
+                UserBadge.objects.get_or_create(
+                    user=instance.user1,
+                    badge=Badge.objects.get(id='neighbor_30th')
+                )
+            if user1NeighborCounts >= 50:
+                UserBadge.objects.get_or_create(
+                    user=instance.user1,
+                    badge=Badge.objects.get(id='neighbor_50th')
+                )
+            if user1NeighborCounts >= 100:
+                UserBadge.objects.get_or_create(
+                    user=instance.user1,
+                    badge=Badge.objects.get(id='neighbor_100th')
+                )
+            if user2NeighborCounts >= 1:
+                UserBadge.objects.get_or_create(
+                    user=instance.user2,
+                    badge=Badge.objects.get(id='neighbor_1st')
+                )
+            if user2NeighborCounts >= 10:
+                UserBadge.objects.get_or_create(
+                    user=instance.user2,
+                    badge=Badge.objects.get(id='neighbor_10th')
+                )
+            if user2NeighborCounts >= 30:
+                UserBadge.objects.get_or_create(
+                    user=instance.user2,
+                    badge=Badge.objects.get(id='neighbor_30th')
+                )
+            if user2NeighborCounts >= 50:
+                UserBadge.objects.get_or_create(
+                    user=instance.user2,
+                    badge=Badge.objects.get(id='neighbor_50th')
+                )
+            if user2NeighborCounts >= 100:
+                UserBadge.objects.get_or_create(
+                    user=instance.user2,
+                    badge=Badge.objects.get(id='neighbor_100th')
+                )
+                
+        transaction.on_commit(notify)
 
 
 # 유저태그 모델에 뭔가 추가되면 실행됨.
 @receiver(m2m_changed, sender=Diary.user_tags.through)
-@transaction.atomic
 def create_tagged_notification(sender, instance, action, reverse, model, pk_set, **kwargs):
     """일기에서 태그된 유저에게 알림을 보내는 함수"""
     if action == "post_add":  # ManyToManyField에 새로운 값이 추가될 때만 실행
-        for user_id in pk_set:  # 태그된 유저들의 ID 목록
-            user = model.objects.get(pk=user_id)  # User 모델의 객체 가져오기
-            new_notification = Notification.objects.create(
-                user=user,
-                type="TAG",
-                message=f"@{instance.writer.nickname}님이 당신을 태그했습니다."
-            )
-            Notification_TAG.objects.create(
-                notification=new_notification,
-                tagged_diary=instance
-            )
+        def notify():
+            for user_id in pk_set:  # 태그된 유저들의 ID 목록
+                user = model.objects.get(pk=user_id)  # User 모델의 객체 가져오기
+                new_notification = Notification.objects.create(
+                    user=user,
+                    type="TAG",
+                    message=f"@{instance.writer.nickname}님이 당신을 태그했습니다."
+                )
+                Notification_TAG.objects.create(
+                    notification=new_notification,
+                    tagged_diary=instance
+                )
 
+        # 트랜잭션이 완전히 커밋된 후 실행되도록 설정
+        transaction.on_commit(notify)
 
 # 일기 모델에 뭔가 저장되면 실행됨.
 @receiver(post_save, sender=Diary)
-@transaction.atomic
 def create_Diary_signal(sender, instance, created, **kwargs):
     """일기 수 관련 배지 지급"""
     if created:  # 새로운 일기가 생성된 경우에만 실행
-        writer = instance.writer
-        diaryCount = Diary.objects.filter(writer=instance.writer).count()
-        
-        if diaryCount >= 1:
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_1st')
-            )
-        elif diaryCount >= 10:
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_10th')
-            )
-        elif diaryCount >= 30:
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_30th')
-            )
-        elif diaryCount >= 50:
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_50th')
-            )
-        elif diaryCount >= 100:
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_100th')
-            )
-                
-        if(has_written_7_days_consecutively(writer)):
-            UserBadge.objects.get_or_create(
-                user=writer,
-                badge=Badge.objects.get(id='diary_7days')
-            )
+        def notify():
+            writer = instance.writer
+            diaryCount = Diary.objects.filter(writer=instance.writer).count()
+            
+            if diaryCount >= 1:
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_1st')
+                )
+            if diaryCount >= 10:
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_10th')
+                )
+            if diaryCount >= 30:
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_30th')
+                )
+            if diaryCount >= 50:
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_50th')
+                )
+            if diaryCount >= 100:
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_100th')
+                )
+                    
+            if(has_written_7_days_consecutively(writer)):
+                UserBadge.objects.get_or_create(
+                    user=writer,
+                    badge=Badge.objects.get(id='diary_7days')
+                )
+        transaction.on_commit(notify)
 
 # util함수
 def has_written_7_days_consecutively(user):
