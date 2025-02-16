@@ -31,8 +31,18 @@
         closeButton.className = "sticker_remove_btn_kes";
         closeButton.textContent = "X";
         closeButton.addEventListener("click", () => {
+            event.stopPropagation(); // 클릭 이벤트 전파 막기
             newStickerContainer.remove();
         });
+        // 스티커 제거 모바일
+        closeButton.addEventListener("touchstart", (event) => {
+            event.stopPropagation(); // 터치 이벤트 전파 막기
+            newStickerContainer.draggable = false; // 드래그 방지
+            setTimeout(() => {
+                newStickerContainer.remove();
+            }, 100);
+        });
+
         // 2. 크기조절
         const resizeHandle = document.createElement('div');
         resizeHandle.className = "sticker_resize_handle_kes";
@@ -43,6 +53,7 @@
         let aspectRatio = newSticker_psy.naturalWidth / newSticker_psy.naturalHeight;
         let startX, startY, startWidth, startHeight;
         resizeHandle.addEventListener("mousedown", (event) => {
+            event.stopPropagation(); // 드래그 방지
             isResizing = true;
             startX = event.clientX;
             startY = event.clientY;
@@ -62,6 +73,14 @@
             isResizing = false;
         });
 
+         // 📱 모바일 크기 조절 이벤트
+        resizeHandle.addEventListener("touchstart", (event) => {
+            console.log("터치스타트")
+            newStickerContainer.draggable = false;
+            setTimeout(() => {
+                newStickerContainer.draggable = true;
+            }, 1500); // 일정 시간 후 다시 활성화
+        });
 
         // DOM요소 추가
         newStickerContainer.addEventListener('click', (event) => {
