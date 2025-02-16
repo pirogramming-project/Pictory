@@ -29,9 +29,28 @@
     thicknessSlider_kes.addEventListener("input", () => {
         const thicknessSliderValue = thicknessSlider_kes.value / 10;
         imgSlotsContainer.style.gap = `${thicknessSliderValue}px`;
+
+        const newWidth = (ImageSlotsContainerWidth - (gridColumnNumber-1) * thicknessSliderValue) / gridColumnNumber;
+        const newHeight = (ImageSlotsContainerHeight - (gridRowNumber-1) * thicknessSliderValue) / gridRowNumber;
+
         imgSlots.forEach(slot => {
-            slot.style.width = `${(ImageSlotsContainerWidth - (gridColumnNumber-1) * thicknessSliderValue) / gridColumnNumber}px`;
-            slot.style.height = `${(ImageSlotsContainerHeight - (gridRowNumber-1) * thicknessSliderValue) / gridRowNumber}px`;
+            slot.style.width = `${newWidth}px`;
+            slot.style.height = `${newHeight}px`;
+
+            const childImg = slot.children[0];
+            if (childImg.tagName === "IMG") {
+                const imgWidth = childImg.naturalWidth;
+                const imgHeight = childImg.naturalHeight;
+
+                const newScale = Math.max(newWidth / imgWidth, newHeight / imgHeight);
+
+                const newImgWidth = imgWidth * newScale;
+                const newImgHeight = imgHeight * newScale;
+                childImg.style.width = `${newImgWidth}px`;
+                childImg.style.height = `${newImgHeight}px`;
+                childImg.style.left = `${(newWidth - newImgWidth) / 2}px`;
+                childImg.style.top = `${(newHeight - newImgHeight) / 2}px`;
+            }
         })
     });
 
