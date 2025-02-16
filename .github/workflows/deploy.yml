@@ -1,0 +1,38 @@
+name: Deploy to Naver Cloud
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed  # PR이 main에 merge되었을 때 실행
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true  # PR이 merge된 경우에만 실행
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/ubuntu/Pictory/  # 실제 배포할 프로젝트 경로
+            git pull origin main
+            source venv/bin/activate  # 가상환경 활성화 (필요하면 추가)
+            pip install -r requirements.txt  # 패키지 업데이트 (필요하면 추가)
+            python manage.py makemigrations
+            python manage.py migrate  # DB 마이그레이션
+            python manage.py collectstatic --noinput  # 정적 파일 모으기 (필요하면 추가)
+            systemctl restart gunicorn  # 혹은 uwsgi, daphne 등 사용 중인 WSGI 서버 재시작
+            systemctl restart nginx  # Nginx 재시작 (필요하면 추가)
+          EOF
