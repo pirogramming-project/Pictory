@@ -84,12 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // `innerHTML`을 사용해 링크와 작성일을 포함
                 listItem.innerHTML = `
-                    <a href="/diary/detail/${diary.id}/" style="text-decoration: none;">
-                        <strong>o Title: ${diary.title}</strong><br>
-                    </a>
+                <p>
+                    <strong>o Title: ${diary.title}</strong><br>
                     <span> - Date: ${diary.date || '오늘'}</span>
+                </p>
                 `;
-
+                listItem.addEventListener('click', ()=> {
+                    document.location.href=`/diary/detail/${diary.id}/`;
+                });
                 container.appendChild(listItem);
             });
         }

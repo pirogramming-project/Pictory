@@ -31,8 +31,18 @@
         closeButton.className = "sticker_remove_btn_kes";
         closeButton.textContent = "X";
         closeButton.addEventListener("click", () => {
+            event.stopPropagation(); // 클릭 이벤트 전파 막기
             newStickerContainer.remove();
         });
+        // 스티커 제거 모바일
+        closeButton.addEventListener("touchstart", (event) => {
+            event.stopPropagation(); // 터치 이벤트 전파 막기
+            newStickerContainer.draggable = false; // 드래그 방지
+            setTimeout(() => {
+                newStickerContainer.remove();
+            }, 100);
+        });
+
         // 2. 크기조절
         const resizeHandle = document.createElement('div');
         resizeHandle.className = "sticker_resize_handle_kes";
@@ -43,6 +53,7 @@
         let aspectRatio = newSticker_psy.naturalWidth / newSticker_psy.naturalHeight;
         let startX, startY, startWidth, startHeight;
         resizeHandle.addEventListener("mousedown", (event) => {
+            event.stopPropagation(); // 드래그 방지
             isResizing = true;
             startX = event.clientX;
             startY = event.clientY;
@@ -62,6 +73,14 @@
             isResizing = false;
         });
 
+         // 📱 모바일 크기 조절 이벤트
+        resizeHandle.addEventListener("touchstart", (event) => {
+            console.log("터치스타트")
+            newStickerContainer.draggable = false;
+            setTimeout(() => {
+                newStickerContainer.draggable = true;
+            }, 1500); // 일정 시간 후 다시 활성화
+        });
 
         // DOM요소 추가
         newStickerContainer.addEventListener('click', (event) => {
@@ -81,37 +100,80 @@
     function addImageDragEventListeners_kes(draggableImg) {
         let offsetX = 0, offsetY = 0;
         const container = document.getElementById("pictory-frame_psy");
-
+    
+        // 🖥 데스크톱용 드래그 이벤트
         draggableImg.addEventListener("dragstart", (e) => {
             offsetX = e.offsetX;
             offsetY = e.offsetY;
-            e.dataTransfer.setData("text/plain", ""); // 기본 동작 방지용
+            e.dataTransfer.setData("text/plain", ""); // 기본 드래그 동작 방지
         });
-
+    
         draggableImg.addEventListener("drag", (e) => {
             if (e.clientX === 0 && e.clientY === 0) return; // 드래그 종료 시 무시
-
+    
             const parentRect = container.getBoundingClientRect();
             const imgWidth = draggableImg.offsetWidth - 20;
             const imgHeight = draggableImg.offsetHeight - 20;
-
+    
             let newX = e.clientX - parentRect.left - offsetX;
             let newY = e.clientY - parentRect.top - offsetY;
-
+    
             // 부모 영역 내에서만 이동
             newX = Math.max(0, Math.min(newX, parentRect.width - imgWidth));
             newY = Math.max(0, Math.min(newY, parentRect.height - imgHeight));
-
+    
             draggableImg.style.left = `${newX}px`;
             draggableImg.style.top = `${newY}px`;
         });
-
+    
         draggableImg.addEventListener("dragover", (e) => {
             e.preventDefault(); // 기본 드래그 동작 방지
         });
-
+    
         draggableImg.addEventListener("drop", (e) => {
             e.preventDefault();
         });
+    
+        // 📱 모바일용 터치 이벤트
+        let touchStartX = 0, touchStartY = 0;
+        let touchMoved = false;
+    
+        draggableImg.addEventListener("touchstart", (e) => {
+            const touch = e.touches[0]; // 첫 번째 터치 가져오기
+            const rect = draggableImg.getBoundingClientRect();
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchMoved = false; // 터치 시작 시 이동 여부 초기화
+        });
+    
+        draggableImg.addEventListener("touchmove", (e) => {
+            e.preventDefault(); // 기본 터치 스크롤 방지
+            touchMoved = true; // 터치가 움직였음을 기록
+    
+            const touch = e.touches[0];
+            const parentRect = container.getBoundingClientRect();
+            const imgWidth = draggableImg.offsetWidth - 20;
+            const imgHeight = draggableImg.offsetHeight - 20;
+    
+            let newX = touch.clientX - parentRect.left - (draggableImg.offsetWidth / 2);
+            let newY = touch.clientY - parentRect.top - (draggableImg.offsetHeight / 2);
+    
+            // 부모 영역 내에서만 이동
+            newX = Math.max(0, Math.min(newX, parentRect.width - imgWidth));
+            newY = Math.max(0, Math.min(newY, parentRect.height - imgHeight));
+    
+            draggableImg.style.left = `${newX}px`;
+            draggableImg.style.top = `${newY}px`;
+        });
+    
+        draggableImg.addEventListener("touchend", (e) => {
+            e.preventDefault(); // 터치 종료 시 불필요한 이벤트 방지
+    
+            // 터치 이동이 거의 없었다면 클릭 이벤트를 트리거
+            if (!touchMoved) {
+                draggableImg.click(); // 클릭 이벤트 수동 실행
+            }
+        });
     }
+    
 </script>

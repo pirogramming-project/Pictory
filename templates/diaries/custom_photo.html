@@ -26,7 +26,7 @@
                             <button class="cloud-btn_psy" data-page_psy="logo">
                                 <p>Logo</P></button>
                             <button class="cloud-btn_psy" data-page_psy="thickness">
-                                <p>Thickness</P></button>
+                                <p>Gap</P></button>
                             <button class="cloud-btn_psy" data-page_psy="sticker">
                                 <p>Sticker</P>
                             </button>
@@ -110,12 +110,8 @@
                 const input = document.createElement("input");
                 input.type = "file";
                 input.id = `imageInput_kes_${slotIndex_psy}`
-                input.className = "imageInput_kes";
-                input.name = "photos";  // 같은 name을 사용하면 리스트로 전송됨
                 input.accept = "image/*";
-                input.style.display = "none";
                 input.addEventListener("change", (event) => previewImage_psy(event));
-                form.appendChild(input);
                 input.click();
             }
 

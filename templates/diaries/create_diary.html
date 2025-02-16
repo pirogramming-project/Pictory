@@ -203,6 +203,7 @@
             });
 
             document.querySelector('.placeListOnclick').addEventListener('click', () => {
+                event.preventDefault();
                 placeSearch(inputField.value)
             });
 
