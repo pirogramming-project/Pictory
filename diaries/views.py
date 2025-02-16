@@ -252,9 +252,9 @@ def community(request):
         user1 = neighbor.user1
         user2 = neighbor.user2
         if user1 != request.user:
-            friendDiaryList.extend(Diary.objects.filter(writer=user1))
+            friendDiaryList.extend(Diary.objects.filter(writer=user1).order_by('-created_at'))
         else:
-            friendDiaryList.extend(Diary.objects.filter(writer=user2))
+            friendDiaryList.extend(Diary.objects.filter(writer=user2).order_by('-created_at'))
             
     context = {
         'friend_diaries' : friendDiaryList
@@ -319,7 +319,7 @@ def diary_map(request):
 
 @login_required
 def mydiaries(request):
-    myDiaryList = Diary.objects.filter(writer=request.user)
+    myDiaryList = Diary.objects.filter(writer=request.user).order_by('-created_at') #최신순 정렬
     context = {
         'my_diaries' : myDiaryList
     }
