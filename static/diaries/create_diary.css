@@ -184,6 +184,7 @@
     border-radius: 5px;
     resize: vertical;
     background-color: var(--background);
+    outline: none;
 }
 
 .diary_save_psy {
